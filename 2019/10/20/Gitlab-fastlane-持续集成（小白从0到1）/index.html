@@ -6,21 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://github.com/Baichenghui">
-  <title>b9i60000</title>
+  <title>Gitlab+fastlane 持续集成（小白从0到1） | b9i60000</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-    
-    <!-- <meta name="keywords" content="">
-    <meta name="description" content=""> -->
-  
-  <meta property="og:type" content="website">
-<meta property="og:title" content="b9i60000">
-<meta property="og:url" content="https://github.com/Baichenghui/page/2/index.html">
+  <meta name="description" content="[TOC] 实现步骤 在gitlab新建项目 配置并启动gitlab-runner 安装并配置fastlane 配置.gitlab-ci.yml文件  1、在gitlab新建项目做开发的都会 2、配置gitlab-runnergitlab-runner文档 gitlab-runner的配置——for Mac 3、安装并配置fastlane安装fastlanefastlane中文文档 注意：任何的安">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Gitlab+fastlane 持续集成（小白从0到1）">
+<meta property="og:url" content="https://github.com/Baichenghui/2019/10/20/Gitlab-fastlane-%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%EF%BC%88%E5%B0%8F%E7%99%BD%E4%BB%8E0%E5%88%B01%EF%BC%89/index.html">
 <meta property="og:site_name" content="b9i60000">
+<meta property="og:description" content="[TOC] 实现步骤 在gitlab新建项目 配置并启动gitlab-runner 安装并配置fastlane 配置.gitlab-ci.yml文件  1、在gitlab新建项目做开发的都会 2、配置gitlab-runnergitlab-runner文档 gitlab-runner的配置——for Mac 3、安装并配置fastlane安装fastlanefastlane中文文档 注意：任何的安">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p3931">
+<meta property="article:published_time" content="2019-10-20T02:56:58.000Z">
+<meta property="article:modified_time" content="2020-10-20T03:48:16.844Z">
 <meta property="article:author" content="b9i60000">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p3931">
   
     <link rel="alternative" href="/atom.xml" title="b9i60000" type="application/atom+xml">
   
@@ -211,32 +213,53 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-
-  
-    <article id="post-YYAsyncLayer-研究" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-Gitlab-fastlane-持续集成（小白从0到1）" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
   
   
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2019/10/20/YYAsyncLayer-%E7%A0%94%E7%A9%B6/" target="_blank">YYAsyncLayer 研究</a>
-  
+    <h1 class="article-title" itemprop="name">
+      Gitlab+fastlane 持续集成（小白从0到1）
     </h1>
   
 
 
   
   
-<a href="/2019/10/20/YYAsyncLayer-%E7%A0%94%E7%A9%B6/" class="archive-article-date">
-        <time datetime="2019-10-20T02:51:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-20</time>
+        
+        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
+              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+        </span>
+
+<a href="/2019/10/20/Gitlab-fastlane-%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%EF%BC%88%E5%B0%8F%E7%99%BD%E4%BB%8E0%E5%88%B01%EF%BC%89/" class="archive-article-date">
+        <time datetime="2019-10-20T02:56:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-20</time>
 </a>
 
   
   
     
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">375字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">1分</span>
+    </span>
+  </span>
+</div>
+
 
   
   </header>
@@ -244,115 +267,92 @@
   <div class="article-entry" itemprop="articleBody">
     
     <p>[TOC]</p>
-<h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>异步绘制是界面流畅度提升的思路，YYAsyncLayer 是 ibireme 写的一个异步绘制的轮子。质量比较高，涉及到很多优化思维，值得学习。多学技术，学好技术。</p>
-<h3 id="为什么要异步绘制"><a href="#为什么要异步绘制" class="headerlink" title="为什么要异步绘制"></a>为什么要异步绘制</h3><h5 id="屏幕显示图像的原理"><a href="#屏幕显示图像的原理" class="headerlink" title="屏幕显示图像的原理"></a>屏幕显示图像的原理</h5><p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2376" alt="9d500c2270433ab8e444083d5cf650f2.png"></p>
-<p>CPU 计算好显示内容提交到 GPU，GPU 渲染完成后将渲染结果放入帧缓冲区，随后视频控制器会按照 VSync 信号逐行读取帧缓冲区的数据，经过可能的数模转换传递给显示器显示。</p>
-<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2375" alt="eb92699d5650217ec7357a49d5789ca2.png"></p>
-<p>过去的CRT 的电子枪按照上面方式，从上到下一行行扫描，扫描完成后显示器就呈现一帧画面，随后电子枪回到初始位置继续下一次扫描。为了把显示器的显示过程和系统的视频控制器进行同步，显示器（或者其他硬件）会用硬件时钟产生一系列的定时信号。当电子枪换到新的一行，准备进行扫描时，显示器会发出一个水平同步信号（horizonal synchronization），简称 HSync；而当一帧画面绘制完成后，电子枪回复到原位，准备画下一帧前，显示器会发出一个垂直同步信号（vertical synchronization），简称 VSync。显示器通常以固定频率进行刷新，这个刷新率就是 VSync 信号产生的频率。</p>
-<h5 id="双缓冲机制"><a href="#双缓冲机制" class="headerlink" title="双缓冲机制"></a>双缓冲机制</h5><p>显示系统通常会引入两个缓冲区，即双缓冲机制。在这种情况下，GPU 会预先渲染好一帧放入一个缓冲区内，让视频控制器读取，当下一帧渲染好后，GPU 会直接把视频控制器的指针指向第二个缓冲器。如此一来效率会有很大的提升。</p>
-<p>双缓冲虽然能解决效率问题，但会引入一个新的问题。当视频控制器还未读取完成时，即屏幕内容刚显示一半时，GPU 将新的一帧内容提交到帧缓冲区并把两个缓冲区进行交换后，视频控制器就会把新的一帧数据的下半段显示到屏幕上，造成画面撕裂现象。</p>
-<p>为了解决这个问题，GPU 通常有一个机制叫做垂直同步（简写也是 V-Sync），当开启垂直同步后，GPU 会等待显示器的 VSync 信号发出后，才进行新的一帧渲染和缓冲区更新。这样能解决画面撕裂现象，也增加了画面流畅度，但需要消费更多的计算资源，也会带来部分延迟。</p>
-<h5 id="界面卡顿的实质"><a href="#界面卡顿的实质" class="headerlink" title="界面卡顿的实质"></a>界面卡顿的实质</h5><p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2374" alt="5f16df9fe174ef3a6879c2bb1f066d27.png"> </p>
-<p>在 VSync 信号到来后，系统图形服务会通过 CADisplayLink 等机制通知 App，App 主线程开始在 CPU 中计算显示内容，比如视图的创建、布局计算、图片解码、文本绘制等。随后 CPU 会将计算好的内容提交到 GPU 去，由 GPU 进行变换、合成、渲染。随后 GPU 会把渲染结果提交到帧缓冲区去，等待下一次 VSync 信号到来时显示到屏幕上。由于垂直同步的机制，如果在一个 VSync 时间内，CPU 或者 GPU 没有完成内容提交，则那一帧就会被丢弃，等待下一次机会再显示，而这时显示屏会保留之前的内容不变。这就是界面卡顿的原因。</p>
-<h5 id="UIKit-性能瓶颈"><a href="#UIKit-性能瓶颈" class="headerlink" title="UIKit 性能瓶颈"></a>UIKit 性能瓶颈</h5><p>大部分 UIKit 组件的绘制是在主线程进行，需要 CPU 来进行绘制，当同一时刻过多组件需要绘制或者组件元素过于复杂时，必然会给 CPU 带来压力，这个时候就很容易掉帧（主要是文本控件，大量文本内容的计算和绘制过程都相当繁琐）。</p>
-<h5 id="UIKit-替代方案：CoreAnimation-或-CoreGraphics"><a href="#UIKit-替代方案：CoreAnimation-或-CoreGraphics" class="headerlink" title="UIKit 替代方案：CoreAnimation 或 CoreGraphics"></a>UIKit 替代方案：CoreAnimation 或 CoreGraphics</h5><h6 id="CoreAnimation"><a href="#CoreAnimation" class="headerlink" title="CoreAnimation"></a>CoreAnimation</h6><p>首选优化方案是 CoreAnimation 框架。CALayer 的大部分属性都是由 GPU 绘制的 (硬件层面)，不需要 CPU (软件层面) 做任何绘制。CA 框架下的 CAShapeLayer (多边形绘制)、CATextLayer(文本绘制)、CAGradientLayer (渐变绘制) 等都有较高的效率，非常实用。</p>
-<h6 id="CoreGraphics"><a href="#CoreGraphics" class="headerlink" title="CoreGraphics"></a>CoreGraphics</h6><p>其次在适当的地方可以考虑 CoreGraphics 框架。CoreGraphics 依托于 CPU 的软件绘制。在实现 CALayerDelegate 协议的 -drawLayer:inContext: 方法时（等同于UIView 二次封装的 -drawRect:方法），需要分配一个内存占用较高的上下文 context，与此同时，CALayer 或者其子类需要创建一个等大的寄宿图 contents。当基于 CPU 的软件绘制完成，还需要通过 IPC (进程间通信) 传递给设备显示系统。值得注意的是：当重绘时需要抹除这个上下文重新分配内存。</p>
-<p>不管是创建上下文、重绘带来的内存重新分配、IPC 都会带来性能上的较大开销。所以 CoreGraphics 的性能比较差，日常开发中要尽量避免直接在主线程使用。通常情况下，直接给 CALayer 的 contents 赋值 CGImage 图片或者使用 CALayer 的衍生类就能实现大部分需求，还能充分利用硬件支持，图像处理交给 GPU 当然更加放心。</p>
-<h5 id="多核设备带来的可能性"><a href="#多核设备带来的可能性" class="headerlink" title="多核设备带来的可能性"></a>多核设备带来的可能性</h5><p>通过以上说明，可以了解 CoreGraphics 较为糟糕的性能。然而可喜的是，市面上的设备都已经不是单核了，这就意味着可以通过后台线程处理耗时任务，主线程只需要负责调度显示。</p>
-<p>CoreGraphics 框架可以通过图片上下文将绘制内容制作为一张位图，并且这个操作可以在非主线程执行。那么，当有 n 个绘制任务时，可以开辟多个线程在后台异步绘制，绘制成功拿到位图回到主线程赋值给 CALayer 的寄宿图属性。</p>
-<p>这就是 YYAsyncLayer 框架的核心思想。</p>
-<p>虽然多个线程异步绘制会消耗大量的内存，但是对于性能敏感界面来说，只要工程师控制好内存峰值，可以极大的提高交互流畅度。优化很多时候就是空间换时间，所谓鱼和熊掌不可兼得。这也说明了一个问题，实际开发中要做有针对性的优化，不可盲目跟风。</p>
-<h3 id="框架概述"><a href="#框架概述" class="headerlink" title="框架概述"></a>框架概述</h3><p>类文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">YYSentinel.h (.m)</span><br><span class="line">YYTransaction.h (.m)</span><br><span class="line">YYAsyncLayer.h (.m)</span><br></pre></td></tr></table></figure>
+<h5 id="实现步骤"><a href="#实现步骤" class="headerlink" title="实现步骤"></a>实现步骤</h5><ol>
+<li>在gitlab新建项目</li>
+<li>配置并启动gitlab-runner</li>
+<li>安装并配置fastlane</li>
+<li>配置.gitlab-ci.yml文件</li>
+</ol>
+<h5 id="1、在gitlab新建项目"><a href="#1、在gitlab新建项目" class="headerlink" title="1、在gitlab新建项目"></a>1、在gitlab新建项目</h5><p>做开发的都会</p>
+<h5 id="2、配置gitlab-runner"><a href="#2、配置gitlab-runner" class="headerlink" title="2、配置gitlab-runner"></a>2、配置gitlab-runner</h5><p><a target="_blank" rel="noopener" href="https://docs.gitlab.com/runner/register/index.html">gitlab-runner文档</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/c7995ad64f48">gitlab-runner的配置——for Mac</a></p>
+<h5 id="3、安装并配置fastlane"><a href="#3、安装并配置fastlane" class="headerlink" title="3、安装并配置fastlane"></a>3、安装并配置fastlane</h5><h6 id="安装fastlane"><a href="#安装fastlane" class="headerlink" title="安装fastlane"></a>安装fastlane</h6><p><a target="_blank" rel="noopener" href="https://s0docs0fastlane0tools.icopy.site/">fastlane中文文档</a></p>
+<p>注意：任何的安装可能都需要你配置下环境变量</p>
+<h6 id="安装firim插件"><a href="#安装firim插件" class="headerlink" title="安装firim插件"></a>安装firim插件</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fastlane add_plugin firim</span><br></pre></td></tr></table></figure>
+<p>注意：这个要在工程fastlane文件夹所在目录执行</p>
+<h6 id="Appfile"><a href="#Appfile" class="headerlink" title="Appfile"></a>Appfile</h6><p>用于存放 app_identifier（bundle id）、 apple_id(appl开发中账号邮箱地址)、team_id、itc_team_id</p>
+<h6 id="Deliverfile"><a href="#Deliverfile" class="headerlink" title="Deliverfile"></a>Deliverfile</h6><p>deliver工具的配置文件</p>
+<h6 id="Fastfile"><a href="#Fastfile" class="headerlink" title="Fastfile"></a>Fastfile</h6><p>用于管理你所创建的 lane，lane 则会调用 action。</p>
+<h6 id="Gymfile"><a href="#Gymfile" class="headerlink" title="Gymfile"></a>Gymfile</h6><p><a target="_blank" rel="noopener" href="http://docs.fastlane.tools/actions/gym/">官方文档</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/f62c8a980c35">Fastlane - gym</a></p>
+<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p3931" alt="18aa7066fa1a32b15eca900e3670743f.png"></p>
+<h6 id="Snapfile"><a href="#Snapfile" class="headerlink" title="Snapfile"></a>Snapfile</h6><p>用于指定需要进行屏幕截图的设备类型和语种。</p>
+<h6 id="Matchfile"><a href="#Matchfile" class="headerlink" title="Matchfile"></a>Matchfile</h6><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/5962940522a2">使用Match来管理代码签名</a></p>
+<h6 id="Pluginfile"><a href="#Pluginfile" class="headerlink" title="Pluginfile"></a>Pluginfile</h6><p>安装的插件会在这里面显示，如前面提到的插件firim安装之后,Pluginfile中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gem &#39;fastlane-plugin-firim&#39;</span><br></pre></td></tr></table></figure>
 
-
-<h5 id="YYSentinel"><a href="#YYSentinel" class="headerlink" title="YYSentinel"></a>YYSentinel</h5><p>计数的类，自增int32_t类型变量value，是为了记录最新的布局请求标识，便于及时的放弃多余的绘制逻辑以减少开销。</p>
-<p>在框架中的应用是，异步绘制操作之前取出value作为局部变量保存</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int32_t value &#x3D; sentinel.value;</span><br></pre></td></tr></table></figure>
-
-<p>然后定义isCancelled block判断是否取消绘制操作了</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">BOOL (^isCancelled)() &#x3D; ^BOOL() &#123;</span><br><span class="line">    &#x2F;&#x2F;value产生变化说明取消绘制操作</span><br><span class="line">    return value !&#x3D; sentinel.value;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>取消绘制操作</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- (void)_cancelAsyncDisplay &#123;</span><br><span class="line">    &#x2F;&#x2F;对 value 进行自增，这样value就产生了变化</span><br><span class="line">    [_sentinel increase];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h5 id="YYTransaction"><a href="#YYTransaction" class="headerlink" title="YYTransaction"></a>YYTransaction</h5><p>事务类，捕获主线程 runloop 的某个时机回调，用于处理异步绘制事件。</p>
-<h5 id="YYAsyncLayer"><a href="#YYAsyncLayer" class="headerlink" title="YYAsyncLayer"></a>YYAsyncLayer</h5><p>继承自 CALayer ，封装了异步绘制的逻辑便于使用。</p>
-<h3 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h3><h5 id="YYSentinel-1"><a href="#YYSentinel-1" class="headerlink" title="YYSentinel"></a>YYSentinel</h5><p>.h</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@interface YYSentinel : NSObject </span><br><span class="line">@property (readonly) int32_t value; </span><br><span class="line">- (int32_t)increase; </span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
-<p>.m</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;YYSentinel.h&quot;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 若需要保证整形数值变量的线程安全，可以使用 OSAtomic 框架下的方法，它往往性能比使用各种“锁”更为优越，并且代码优雅。</span><br><span class="line">#import &lt;libkern&#x2F;OSAtomic.h&gt;</span><br><span class="line"></span><br><span class="line">@implementation YYSentinel &#123;</span><br><span class="line">    int32_t _value;</span><br><span class="line">&#125;</span><br><span class="line">- (int32_t)value &#123;</span><br><span class="line">    return _value;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 使用 OSAtomicIncrement32() 方法来对 value 执行自增。</span><br><span class="line">&#x2F;&#x2F; OSAtomicIncrement32() 是原子自增方法，线程安全。</span><br><span class="line">- (int32_t)increase &#123;</span><br><span class="line">    return OSAtomicIncrement32(&amp;_value);</span><br><span class="line">&#125;</span><br><span class="line">@end </span><br></pre></td></tr></table></figure>
-
-<h5 id="YYTransaction-1"><a href="#YYTransaction-1" class="headerlink" title="YYTransaction"></a>YYTransaction</h5><p>YYTransaction 使用集合来管理任务。</p>
-<p>YYTransaction 做的事情就是记录一系列事件，并且在合适的时机调用这些事件。</p>
-<h6 id="提交任务"><a href="#提交任务" class="headerlink" title="提交任务"></a>提交任务</h6><p>YYTransaction 有两个属性：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@interface YYTransaction()</span><br><span class="line">@property (nonatomic, strong) id target;</span><br><span class="line">@property (nonatomic, assign) SEL selector;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">static NSMutableSet *transactionSet &#x3D; nil;</span><br></pre></td></tr></table></figure>
-
-<p>方法接收者 (target) 和方法 (selector)。<br>一个 YYTransaction就是一个任务，全局区的 transactionSet 集合就是用来存储这些任务。提交方法-commit 不过是初始配置并且将任务装入集合。</p>
-<h6 id="合适的回调时机"><a href="#合适的回调时机" class="headerlink" title="合适的回调时机"></a>合适的回调时机</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">static void YYTransactionSetup() &#123;</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        transactionSet &#x3D; [NSMutableSet new];</span><br><span class="line">        CFRunLoopRef runloop &#x3D; CFRunLoopGetMain();</span><br><span class="line">        CFRunLoopObserverRef observer;</span><br><span class="line">        </span><br><span class="line">        observer &#x3D; CFRunLoopObserverCreate(CFAllocatorGetDefault(),</span><br><span class="line">                                           kCFRunLoopBeforeWaiting | kCFRunLoopExit,</span><br><span class="line">                                           true,      &#x2F;&#x2F; repeat</span><br><span class="line">                                           0xFFFFFF,  &#x2F;&#x2F; after CATransaction(2000000)</span><br><span class="line">                                           YYRunLoopObserverCallBack, NULL);</span><br><span class="line">        CFRunLoopAddObserver(runloop, observer, kCFRunLoopCommonModes);</span><br><span class="line">        CFRelease(observer);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>在主线程的 RunLoop 中添加了一个 observer 监听，回调的时机是 kCFRunLoopBeforeWaiting 和 kCFRunLoopExit ，即是主线程 RunLoop 循环即将进入休眠或者即将退出的时候。</p>
-<p>observer 的优先级是 0xFFFFFF，优先级在 CATransaction 的后面.</p>
-<p>回调里面做的事情：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">static void YYRunLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActivity activity, void *info) &#123;</span><br><span class="line">    if (transactionSet.count &#x3D;&#x3D; 0) return;</span><br><span class="line">    NSSet *currentSet &#x3D; transactionSet;</span><br><span class="line">    transactionSet &#x3D; [NSMutableSet new];</span><br><span class="line">    [currentSet enumerateObjectsUsingBlock:^(YYTransaction *transaction, BOOL *stop) &#123;</span><br><span class="line">#pragma clang diagnostic push</span><br><span class="line">#pragma clang diagnostic ignored &quot;-Warc-performSelector-leaks&quot;</span><br><span class="line">        [transaction.target performSelector:transaction.selector];</span><br><span class="line">#pragma clang diagnostic pop</span><br><span class="line">    &#125;];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>只是将集合中的任务遍历执行。</p>
-<h6 id="方法重写"><a href="#方法重写" class="headerlink" title="方法重写"></a>方法重写</h6><p>重写 <code>isEqual:</code> 方法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- (BOOL)isEqual:(id)object &#123;</span><br><span class="line">    if (self &#x3D;&#x3D; object) return YES;</span><br><span class="line">    if (![object isMemberOfClass:self.class]) return NO;</span><br><span class="line">    YYTransaction *other &#x3D; object;</span><br><span class="line">    return other.selector &#x3D;&#x3D; _selector &amp;&amp; other.target &#x3D;&#x3D; _target;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>重写 hash 算法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- (NSUInteger)hash &#123;</span><br><span class="line">    long v1 &#x3D; (long)((void *)_selector);</span><br><span class="line">    long v2 &#x3D; (long)_target;</span><br><span class="line">    return v1 ^ v2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>NSObject 类默认的 hash 值为 10 进制的内存地址，这里作者将 _selector和 _target 的内存地址进行一个位异或处理，意味着只要 _selector 和 _target 地址都相同时，hash 值就相同。</p>
-<p>上面定义了<code>static NSMutableSet *transactionSet = nil;</code>，transactionSet是一个集合。</p>
-<p>这么做的意义，是因为这里和其他编程语言一样 NSSet 是基于 hash 的集合，它是不能有重复元素的，而判断是否重复毫无疑问是使用 hash。作者通过重写hash算法来重新定义重复元素。</p>
-<p>将 YYTransaction 的 hash值依托于 _selector 和 _target 的内存地址，那就意味着两点：<br>    1、同一个 YYTransaction 实例，_selector 和 _target 只要有一个内存地址不同，就会在集合中体现为两个值。<br>    2、不同的 YYTransaction 实例，_selector 和 _target 的内存地址都相同，在集合中的体现为一个值。</p>
-<p>在这可以避免重复的方法调用。加入 transactionSet 中的事件会在 Runloop 即将进入休眠或者即将退出时遍历执行，相同的方法接收者 (_target) 和相同的方法 (_selector)，可以视为重复调用（这里的主要场景是避免重复绘制影响性能）。</p>
-<p>举一个实际的例子：</p>
-<p>当使用绘制来制作一个文本时，Font、Text等属性的改变都意味着要重绘，使用 YYTransaction 延迟了绘制的调用时机，并且它们在同一个 RunLoop 循环中，装入 NSSet 将直接合并为一个绘制任务，避免了重复的绘制。</p>
-<h5 id="YYAsyncLayer-1"><a href="#YYAsyncLayer-1" class="headerlink" title="YYAsyncLayer"></a>YYAsyncLayer</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@interface YYAsyncLayer : CALayer </span><br><span class="line">@property BOOL displaysAsynchronously;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
-<p>YYAsyncLayer 继承自 CALayer，对外暴露了一个方法可开闭是否异步绘制。</p>
-<h6 id="初始化配置"><a href="#初始化配置" class="headerlink" title="初始化配置"></a>初始化配置</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">- (instancetype)init &#123;</span><br><span class="line">    self &#x3D; [super init];</span><br><span class="line">    static CGFloat scale; &#x2F;&#x2F;global</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        scale &#x3D; [UIScreen mainScreen].scale;</span><br><span class="line">    &#125;);</span><br><span class="line">    self.contentsScale &#x3D; scale;</span><br><span class="line">    _sentinel &#x3D; [YYSentinel new];</span><br><span class="line">    _displaysAsynchronously &#x3D; YES;</span><br><span class="line">    return self;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>YYAsyncLayer 的 contentsScale 为屏幕的 scale，该属性是 物理像素 / 逻辑像素，这样可以充分利用不同设备的显示器分辨率，绘制更清晰的图像。但是若 contentsGravity 设置了可拉伸的类型，CoreAnimation 将会优先满足，而忽略掉 contentsScale。UIView 和 UIImageView 默认处理了它们内部 CALayer 的 contentsScale，所以除非是直接使用 CALayer 及其衍生类，都不用显式的配置 contentsScale。</p>
-<p>同时还创建了一个 YYSentinel 实例。</p>
-<p>默认开启异步绘制。</p>
-<h6 id="重写绘制方法："><a href="#重写绘制方法：" class="headerlink" title="重写绘制方法："></a>重写绘制方法：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">- (void)setNeedsDisplay &#123;</span><br><span class="line">    [self _cancelAsyncDisplay];</span><br><span class="line">    [super setNeedsDisplay];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)display &#123;</span><br><span class="line">    super.contents &#x3D; super.contents;</span><br><span class="line">    [self _displayAsync:_displaysAsynchronously];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>标记需要绘制时，会先取消目前的异步绘制。待下一轮runloop到来绘制时，通过 <code>_displayAsync:</code> 方法来进行异步绘制操作。<code>_displayAsync:</code> 方法后面分析。</p>
-<h6 id="YYAsyncLayerDisplayTask"><a href="#YYAsyncLayerDisplayTask" class="headerlink" title="YYAsyncLayerDisplayTask"></a>YYAsyncLayerDisplayTask</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@interface YYAsyncLayerDisplayTask : NSObject</span><br><span class="line">@property (nullable, nonatomic, copy) void (^willDisplay)(CALayer *layer); </span><br><span class="line">@property (nullable, nonatomic, copy) void (^display)(CGContextRef context, CGSize size, BOOL(^isCancelled)(void)); </span><br><span class="line">@property (nullable, nonatomic, copy) void (^didDisplay)(CALayer *layer, BOOL finished); </span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
-
-<p><code>YYAsyncLayerDisplayTask</code> 是一个异步绘制任务。</p>
-<p>通过 <code>willDisplay</code> 和 <code>didDisplay</code> 回调将要绘制和结束绘制时机，通过实现<code>display</code> 在代码块里面写业务绘制逻辑。</p>
-<h6 id="YYAsyncLayerDelegate"><a href="#YYAsyncLayerDelegate" class="headerlink" title="YYAsyncLayerDelegate"></a>YYAsyncLayerDelegate</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@protocol YYAsyncLayerDelegate &lt;NSObject&gt;</span><br><span class="line">@required </span><br><span class="line">- (YYAsyncLayerDisplayTask *)newAsyncDisplayTask;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
-
-<p>通过协议提供数据源的方式，获取异步绘制的任务。</p>
-<h5 id="异步绘制的核心逻辑"><a href="#异步绘制的核心逻辑" class="headerlink" title="异步绘制的核心逻辑"></a>异步绘制的核心逻辑</h5><p>去掉一些优化代码，主要做的事情如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">dispatch_async(YYAsyncLayerGetDisplayQueue(), ^&#123;</span><br><span class="line">            UIGraphicsBeginImageContextWithOptions(size, opaque, scale);</span><br><span class="line">            CGContextRef context &#x3D; UIGraphicsGetCurrentContext(); </span><br><span class="line">            UIImage *image &#x3D; UIGraphicsGetImageFromCurrentImageContext();</span><br><span class="line">            UIGraphicsEndImageContext();</span><br><span class="line">            dispatch_async(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">                self.contents &#x3D; (__bridge id)(image.CGImage); </span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
-
-<p>其实就是通过 <code>CoreGraphics</code> 在子线程中生成一个位图，然后进入主队列给 YYAsyncLayer 的 contents 赋值 CGImage 由 GPU 渲染过后提交到显示系统。</p>
-<h5 id="及时的结束无用的绘制"><a href="#及时的结束无用的绘制" class="headerlink" title="及时的结束无用的绘制"></a>及时的结束无用的绘制</h5><p>前面提到的 <code>YYSentinel</code> 的作用已经说明。</p>
-<p>在适当的地方进行自增value，然后在绘制过程中对比value是否发生变化来判断是否取消绘制操作。</p>
-<p>很巧妙的实现。</p>
-<h5 id="异步线程的管理"><a href="#异步线程的管理" class="headerlink" title="异步线程的管理"></a>异步线程的管理</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">static dispatch_queue_t YYAsyncLayerGetDisplayQueue() &#123;</span><br><span class="line">#ifdef YYDispatchQueuePool_h</span><br><span class="line">    return YYDispatchQueueGetForQOS(NSQualityOfServiceUserInitiated);</span><br><span class="line">#else</span><br><span class="line">#define MAX_QUEUE_COUNT 16</span><br><span class="line">    static int queueCount;</span><br><span class="line">    static dispatch_queue_t queues[MAX_QUEUE_COUNT];</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    static int32_t counter &#x3D; 0;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        queueCount &#x3D; (int)[NSProcessInfo processInfo].activeProcessorCount;</span><br><span class="line">        queueCount &#x3D; queueCount &lt; 1 ? 1 : queueCount &gt; MAX_QUEUE_COUNT ? MAX_QUEUE_COUNT : queueCount;</span><br><span class="line">        if ([UIDevice currentDevice].systemVersion.floatValue &gt;&#x3D; 8.0) &#123;</span><br><span class="line">            for (NSUInteger i &#x3D; 0; i &lt; queueCount; i++) &#123;</span><br><span class="line">                dispatch_queue_attr_t attr &#x3D; dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_USER_INITIATED, 0);</span><br><span class="line">                queues[i] &#x3D; dispatch_queue_create(&quot;com.ibireme.yykit.render&quot;, attr);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            for (NSUInteger i &#x3D; 0; i &lt; queueCount; i++) &#123;</span><br><span class="line">                queues[i] &#x3D; dispatch_queue_create(&quot;com.ibireme.yykit.render&quot;, DISPATCH_QUEUE_SERIAL);</span><br><span class="line">                dispatch_set_target_queue(queues[i], dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    int32_t cur &#x3D; OSAtomicIncrement32(&amp;counter);</span><br><span class="line">    if (cur &lt; 0) cur &#x3D; -cur;</span><br><span class="line">    return queues[(cur) % queueCount];</span><br><span class="line">#undef MAX_QUEUE_COUNT</span><br><span class="line">#endif</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h6 id="要点-1-：串行队列数量和处理器数量相同"><a href="#要点-1-：串行队列数量和处理器数量相同" class="headerlink" title="要点 1 ：串行队列数量和处理器数量相同"></a>要点 1 ：串行队列数量和处理器数量相同</h6><p>一个 n 核设备同一时刻最多能 并行 执行 n 个任务，也就是最多有 n 个线程是相互不竞争 CPU 资源的。</p>
-<p>开辟的线程过多，超过了处理数量，实际上某些并行的线程之间就可能竞争同一个处理器的资源，频繁的切换上下文也会消耗处理器资源。</p>
-<p>而串行队列中只有一个线程，该框架中，作者使用和处理器相同数量的串行队列来轮询处理异步任务，有效的减少了线程调度操作。</p>
-<h6 id="要点-2-：创建串行队列，设置优先级"><a href="#要点-2-：创建串行队列，设置优先级" class="headerlink" title="要点 2 ：创建串行队列，设置优先级"></a>要点 2 ：创建串行队列，设置优先级</h6><p>在 8.0 以上的系统，队列的优先级为 QOS_CLASS_USER_INITIATED，低于用户交互相关的 QOS_CLASS_USER_INTERACTIVE。</p>
-<p>在 8.0 以下的系统，通过 dispatch_set_target_queue() 函数设置优先级为 DISPATCH_QUEUE_PRIORITY_DEFAULT (第二个参数如果使用串行队列会强行将我们创建的所有线程串行执行任务)。</p>
-<p>可以猜测主队列的优先级是大于或等于 QOS_CLASS_USER_INTERACTIVE的，让这些串行队列的优先级低于主队列，避免框架创建的线程和主线程竞争资源。</p>
-<h6 id="要点-3-：轮询返回队列"><a href="#要点-3-：轮询返回队列" class="headerlink" title="要点 3 ：轮询返回队列"></a>要点 3 ：轮询返回队列</h6><p>使用原子自增函数 OSAtomicIncrement32() 对局部静态变量 counter进行自增，然后通过取模运算轮询返回队列。</p>
-<p>注意这里使用了一个判断：if (cur &lt; 0) cur = -cur;，当 cur 自增越界时就会变为负数最大值（在二进制层面，是用正整数的反码加一来表示其负数的）。</p>
-<h6 id="为什么要使用-n-个串行队列实现并发"><a href="#为什么要使用-n-个串行队列实现并发" class="headerlink" title="为什么要使用 n 个串行队列实现并发"></a>为什么要使用 n 个串行队列实现并发</h6><p>为什么这里需要使用 n 个串行队列来调度，而不用一个并行队列。</p>
-<p>主要是因为并行队列无法精确的控制线程数量，很有可能创建过多的线程，导致 CPU 线程调度过于频繁，影响交互性能。</p>
-<p>可能会想到用信号量 (dispatch_semaphore_t) 来控制并发，然而这样只能控制并发的任务数量，而不能控制线程数量，并且使用起来不是很优雅。而使用串行队列就很简单了，我们可以很明确的知道自己创建的线程数量，一切皆在掌控之中。</p>
-<h3 id="学习"><a href="#学习" class="headerlink" title="学习"></a>学习</h3><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/154451e4bd42">YYAsyncLayer 源码剖析：异步绘制</a></p>
+<h5 id="4、配置-gitlab-ci-yml文件"><a href="#4、配置-gitlab-ci-yml文件" class="headerlink" title="4、配置.gitlab-ci.yml文件"></a>4、配置.gitlab-ci.yml文件</h5><p>注意：<br>variables:<br>  LC_ALL: “en_US.UTF-8”<br>  LANG: “en_US.UTF-8”<br>  GIT_STRATEGY: fetch #开发阶段这要设置一下，默认每次都会clone代码，耗时较长。上线版本设置为clone获取最新代码</p>
+<p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000019540360">持续集成之.gitlab-ci.yml篇（详细讲解了各命令的作用）</a></p>
+<p><a target="_blank" rel="noopener" href="https://s0docs0gitlab0com.icopy.site/ce/ci/yaml/README.html">（官方文档）</a> </p>
+<h5 id="原理理解"><a href="#原理理解" class="headerlink" title="原理理解"></a>原理理解</h5><p>在配置.gitlab-ci.yml文件中配置需要执行的脚本，这里配置执行fastlane脚本。</p>
+<h5 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h5><p>个人建议，直接看官方文档，除非英文太差，那就找中文资料吧。</p>
 
     
 
     
+    <div class="page-reward">
+      <a href="javascript:void(0);" class="page-reward-btn tooltip-top" target="_self">
+        <div class="tooltip tooltip-east">
+          <span class="tooltip-item">
+            赏
+          </span>
+          <span class="tooltip-content">
+            <span class="tooltip-text">
+              <span class="tooltip-inner">
+                <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i
+                    class="icon icon-quo-right"></i></p>
+                <div class="reward-box">
+                  
+                  <div class="reward-box-item">
+                    <img class="reward-img" src="/img/alipay.jpg">
+                    <span class="reward-type">支付宝</span>
+                  </div>
+                  
+                  
+                  <div class="reward-box-item">
+                    <img class="reward-img" src="/img/weixin.png">
+                    <span class="reward-type">微信</span>
+                  </div>
+                  
+                </div>
+              </span>
+            </span>
+          </span>
+        </div>
+      </a>
+    </div>
+    
 
+    
+    <div class="declare"> 
+      <ul class="post-copyright">
+        <li>
+          <strong>本文作者：</strong>
+          b9i60000
+        </li>
+        <li>
+          <strong>本文链接：</strong>
+          <a href="https://github.com/Baichenghui/2019/10/20/Gitlab-fastlane-持续集成（小白从0到1）/" title="Gitlab+fastlane 持续集成（小白从0到1）" target="_blank">https://github.com/Baichenghui/2019/10/20/Gitlab-fastlane-持续集成（小白从0到1）/</a>
+        </li>
+        
+        <li>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
+        </li>
+        
+      </ul>
+    </div>
     
 
   </div>
@@ -362,16 +362,85 @@
     
 
     
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2019/10/20/YYAsyncLayer-%E7%A0%94%E7%A9%B6/">展开全文 >></a>
-    </p>
+
     
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://github.com/Baichenghui/2019/10/20/Gitlab-fastlane-%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%EF%BC%88%E5%B0%8F%E7%99%BD%E4%BB%8E0%E5%88%B01%EF%BC%89/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
 
     
     <div class="clearfix"></div>
   </div>
   </div>
 </article>
+
+
+<nav id="article-nav">
+  
+    <a href="/2019/10/20/macbook-%E7%94%B5%E6%B1%A0%E5%81%A5%E5%BA%B7%E7%A8%8B%E5%BA%A6%E6%A3%80%E6%B5%8B%E7%BB%88%E7%AB%AF%E5%91%BD%E4%BB%A4/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          macbook 电池健康程度检测终端命令
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/10/20/sizeToFit-%E5%92%8C-sizeThatFits/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">sizeToFit 和 sizeThatFits</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -392,533 +461,14 @@
 
 
 
-  
-    <article id="post-图像和图形的最佳实践（WWDC-2018-session-219）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2019/10/20/%E5%9B%BE%E5%83%8F%E5%92%8C%E5%9B%BE%E5%BD%A2%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%EF%BC%88WWDC-2018-session-219%EF%BC%89/" target="_blank">图像和图形的最佳实践（WWDC 2018 session 219）</a>
-  
-    </h1>
-  
 
 
-  
-  
-<a href="/2019/10/20/%E5%9B%BE%E5%83%8F%E5%92%8C%E5%9B%BE%E5%BD%A2%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%EF%BC%88WWDC-2018-session-219%EF%BC%89/" class="archive-article-date">
-        <time datetime="2019-10-20T02:51:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-20</time>
-</a>
 
-  
-  
-    
 
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>[TOC]</p>
-<h3 id="UIImage和UIImageView"><a href="#UIImage和UIImageView" class="headerlink" title="UIImage和UIImageView"></a>UIImage和UIImageView</h3><p>UIImage在UIKit中表示一个图形的内容，而UIImageView在UIKit中用来呈现一个视图。但是在这之外还有一个隐藏的、影响程序性能的过程，叫做解码(Decode)。</p>
-<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2377" alt="408ae032ad58fa3ed7567c071056843a.png"></p>
-<h5 id="图片的解码"><a href="#图片的解码" class="headerlink" title="图片的解码"></a>图片的解码</h5><p>当你用 UIImage 或 CGImageSource 的那几个方法创建图片时，图片数据并不会立刻解码。图片设置到 UIImageView 或者 CALayer.contents 中去，并且 CALayer 被提交到 GPU 前，CGImage 中的数据才会得到解码。这一步是发生在主线程的，并且不可避免。</p>
-<p>如果想要绕开这个机制，常见的做法是在后台线程先把图片绘制到 CGBitmapContext 中，然后从 Bitmap 直接创建图片。目前常见的网络图片库都自带这个功能。</p>
-<p>在了解Decode的过程中，我们首先要了解一个概念：缓冲区(Buffer)。</p>
-<h5 id="缓冲区-Buffer"><a href="#缓冲区-Buffer" class="headerlink" title="缓冲区(Buffer)"></a>缓冲区(Buffer)</h5><ol>
-<li>缓冲区是在内存中连续的区域。</li>
-<li>通常被视为元素序列。</li>
-</ol>
-<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2380" alt="6234b17718adc25d94d92591359cb113.png"></p>
-<h6 id="图像缓冲区-Image-Buffer-："><a href="#图像缓冲区-Image-Buffer-：" class="headerlink" title="图像缓冲区(Image Buffer)："></a>图像缓冲区(Image Buffer)：</h6><p>图像缓冲区中每个元素表示的是图像中一个像素的颜色信息。所以，该Buffer在内存中的大小与图像大小成正比。</p>
-<h6 id="帧缓冲区-Frame-Buffer-："><a href="#帧缓冲区-Frame-Buffer-：" class="headerlink" title="帧缓冲区(Frame Buffer)："></a>帧缓冲区(Frame Buffer)：</h6><p>帧缓冲区是保存应用实际呈现输出的缓冲区。<br>在应用更新视图层次结构时，UIKit会把应用程序的Window以及子视图渲染到帧缓冲区中。这个更新频率在iPhone上是60FPS，在iPad上是120FPS。<br><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2379" alt="5d0b29cb1cf62a7f88ed9d104971a358.gif"></p>
-<h6 id="数据缓冲区-Data-Buffer"><a href="#数据缓冲区-Data-Buffer" class="headerlink" title="数据缓冲区(Data Buffer)"></a>数据缓冲区(Data Buffer)</h6><p>数据缓冲区为保存一系列bytes数据的缓冲区。<br>在图像例子中，数据缓冲区就是保存从网络下载或者保存在磁盘中的图像的数据，这些数据并不直接描述每一个像素的信息。<br><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2378" alt="f70e8ce6d59fbd8b9437a04e4e05e48f.png"></p>
-<h5 id="加载过程"><a href="#加载过程" class="headerlink" title="加载过程"></a>加载过程</h5><h6 id="加载准备"><a href="#加载准备" class="headerlink" title="加载准备"></a>加载准备</h6><p>准备一个图像元数据，一个UIImage，以及一个加载在视图上的UIImageView，如下：<br><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2381" alt="facc0c35e7982012157d52ed9c5323f8.png"></p>
-<h6 id="获取像素信息"><a href="#获取像素信息" class="headerlink" title="获取像素信息"></a>获取像素信息</h6><p>为了将图像中每个像素信息填充到Frame Buffer中，我们需要得到图像像素信息。</p>
-<p>UIImage会为我们处理这一点：UIImage会创建一个与图片大小一致的Image Buffer用来存储解码(Decode)之后的图像像素信息。</p>
-<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2382" alt="00656289e1fe1ef8f2e0ad2c3739ffab.png"></p>
-<h6 id="显示在屏幕上"><a href="#显示在屏幕上" class="headerlink" title="显示在屏幕上"></a>显示在屏幕上</h6><p>UIImageView读取UIImage创建的Image Buffer数据，交由UIKit显示。UIKit会对像素数据缩放到显示大小进行显示。</p>
-<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2383" alt="048fdec73f278bcdd057bc0304705253.png"></p>
-<p>在加载过程中，UIKit会重复多次的要求UIImageView去进行渲染，这就造成了UIImage会多次的解码Data Buffer。</p>
-<p>为了解决这个问题，UIImage会只进行一次Data Buffer的解码，在解码之后，会挂起解码后的Image Buffer。</p>
-<p>所以，在这种情况下，应用对于每一个UIImage解码后，都会在内存中挂起一个Image Buffer。</p>
-<p>由于Image Buffer与图像大小成正比，所以在加载大图片时，应用程序会在内存中挂起很多大的Image Buffer，这可能会造成操作系统介入，并最终杀死应用。</p>
-<h5 id="下采样-downsampling"><a href="#下采样-downsampling" class="headerlink" title="下采样(downsampling)"></a>下采样(downsampling)</h5><p>针对于我们上述提到的问题，我们可以采用叫做下采用(downsampling)的技术。</p>
-<p>我们注意到，我们最终显示在屏幕上的视图往往比实际图片的尺寸要小，而通常情况下，Core Animation Framework会负责缩小图像。</p>
-<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2384" alt="71a31df9d652df1bdcf9cc9021b8b3db.png"></p>
-<p>现在要做的，本质上是把缩放图像操作捕获为一个叫缩略图的对象。由于减小了Image Buffer的大小，进而减小了在加载图片中的使用的内存总大小。</p>
-<p>同时，我们在解码后，将图片像素信息交给UIImageView去渲染至屏幕后，可以丢弃掉对应的Data Buffer，进一步减少内存的使用。</p>
-<p>这个过程如下图：</p>
-<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2385" alt="c8194124dbec3c8245dd3ae3189e8ce9.gif"></p>
-<h6 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h6><p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2386" alt="d6d28e69f0db0002580d99cf353a4431.png"></p>
-<p>几个重要的点：</p>
-<ol>
-<li>创建CGImageSourceRef</li>
-<li>计算需要渲染至屏幕的真实尺寸、</li>
-<li>获取缩略图</li>
-</ol>
-<h6 id="下采样之后效果"><a href="#下采样之后效果" class="headerlink" title="下采样之后效果"></a>下采样之后效果</h6><p>通过以上的改进方式，可以大幅度的缩减内存的使用。以下为一组测试数据：<br>测试环境：Xcode9.4，iPhone 6s Plus, 5184*3456的5.1MB大小的JPG格式图片。</p>
-<ol>
-<li>不使用改进方法，消耗内存为：49.3M</li>
-<li>使用改进方法，消耗内存为：9.4M</li>
-</ol>
-<h5 id="针对滚动视图的优化"><a href="#针对滚动视图的优化" class="headerlink" title="针对滚动视图的优化"></a>针对滚动视图的优化</h5><p>如果我们需要一个滚动视图来展示一大组质量很大的图片时，我们也会遇到内存过高的问题，接下来我们以UICollectionView加载图片来做分析和优化。</p>
-<h6 id="使用下采样-downsampling-的方式优化"><a href="#使用下采样-downsampling-的方式优化" class="headerlink" title="使用下采样(downsampling)的方式优化"></a>使用下采样(downsampling)的方式优化</h6><p>首先我们采用我们上一步优化图片的方式来为每一个cell中的图片进行优化，代码可能如下：</p>
-<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2387" alt="7e545fe88c4125e701978615815333f0.png"></p>
-<p>这样我们为每一个cell上的图片显示进行了优化，进而使得整体内存使用有一个明显的降低。</p>
-<p>但是，这样会引起另一个问题：如果此时滚动视图，CPU可能会很快的将所需展示的内容渲染到帧缓冲区，但是如果滚动过快，CPU还需参与Core Graphics对于新图像的解帧，这个操作是非常耗时的，这样就可能会造成在硬件读取帧缓冲区数据显示至屏幕时，帧缓冲区数据并没有准备好，进而导致用户视角中的卡顿。另外对于电池来说，在CPU不稳定时，可能会影响到电池使用寿命。</p>
-<h6 id="进一步优化"><a href="#进一步优化" class="headerlink" title="进一步优化"></a>进一步优化</h6><p>有两种技术可以帮助我们解决上述问题。</p>
-<ol>
-<li>预取(prefetching)：在某一时刻，我们不需要某个cell，但是在不久的将来会需要这个cell，所以可以把某些工作提前至这个时刻来进行。</li>
-<li>后台执行(performing work in the background)。</li>
-</ol>
-<p>针对于UICollectionView，我们可以做以下处理：</p>
-<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2388" alt="489fb1b6693c03fc68a08655a3b23e53.png">  </p>
-<p>我们为预取的cell进行在后台即全局异步队列(global<br>asynchronous queues)的图像解码，这是我们提到的两种优化技术。</p>
-<p>但是，在使用全局异步队列的时候，可能会出现线程爆炸的问题：如果我们一次性处理多张图像，但是设备只有2个CPU时，此时GCD会创建新的线程来处理解码工作。创建新线程以及在不同线程之间切换是十分消耗时间和资源的。</p>
-<h6 id="解决线程爆炸问题"><a href="#解决线程爆炸问题" class="headerlink" title="解决线程爆炸问题"></a>解决线程爆炸问题</h6><p>我们可以将解码操作异步的分派到串行队列中，如下图：</p>
-<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2389" alt="57beaadf105a2ca2d77631641f2415c9.png"></p>
-<p>这样做可能使得某些图像的解码过程延后，但是更多的是减少了在线程切换过程中浪费的时间和资源。</p>
-<p>至此，我们完成了对于滚动视图加载多张图片的优化。</p>
-<h5 id="图片资源的优化"><a href="#图片资源的优化" class="headerlink" title="图片资源的优化"></a>图片资源的优化</h5><p>在目前的程序中，可以展示的图像资源来源可能有一下几种：</p>
-<ol>
-<li>存储在Image Assets中</li>
-<li>存储在Application或者Bundle的包中</li>
-<li>存储在沙盒的Document或者Cache文件中</li>
-<li>从网络下载的数据中</li>
-</ol>
-<p>对于程序中自带的图像资源，苹果官方推荐我们使用Image Assets来存储，以下是使用该方式的几个优点：</p>
-<ol>
-<li>Image Assets针对基于名称和特性的查找进行了优化，它比在磁盘上搜索文件要快。</li>
-<li>在管理缓冲区方面也有优化。</li>
-<li>允许对设备安装包进行优化，在下载App的时候会只下载能最高效果显示在对应设备的图像资源，从而减小安装包大小。</li>
-<li>对Vector Artwork的支持。</li>
-</ol>
-<h6 id="Vector-Artwork"><a href="#Vector-Artwork" class="headerlink" title="Vector Artwork"></a>Vector Artwork</h6><p>Vector Artwork是iOS 11引入的新特性。我们可以在Image Assets中勾选Preserve Vector Data来启用它。如果启用了Vector Artwork的话，当我们将图像显示到一个比它原始尺寸大或者小的视图中时，这个图像不会变的模糊。因为显示的图像是从矢量图形中重新光栅化而来的，从而使得图像有清晰的边缘。</p>
-<p>启用Vector Artwork后，图像的处理方式和之前图片的处理方式类似，只是将解码阶段变为了光栅化阶段，光栅化阶段将矢量数据转换为位图数据，进而供帧缓冲区读取。</p>
-<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2390" alt="261beb86f4101804b5cfdf75201997c4.png"></p>
-<p>如果我们把应用中所有的图像资源进行了Preserve Vector Data处理的话，会造成一些CPU的使用。<br>所以Xcode对这些情况做了一些处理：如果选中了Preserve Vector Data选项，但是在视图上展示为原始尺寸大小时，Image Assets实际上已经完成了原始尺寸的光栅化，并把相关数据保存在Image Assets中了，所以这种情况可以直接对存储的数据进行解码，而不进行光栅化。</p>
-<p>另外一个建议是：如果计划展示的尺寸为固定的几个尺寸，那么不要依赖Preserve Vector Data，而是准备好对应尺寸的图像资源，从而加快CPU对图像资源的处理。</p>
-<h3 id="自定义绘制内容"><a href="#自定义绘制内容" class="headerlink" title="自定义绘制内容"></a>自定义绘制内容</h3><p>我们有时需要在程序中进行一些自定义的绘制，例如绘制一个如下样式的视图：</p>
-<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2391" alt="ff0b012d2fa40975005f5be41176c647.png"></p>
-<p>我们可以继承UIView，然后在draw方法中进行相应的绘制：</p>
-<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2392" alt="bbe84f6a2a0164c69e23ee7590de4d55.png"></p>
-<p>UIView是基于CALayer来显示内容的；</p>
-<p>而对于UIImageView来说，UIImageView会将UIImage解码后的数据交给CALayer来作为内容显示；</p>
-<p>而对于draw来说，CALayer会创建一个与图像大小成正比的backing store来存储图像数据，然后将图像数据拷贝至backing store中，然后将backing store中的内容绘制到帧缓冲区中。</p>
-<p>通过重写draw方法可能会造成多余的内存消耗以及数据的拷贝.</p>
-<h5 id="Backing-Store"><a href="#Backing-Store" class="headerlink" title="Backing Store"></a>Backing Store</h5><p>重写draw方法时，会触发创建Backing Store，此时的Backing Store的大小与视图的像素大小成正比。</p>
-<p>在iOS12中，Backing Store将会使用动态增长的方式来减少内存的使用。在以前的iOS版本中，我们可以设置CALayer的contentsFromat属性来指定Core Animation Framework在绘制时用到的颜色长度，这个设置会关闭iOS12中关于Backing Store的设置。</p>
-<h5 id="建议实现方式"><a href="#建议实现方式" class="headerlink" title="建议实现方式"></a>建议实现方式</h5><p>对于我们需要自定义绘制的视图，我们应该减少Backing Store的使用。</p>
-<p>通常的做法是将一个大视图构建为多个小视图来实现；<br>同时，系统提供的经过优化的视图属性也不会造成多余内存的使用（例如UIView的backgroundColor属性，就不会创建Backing Store。此时需要注意，使用pattern color时是一个例外，可以使用UIImageView作为UIView的子视图来替代这一效果）。</p>
-<h5 id="将大视图构建为多个小视图"><a href="#将大视图构建为多个小视图" class="headerlink" title="将大视图构建为多个小视图"></a>将大视图构建为多个小视图</h5><p>我们可以构建为以下层级：</p>
-<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2393" alt="d5e68ec0d562fc3d97870464c8cd875c.png"></p>
-<h6 id="圆角处理"><a href="#圆角处理" class="headerlink" title="圆角处理"></a>圆角处理</h6><p>在我们要进行圆角处理时，使用CALayer的cornerRadius属性，该属性不会引起多余的内存使用。而对于使用maskView和maskLayer来说，会使用到额外的内存空间。</p>
-<p>同时对于圆角之外的透明区域为复杂的不规则形状且cornerRadius满足不了需求时，可以使用UIImageView配合Resizeable的UIImage来进行处理。</p>
-<h6 id="Icon的实现"><a href="#Icon的实现" class="headerlink" title="Icon的实现"></a>Icon的实现</h6><p>Icon可以使用UIImageView来显示。</p>
-<p>为了达到UIImage的复用，UIImageView支持对单色图像着色，同时可以直接渲染到帧缓冲区中。</p>
-<p>这个设置需要对UIImage进行renderingMode的设置或者在Image Assets中进renderingMode设置。</p>
-<p>最后，为UIImageView设置tintColor来完成最终颜色渲染。</p>
-<h6 id="UILabel的优化"><a href="#UILabel的优化" class="headerlink" title="UILabel的优化"></a>UILabel的优化</h6><p>UILabel对于显示单色字符串做了优化处理，可以节省75%大小的Backing Store的使用。</p>
-<p>UILabel对于多彩字符串以及emoji进行了动态增长Backing Store的优化。</p>
-<h3 id="简单讲述在应用中使用先进的CPU和GPU技术。"><a href="#简单讲述在应用中使用先进的CPU和GPU技术。" class="headerlink" title="简单讲述在应用中使用先进的CPU和GPU技术。"></a>简单讲述在应用中使用先进的CPU和GPU技术。</h3><h5 id="Advanced-Image-Effects"><a href="#Advanced-Image-Effects" class="headerlink" title="Advanced Image Effects"></a>Advanced Image Effects</h5><ol>
-<li>实时处理图像时考虑Core Image。</li>
-<li>尽量使用GPU来处理图像，进而解放CPU。</li>
-<li>使用CIImage创建UIImage，并交由UIImageView去展示，这个过程会默认由GPU去处理，减少对CPU的使用。</li>
-</ol>
-<h5 id="Advanced-Image-Processing"><a href="#Advanced-Image-Processing" class="headerlink" title="Advanced Image Processing"></a>Advanced Image Processing</h5><ol>
-<li>使用CVPixelBuffer将数据移动到Metal, Vision和Accelerate等框架。</li>
-<li>使用最好的初始值设定项（不要重复执行已经完成的工作）。</li>
-<li>防止在GPU和CPU直接来回切换。</li>
-<li>确保交给Accelerate的buffers是正确的格式。</li>
-</ol>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ol>
-<li>异步的进行预处理。</li>
-<li>使用UIImageView和UILabel来减少Backing Store的使用。</li>
-<li>不要禁止自定义绘制时系统做的新优化。</li>
-<li>使用Image Assets来存储图像。</li>
-<li>如果要展示相同图片的不同尺寸，不要过多依赖Preserve Vector Data。</li>
-</ol>
-<h3 id="学习"><a href="#学习" class="headerlink" title="学习"></a>学习</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/TuGeLe/article/details/81137995">图像和图形的最佳实践（WWDC 2018 session 219）</a></p>
-<p><a target="_blank" rel="noopener" href="https://developer.apple.com/videos/play/wwdc2018/219/">WWDC 2018 session 219</a></p>
 
-    
 
-    
 
-    
 
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2019/10/20/%E5%9B%BE%E5%83%8F%E5%92%8C%E5%9B%BE%E5%BD%A2%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%EF%BC%88WWDC-2018-session-219%EF%BC%89/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-iOS离屏渲染研究" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2019/10/20/iOS%E7%A6%BB%E5%B1%8F%E6%B8%B2%E6%9F%93%E7%A0%94%E7%A9%B6/" target="_blank">iOS离屏渲染研究</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2019/10/20/iOS%E7%A6%BB%E5%B1%8F%E6%B8%B2%E6%9F%93%E7%A0%94%E7%A9%B6/" class="archive-article-date">
-        <time datetime="2019-10-20T02:51:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-20</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>[TOC]</p>
-<h3 id="离屏渲染"><a href="#离屏渲染" class="headerlink" title="离屏渲染"></a>离屏渲染</h3><h6 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h6><p>如果要在显示屏上显示内容，我们至少需要一块与屏幕像素数据量一样大的frame buffer，作为像素数据存储区域，而这也是GPU存储渲染结果的地方。如果有时因为面临一些限制，无法把渲染结果直接写入frame buffer，而是先暂存在另外的内存区域，之后再写入frame buffer，那么这个过程被称之为离屏渲染。</p>
-<p>简单说就是：在当前屏幕缓冲区以外新开辟一个缓冲区进行渲染操作。</p>
-<h6 id="离屏渲染消耗性能的原因"><a href="#离屏渲染消耗性能的原因" class="headerlink" title="离屏渲染消耗性能的原因"></a>离屏渲染消耗性能的原因</h6><ol>
-<li>需要创建新的缓冲区</li>
-<li>离屏渲染的整个过程，需要多次切换上下文环境，先是从当前屏幕（On-Screen）切换到离屏（Off-Screen）；等到离屏渲染结束以后，将离屏缓冲区的渲染结果显示到屏幕上，又需要将上下文环境从离屏切换到当前屏幕</li>
-</ol>
-<h3 id="离屏渲染是在哪一步进行的？为什么？"><a href="#离屏渲染是在哪一步进行的？为什么？" class="headerlink" title="离屏渲染是在哪一步进行的？为什么？"></a>离屏渲染是在哪一步进行的？为什么？</h3><p>1、CPU”离屏渲染“</p>
-<p>在UIView中实现了drawRect方法，就算它的函数体内部实际没有代码，系统也会为这个view申请一块内存区域，等待CoreGraphics可能的绘画操作。</p>
-<p>对于类似这种“新开一块CGContext来画图“的操作，有很多文章和视频也称之为“离屏渲染”（因为像素数据是暂时存入了CGContext，而不是直接到了frame buffer）。进一步来说，其实所有CPU进行的光栅化操作（如文字渲染、图片解码），都无法直接绘制到由GPU掌管的frame buffer，只能暂时先放在另一块内存之中，说起来都属于“离屏渲染”。</p>
-<p>根据苹果工程师的说法CPU渲染就是俗称的“软件渲染”，而真正的离屏渲染发生在GPU。</p>
-<p>2、GPU离屏渲染</p>
-<p>对于每一层layer，要么能找到一种通过单次遍历就能完成渲染的算法，要么就不得不另开一块内存，借助这个临时中转区域来完成一些更复杂的、多次的修改/剪裁操作，这时就离屏渲染了。</p>
-<h3 id="设置cornerRadius一定会触发离屏渲染吗？"><a href="#设置cornerRadius一定会触发离屏渲染吗？" class="headerlink" title="设置cornerRadius一定会触发离屏渲染吗？"></a>设置cornerRadius一定会触发离屏渲染吗？</h3><p>不会</p>
-<h3 id="常见离屏渲染场景"><a href="#常见离屏渲染场景" class="headerlink" title="常见离屏渲染场景"></a>常见离屏渲染场景</h3><h6 id="1、-cornerRadius-clipsToBounds"><a href="#1、-cornerRadius-clipsToBounds" class="headerlink" title="1、 cornerRadius+clipsToBounds"></a>1、 cornerRadius+clipsToBounds</h6><p>1、将一个layer的内容裁剪成圆角，可能不存在一次遍历就能完成的方法<br>2、容器的子layer因为父容器有圆角，那么也会需要被裁剪，而这时它们还在渲染队列中排队，尚未被组合到一块画布上，自然也无法统一裁剪</p>
-<p>此时我们就不得不开辟一块独立于frame buffer的空白内存，先把容器以及其所有子layer依次画好，然后把四个角“剪”成圆形，再把结果画到frame buffer中。这就造成了GPU的离屏渲染。</p>
-<h6 id="2、shadow"><a href="#2、shadow" class="headerlink" title="2、shadow"></a>2、shadow</h6><p>原因在于，虽然layer本身是一块矩形区域，但是阴影默认是作用在其中”非透明区域“的，而且需要显示在所有layer内容的下方，因此根据画家算法必须被渲染在先。但矛盾在于此时阴影的本体（layer和其子layer）都还没有被组合到一起，怎么可能在第一步就画出只有完成最后一步之后才能知道的形状呢？这样一来又只能另外申请一块内存，把本体内容都先画好，再根据渲染结果的形状，添加阴影到frame buffer，最后把内容画上去（这只是我的猜测，实际情况可能更复杂）。</p>
-<p>不过如果我们能够预先告诉CoreAnimation（通过shadowPath属性）阴影的几何形状，那么阴影当然可以先被独立渲染出来，不需要依赖layer本体，也就不再需要离屏渲染了。</p>
-<h6 id="3、group-opacity"><a href="#3、group-opacity" class="headerlink" title="3、group opacity"></a>3、group opacity</h6><p>alpha并不是分别应用在每一层之上，而是只有到整个layer树画完之后，再统一加上alpha，最后和底下其他layer的像素进行组合。显然也无法通过一次遍历就得到最终结果。将一对蓝色和红色layer叠在一起，然后在父layer上设置opacity=0.5，并复制一份在旁边作对比。左边关闭group opacity，右边保持默认（从iOS7开始，如果没有显式指定，group opacity会默认打开），然后打开offscreen rendering的调试，我们会发现右边的那一组确实是离屏渲染了。</p>
-<h6 id="4、mask"><a href="#4、mask" class="headerlink" title="4、mask"></a>4、mask</h6><p>我们知道mask是应用在layer和其所有子layer的组合之上的，而且可能带有透明度，那么其实和group opacity的原理类似，不得不在离屏渲染中完成。</p>
-<h6 id="5、UIBlurEffect"><a href="#5、UIBlurEffect" class="headerlink" title="5、UIBlurEffect"></a>5、UIBlurEffect</h6><p>同样无法通过一次遍历完成，其原理在WWDC中提到。</p>
-<h6 id="6、shouldRasterize。一旦被设置为true"><a href="#6、shouldRasterize。一旦被设置为true" class="headerlink" title="6、shouldRasterize。一旦被设置为true"></a>6、shouldRasterize。一旦被设置为true</h6><p>Render Server就会强制把layer的渲染结果（包括其子layer，以及圆角、阴影、group opacity等等）保存在一块内存中，这样一来在下一帧仍然可以被复用，而不会再次触发离屏渲染。</p>
-<p>注意：</p>
-<ol>
-<li>shouldRasterize的主旨在于降低性能损失，但总是至少会触发一次离屏渲染。</li>
-<li>离屏渲染缓存有空间上限，最多不超过屏幕总像素的2.5倍大小</li>
-<li>一旦缓存超过100ms没有被使用，会自动被丢弃</li>
-<li>layer的内容（包括子layer）必须是静态的，因为一旦发生变化（如resize，动画），之前辛苦处理得到的缓存就失效了。</li>
-<li>其实除了解决多次离屏渲染的开销，shouldRasterize在另一个场景中也可以使用：如果layer的子结构非常复杂，渲染一次所需时间较长，同样可以打开这个开关，把layer绘制到一块缓存，然后在接下来复用这个结果，这样就不需要每次都重新绘制整个layer树了</li>
-</ol>
-<h6 id="7、其他"><a href="#7、其他" class="headerlink" title="7、其他"></a>7、其他</h6><p>类似allowsEdgeAntialiasing等等也可能会触发离屏渲染，</p>
-<p>原理也都是类似：如果你无法仅仅使用frame buffer来画出最终结果，那就只能另开一块内存空间来储存中间结果。这些原理并不神秘。</p>
-<h3 id="什么时候需要CPU渲染"><a href="#什么时候需要CPU渲染" class="headerlink" title="什么时候需要CPU渲染"></a>什么时候需要CPU渲染</h3><p>渲染性能的调优，其实始终是在做一件事：平衡CPU和GPU的负载，让他们尽量做各自最擅长的工作。</p>
-<p>绝大多数情况下，得益于GPU针对图形处理的优化，我们都会倾向于让GPU来完成渲染任务，而给CPU留出足够时间处理各种各样复杂的App逻辑。</p>
-<p>为此Core Animation做了大量的工作，尽量把渲染工作转换成适合GPU处理的形式（也就是所谓的硬件加速，如layer composition，设置backgroundColor等等）。</p>
-<p>但是对于一些情况，如文字（CoreText使用CoreGraphics渲染）和图片（ImageIO）渲染，由于GPU并不擅长做这些工作，不得不先由CPU来处理好以后，再把结果作为texture传给GPU。</p>
-<p>一个典型的例子是，我们经常会使用CoreGraphics给图片加上圆角（将图片中圆角以外的部分渲染成透明）。整个过程全部是由CPU完成的。这样一来既然我们已经得到了想要的效果，就不需要再另外给图片容器设置cornerRadius。另一个好处是，我们可以灵活地控制裁剪和缓存的时机，巧妙避开CPU和GPU最繁忙的时段，达到平滑性能波动的目的。</p>
-<h3 id="学习"><a href="#学习" class="headerlink" title="学习"></a>学习</h3><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzA5NzMwODI0MA==&mid=2647764329&idx=1&sn=7e13a167b7d4df4d071928248d9531b7&chksm=8887d656bff05f40a41e614493103e4ddaecbd7caaf81b6db4019684ffffefd8bdbe1d068179&mpshare=1&scene=23&srcid=1211WQgUISoJ055okBhVGJaJ&sharer_sharetime=1576054080266&sharer_shareid=fc8016a1ffcf846e48e1c7a21f07026a%23rd">iOS离屏渲染研究</a></p>
-
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2019/10/20/iOS%E7%A6%BB%E5%B1%8F%E6%B8%B2%E6%9F%93%E7%A0%94%E7%A9%B6/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-iOS 高效切圆角方法总结" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2019/10/20/iOS%20%E9%AB%98%E6%95%88%E5%88%87%E5%9C%86%E8%A7%92%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/" target="_blank">iOS 高效切圆角方法总结</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2019/10/20/iOS%20%E9%AB%98%E6%95%88%E5%88%87%E5%9C%86%E8%A7%92%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/" class="archive-article-date">
-        <time datetime="2019-10-20T02:46:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-20</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>[TOC]</p>
-<h3 id="UIView设置圆角"><a href="#UIView设置圆角" class="headerlink" title="UIView设置圆角"></a>UIView设置圆角</h3><h5 id="四个圆角"><a href="#四个圆角" class="headerlink" title="四个圆角"></a>四个圆角</h5><p>对于 contents 无内容或者内容的背景透明(无涉及到圆角以外的区域)的layer，直接设置layer的 backgroundColor 和 cornerRadius 属性来绘制圆角:</p>
-<ol>
-<li>UIView的contents无内容可以直接通过设置cornerRadius达到效果。</li>
-<li>UILable的contents也一样，所以也可通过<br>设置cornerRadius达到效果。不过label不能直接设置backgroundColor，因为这样设置的是contents的backgroundColor，需要设置layer. backgroundColor。 </li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">UIView *view &#x3D; [[UIView alloc] init];</span><br><span class="line">view.backgroundColor &#x3D; [UIColor blackColor];</span><br><span class="line">view.layer.cornerRadius &#x3D; 3.f;</span><br><span class="line">&#x2F;&#x2F; 以下两行，任写一行</span><br><span class="line">view.layer.masksToBounds &#x3D; NO;</span><br><span class="line">view.clipToBounds &#x3D; NO;</span><br><span class="line">&#x2F;&#x2F; 以下两行，千万不要加！</span><br><span class="line">view.layer.masksToBounds &#x3D; YES;</span><br><span class="line">view.clipToBounds &#x3D; YES;</span><br></pre></td></tr></table></figure>
-
-<p>注意点：UIView 只要设置图层的 cornerRadius 属性即可（不明白的话，可以看看官方文档里对 cornerRadius 的描述），如果设置 layer.masksToBounds = YES，会造成不必要的离屏渲染。 </p>
-<h5 id="单独某个方向的圆角-特殊情况需要设置layer-masksToBounds，就不要通过cornerRadius方式了"><a href="#单独某个方向的圆角-特殊情况需要设置layer-masksToBounds，就不要通过cornerRadius方式了" class="headerlink" title="单独某个方向的圆角/特殊情况需要设置layer.masksToBounds，就不要通过cornerRadius方式了"></a>单独某个方向的圆角/特殊情况需要设置layer.masksToBounds，就不要通过cornerRadius方式了</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">@implementation UIView (RounderCorner)</span><br><span class="line"></span><br><span class="line">- (void)hh_addRounderCornerWithRadius:(CGFloat)radius size:(CGSize)size corners:(UIRectCorner)corner</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;绘制一个圆角图片</span><br><span class="line">    UIImage *image &#x3D; [UIImage hh_corver:.....];</span><br><span class="line">    </span><br><span class="line">    UIImageView *imageView &#x3D; [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];</span><br><span class="line">    [imageView setImage:image];</span><br><span class="line">    [self insertSubview:imageView atIndex:0];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="文本类视图"><a href="#文本类视图" class="headerlink" title="文本类视图"></a>文本类视图</h3><h5 id="UITextField"><a href="#UITextField" class="headerlink" title="UITextField"></a>UITextField</h5><p>UITextField有两种实现方法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 天然支持设置圆角边框</span><br><span class="line">UITextField *textField &#x3D; [[UITextField alloc] init];</span><br><span class="line">textField.borderStyle &#x3D; UITextBorderStyleRoundedRect;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 与 UIView 类似</span><br><span class="line">UITextField *textField &#x3D; [[UITextField alloc] init];</span><br><span class="line">textField.layer.cornerRadius &#x3D; cornerRadius;</span><br></pre></td></tr></table></figure>
-
-<h5 id="UITextView"><a href="#UITextView" class="headerlink" title="UITextView"></a>UITextView</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 与 UIView 类似</span><br><span class="line">UITextView *textView &#x3D; [[UITextView alloc] init];</span><br><span class="line">textView.layer.cornerRadius &#x3D; cornerRadius;</span><br></pre></td></tr></table></figure>
-
-<h5 id="UILabel"><a href="#UILabel" class="headerlink" title="UILabel"></a>UILabel</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">UILabel *label &#x3D; [[UILabel alloc] init];</span><br><span class="line">&#x2F;&#x2F; 重点在此！！设置视图的图层背景色，千万不要直接设置 label.backgroundColor</span><br><span class="line">label.layer.backgroundColor &#x3D; [UIColor grayColor].CGColor;</span><br><span class="line">label.layer.cornerRadius &#x3D; cornerRadius;</span><br></pre></td></tr></table></figure>
-
-<h3 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h3><h5 id="UIButton"><a href="#UIButton" class="headerlink" title="UIButton"></a>UIButton</h5><p>说明：UIButton 的背景图片，如果是复杂的图片，可以依靠 UI 切图来实现。如果是简单的纯色背景图片，可以利用代码绘制带圆角的图片。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">UIButton *button &#x3D; [UIButton buttonWithType:UIButtonTypeCustom];</span><br><span class="line">&#x2F;&#x2F; 设置 UIButton 的背景图片。</span><br><span class="line">[button setBackgroundImage:image forState:UIControlStateNormal];</span><br></pre></td></tr></table></figure>
-
-<p>背景图片绘制方法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">+ (UIImage *)pureColorImageWithSize:(CGSize)size color:(UIColor *)color cornRadius:(CGFloat)cornRadius &#123;</span><br><span class="line">  UIView *view &#x3D; [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, size.width, size.height)];</span><br><span class="line">  view.backgroundColor &#x3D; color;</span><br><span class="line">  view.layer.cornerRadius &#x3D; cornerRadius;</span><br><span class="line">  &#x2F;&#x2F; 下面方法，第一个参数表示区域大小。第二个参数表示是否是非透明的。如果需要显示半透明效果，需要传NO，否则传YES。第三个参数是屏幕密度</span><br><span class="line">  UIGraphicsBeginImageContextWithOptions(view.bounds.size, NO, [UIScreen mainScreen].scale);</span><br><span class="line">  [view.layer renderInContext:UIGraphicsGetCurrentContext()];</span><br><span class="line">  UIImage *image &#x3D; UIGraphicsGetImageFromCurrentImageContext();</span><br><span class="line">  UIGraphicsEndImageContext();</span><br><span class="line"></span><br><span class="line">  return image;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h5 id="UIImageView"><a href="#UIImageView" class="headerlink" title="UIImageView"></a>UIImageView</h5><p>UIImageView 有四种方式实现圆角：</p>
-<p>1、截取图片方式（性能较好，基本不掉帧）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">+ (UIImage *)dx_imageByRoundCornerRadius:(CGFloat)radius</span><br><span class="line">                                 corners:(UIRectCorner)corners</span><br><span class="line">                                    size:(CGSize)size</span><br><span class="line">                               fillColor:(UIColor *)fillColor</span><br><span class="line">&#123;</span><br><span class="line">    if (corners !&#x3D; UIRectCornerAllCorners) &#123;</span><br><span class="line">        UIRectCorner tmp &#x3D; 0;</span><br><span class="line">        if (corners &amp; UIRectCornerTopLeft) tmp |&#x3D; UIRectCornerBottomLeft;</span><br><span class="line">        if (corners &amp; UIRectCornerTopRight) tmp |&#x3D; UIRectCornerBottomRight;</span><br><span class="line">        if (corners &amp; UIRectCornerBottomLeft) tmp |&#x3D; UIRectCornerTopLeft;</span><br><span class="line">        if (corners &amp; UIRectCornerBottomRight) tmp |&#x3D; UIRectCornerTopRight;</span><br><span class="line">        corners &#x3D; tmp;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    UIGraphicsBeginImageContextWithOptions(size, NO, [UIScreen mainScreen].scale);</span><br><span class="line">    CGContextRef context &#x3D; UIGraphicsGetCurrentContext();</span><br><span class="line">    CGRect rect &#x3D; CGRectMake(0, 0, size.width, size.height);</span><br><span class="line">    CGContextScaleCTM(context, 1, -1);</span><br><span class="line">    CGContextTranslateCTM(context, 0, -rect.size.height);</span><br><span class="line">  </span><br><span class="line">    UIBezierPath *path &#x3D; [UIBezierPath bezierPathWithRoundedRect:rect byRoundingCorners:corners cornerRadii:CGSizeMake(radius, radius)];</span><br><span class="line">    [fillColor set];</span><br><span class="line">    [path fill]; </span><br><span class="line">    </span><br><span class="line">    [path addClip];</span><br><span class="line">    CGContextDrawPath(context, kCGPathFill);</span><br><span class="line">    </span><br><span class="line">    UIImage *image &#x3D; UIGraphicsGetImageFromCurrentImageContext();</span><br><span class="line">    UIGraphicsEndImageContext();</span><br><span class="line">    return image;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- (void)tx_addCornerWithRadius:(CGFloat)radius corner:(UIRectCorner)corner &#123;</span><br><span class="line">    self.image &#x3D; [self.image dx_imageAddCornerWithRadius:radius andSize:self.bounds.size];</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>实际开发中，网络图片最好截图之后存入缓存，下次直接使用，不用再裁减。YYWebImageView的设计方案即如此。<br><a href="https://github.com/ibireme/YYWebImage">YYWebImage</a><br><a href="https://github.com/walkdianzi/DSImageViewRound/tree/master">fork SDWebImage库修改实现</a></p>
-<p>2、贝塞尔曲线切割圆角（不推荐，掉帧严重）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">- (UIImageView *)roundedRectImageViewWithCornerRadius:(CGFloat)cornerRadius &#123;</span><br><span class="line">    UIBezierPath *bezierPath &#x3D; [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:cornerRadius];</span><br><span class="line">    CAShapeLayer *layer &#x3D; [CAShapeLayer layer];</span><br><span class="line">    layer.path &#x3D; bezierPath.CGPath;</span><br><span class="line">    self.layer.mask &#x3D; layer;</span><br><span class="line"></span><br><span class="line">    return self;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>3、绘制四个角的遮罩（使用场景受限）</p>
-<p>在 UIImageView 上添加一个四个角有内容，其它部分是透明的视图，只对 UIImageView 圆角部分进行遮挡。但要保证被遮挡的部分背景色要与周围背景相同，避免穿帮。所以当 UIImageView 处于一个复杂的背景时，是不适合使用这个方法的。</p>
-<p>4、最不推荐做法（当一个页面只有少量圆角图片时才推荐使用）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">UIImageView *imageView &#x3D; [[UIImageView alloc] init];</span><br><span class="line">imageView.layer.cornerRadius &#x3D; 5.f;</span><br><span class="line">imageView.layer.masksToBounds &#x3D; YES;</span><br></pre></td></tr></table></figure>
-
-<h3 id="扩展：其他会导致离屏渲染的解决方案"><a href="#扩展：其他会导致离屏渲染的解决方案" class="headerlink" title="扩展：其他会导致离屏渲染的解决方案"></a>扩展：其他会导致离屏渲染的解决方案</h3><p>以下离屏渲染操作，按对性能影响等级从高到低进行排序:</p>
-<h5 id="1-shadows（阴影）"><a href="#1-shadows（阴影）" class="headerlink" title="1. shadows（阴影）"></a>1. shadows（阴影）</h5><p>方案：在设置完layer的shadow属性之后，设置layer.shadowPath = [UIBezierPath pathWithCGRect:view.bounds].CGPath;</p>
-<h5 id="2-圆角（前边已解决过）"><a href="#2-圆角（前边已解决过）" class="headerlink" title="2.圆角（前边已解决过）"></a>2.圆角（前边已解决过）</h5><h5 id="3-mask遮罩"><a href="#3-mask遮罩" class="headerlink" title="3.mask遮罩"></a>3.mask遮罩</h5><p>方案：不用mask</p>
-<h5 id="4-allowsGroupOpacity（组不透明）"><a href="#4-allowsGroupOpacity（组不透明）" class="headerlink" title="4. allowsGroupOpacity（组不透明）"></a>4. allowsGroupOpacity（组不透明）</h5><p>开启CALayer的 allowsGroupOpacity 属性后，子 layer 在视觉上的透明度的上限是其父 layer 的 opacity (对应UIView的 alpha )，并且从 iOS 7 以后默认全局开启了这个功能，这样做是为了让子视图与其容器视图保持同样的透明度。<br>方案：关闭 allowsGroupOpacity 属性，按产品需求自己控制layer透明度。 </p>
-<h5 id="5-edge-antialiasing（抗锯齿）"><a href="#5-edge-antialiasing（抗锯齿）" class="headerlink" title="5. edge antialiasing（抗锯齿）"></a>5. edge antialiasing（抗锯齿）</h5><p>方案：不设置 allowsEdgeAntialiasing 属性为YES(默认为NO)</p>
-<h5 id="6-shouldRasterize-光栅化"><a href="#6-shouldRasterize-光栅化" class="headerlink" title="6. shouldRasterize(光栅化)"></a>6. shouldRasterize(光栅化)</h5><p>当视图内容是静态不变时，设置 shouldRasterize(光栅化)为YES，此方案最为实用方便。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">view.layer.shouldRasterize &#x3D; true;</span><br><span class="line">view.layer.rasterizationScale &#x3D; view.layer.contentsScale;</span><br></pre></td></tr></table></figure>
-
-<p>但当视图内容是动态变化(如后台下载图片完毕后切换到主线程设置)时，使用此方案反而为增加系统负荷。</p>
-<h5 id="7-Core-Graphics-API-核心绘图"><a href="#7-Core-Graphics-API-核心绘图" class="headerlink" title="7.Core Graphics API(核心绘图)"></a>7.Core Graphics API(核心绘图)</h5><p>Core Graphics API(核心绘图)的绘制操作会导致CPU的离屏渲染。<br>方案：放到后台线程中进行。</p>
-<h3 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a>Demo</h3><p><a href="https://github.com/Baichenghui/Study/tree/master/CornerDemo">demo</a></p>
-<h3 id="学习"><a href="#学习" class="headerlink" title="学习"></a>学习</h3><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/f8a3400836b5">https://www.jianshu.com/p/f8a3400836b5</a><br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/e879aeff93f3">https://www.jianshu.com/p/e879aeff93f3</a><br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/b9bef82eace1">https://www.jianshu.com/p/b9bef82eace1</a><br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/3141c1177d35">https://www.jianshu.com/p/3141c1177d35</a></p>
-
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2019/10/20/iOS%20%E9%AB%98%E6%95%88%E5%88%87%E5%9C%86%E8%A7%92%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-YYWeakProxy-NSProxy" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2019/10/20/YYWeakProxy-NSProxy/" target="_blank">YYWeakProxy|NSProxy</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2019/10/20/YYWeakProxy-NSProxy/" class="archive-article-date">
-        <time datetime="2019-10-20T02:26:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-20</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h5 id="YYWeakProxy解决NSTimer循环引用问题："><a href="#YYWeakProxy解决NSTimer循环引用问题：" class="headerlink" title="YYWeakProxy解决NSTimer循环引用问题："></a>YYWeakProxy解决NSTimer循环引用问题：</h5><pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">YYWeakProxy *weakProxy &#x3D; [YYWeakProxy proxyWithTarget:self];</span><br><span class="line">   self.timer &#x3D; [NSTimer scheduledTimerWithTimeInterval:1.0 target:weakProxy selector:@selector(weakProxyTimer) userInfo:nil repeats:YES];</span><br></pre></td></tr></table></figure></code></pre>
-<h6 id="原理："><a href="#原理：" class="headerlink" title="原理："></a>原理：</h6><pre><code>生成一个临时对象，让 displayLink 强引用这个临时对象，在这个临时对象中弱引用 self</code></pre>
-<p>self-强-&gt;displayLink-强-&gt;YYWeakProxy-弱-&gt;self，没有形成循环引用</p>
-<h6 id="YYWeakProxy-核心代码："><a href="#YYWeakProxy-核心代码：" class="headerlink" title="YYWeakProxy 核心代码："></a>YYWeakProxy 核心代码：</h6><pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">@property (nonatomic, weak, readonly) id target;</span><br><span class="line">+ (instancetype)proxyWithTarget:(id)target &#123;</span><br><span class="line">     return [[YYWeakProxy alloc] initWithTarget:target];</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;将消息接收对象改为 target</span><br><span class="line">- (id)forwardingTargetForSelector:(SEL)selector &#123;</span><br><span class="line">     return _target;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;self 对 target 是弱引用，一旦 target 被释放将调用下面两个方法，如果不实现的话会 crash</span><br><span class="line">- (void)forwardInvocation:(NSInvocation *)invocation &#123;</span><br><span class="line">     void *null &#x3D; NULL;</span><br><span class="line">     [invocation setReturnValue:&amp;null];</span><br><span class="line">&#125;</span><br><span class="line">- (NSMethodSignature *)methodSignatureForSelector:(SEL)selector &#123;</span><br><span class="line">     return [NSObject instanceMethodSignatureForSelector:@selector(init)];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></code></pre>
-<h6 id="小结："><a href="#小结：" class="headerlink" title="小结："></a>小结：</h6><pre><code>YYWeakProxy 继承自 NSProxy，是 Foundation 框架两大基类之一，实现了 NSObject 协议。</code></pre>
-<p>NSProxy 做为消息转发的抽象代理类，自身能够处理的方法极少(仅 <NSObject> 接口中定义的部分方法，没有 init 方法，子类必须实现 initWithXXX: forwardInvocation: 和 methodSignatureForSelector: 方法), 所以其它方法都能够按照设计的预期被转发到被代理的对象中。</p>
-<h5 id="NSProxy："><a href="#NSProxy：" class="headerlink" title="NSProxy："></a>NSProxy：</h5><pre><code>NSProxy是一个虚类，你可以通过继承它，并重写这两个方法以实现消息转发到另一个实例。
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- (void)forwardInvocation:(NSInvocation *)anInvocation;</span><br><span class="line">- (NSMethodSignature *)methodSignatureForSelector:(SEL)sel; </span><br></pre></td></tr></table></figure>
-
-负责将消息转发到真正的target的代理类。
-举个例子，你想要卖一件二手物品，但是你并不想直接跟卖家接触（直接向target发消息），这时你去找了一个第三方，你告诉这个第三方你要买什么、出多少钱买、什么时候要等（向代理发消息），第三方再去跟卖家接触并把这些信息转告卖家（转发消息给真实的target），最后通过第三方去完成这个交易。</code></pre>
-
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2019/10/20/YYWeakProxy-NSProxy/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-  
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
-    </nav>
-  
 
 
           </div>
@@ -958,8 +508,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,

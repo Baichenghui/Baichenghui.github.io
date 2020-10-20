@@ -6,21 +6,35 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://github.com/Baichenghui">
-  <title>b9i60000</title>
+  <title>GCD研究 | b9i60000</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-    
-    <!-- <meta name="keywords" content="">
-    <meta name="description" content=""> -->
-  
-  <meta property="og:type" content="website">
-<meta property="og:title" content="b9i60000">
-<meta property="og:url" content="https://github.com/Baichenghui/page/2/index.html">
+  <meta name="description" content="[TOC] 简介1个进程中可以开启多条线程，每条线程可以并行（同时）执行不同的任务多线程技术可以提高程序的执行效率 作用显示\刷新UI界面、处理UI事件（比如点击事件、滚动事件、拖拽事件等）在主线程执行。 耗时操作，开启子线程执行。 原理同一时间，CPU只能处理1条线程，只有1条线程在工作（执行），多线程并发（同时）执行，其实是CPU快速地在多条线程之间调度（切换），如果CPU调度线程的时间足够快">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GCD研究">
+<meta property="og:url" content="https://github.com/Baichenghui/2019/10/20/GCD%E7%A0%94%E7%A9%B6/index.html">
 <meta property="og:site_name" content="b9i60000">
+<meta property="og:description" content="[TOC] 简介1个进程中可以开启多条线程，每条线程可以并行（同时）执行不同的任务多线程技术可以提高程序的执行效率 作用显示\刷新UI界面、处理UI事件（比如点击事件、滚动事件、拖拽事件等）在主线程执行。 耗时操作，开启子线程执行。 原理同一时间，CPU只能处理1条线程，只有1条线程在工作（执行），多线程并发（同时）执行，其实是CPU快速地在多条线程之间调度（切换），如果CPU调度线程的时间足够快">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2361">
+<meta property="og:image" content="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2362">
+<meta property="og:image" content="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2363">
+<meta property="og:image" content="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2364">
+<meta property="og:image" content="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2365">
+<meta property="og:image" content="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2366">
+<meta property="og:image" content="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2367">
+<meta property="og:image" content="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2371">
+<meta property="og:image" content="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2372">
+<meta property="og:image" content="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2373">
+<meta property="og:image" content="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2370">
+<meta property="og:image" content="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2369">
+<meta property="og:image" content="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2368">
+<meta property="article:published_time" content="2019-10-20T02:52:31.000Z">
+<meta property="article:modified_time" content="2020-10-20T03:48:13.917Z">
 <meta property="article:author" content="b9i60000">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2361">
   
     <link rel="alternative" href="/atom.xml" title="b9i60000" type="application/atom+xml">
   
@@ -211,32 +225,53 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-
-  
-    <article id="post-YYAsyncLayer-研究" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-GCD研究" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
   
   
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2019/10/20/YYAsyncLayer-%E7%A0%94%E7%A9%B6/" target="_blank">YYAsyncLayer 研究</a>
-  
+    <h1 class="article-title" itemprop="name">
+      GCD研究
     </h1>
   
 
 
   
   
-<a href="/2019/10/20/YYAsyncLayer-%E7%A0%94%E7%A9%B6/" class="archive-article-date">
-        <time datetime="2019-10-20T02:51:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-20</time>
+        
+        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
+              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+        </span>
+
+<a href="/2019/10/20/GCD%E7%A0%94%E7%A9%B6/" class="archive-article-date">
+        <time datetime="2019-10-20T02:52:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-20</time>
 </a>
 
   
   
     
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">10.2k字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">47分</span>
+    </span>
+  </span>
+</div>
+
 
   
   </header>
@@ -244,115 +279,433 @@
   <div class="article-entry" itemprop="articleBody">
     
     <p>[TOC]</p>
-<h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>异步绘制是界面流畅度提升的思路，YYAsyncLayer 是 ibireme 写的一个异步绘制的轮子。质量比较高，涉及到很多优化思维，值得学习。多学技术，学好技术。</p>
-<h3 id="为什么要异步绘制"><a href="#为什么要异步绘制" class="headerlink" title="为什么要异步绘制"></a>为什么要异步绘制</h3><h5 id="屏幕显示图像的原理"><a href="#屏幕显示图像的原理" class="headerlink" title="屏幕显示图像的原理"></a>屏幕显示图像的原理</h5><p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2376" alt="9d500c2270433ab8e444083d5cf650f2.png"></p>
-<p>CPU 计算好显示内容提交到 GPU，GPU 渲染完成后将渲染结果放入帧缓冲区，随后视频控制器会按照 VSync 信号逐行读取帧缓冲区的数据，经过可能的数模转换传递给显示器显示。</p>
-<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2375" alt="eb92699d5650217ec7357a49d5789ca2.png"></p>
-<p>过去的CRT 的电子枪按照上面方式，从上到下一行行扫描，扫描完成后显示器就呈现一帧画面，随后电子枪回到初始位置继续下一次扫描。为了把显示器的显示过程和系统的视频控制器进行同步，显示器（或者其他硬件）会用硬件时钟产生一系列的定时信号。当电子枪换到新的一行，准备进行扫描时，显示器会发出一个水平同步信号（horizonal synchronization），简称 HSync；而当一帧画面绘制完成后，电子枪回复到原位，准备画下一帧前，显示器会发出一个垂直同步信号（vertical synchronization），简称 VSync。显示器通常以固定频率进行刷新，这个刷新率就是 VSync 信号产生的频率。</p>
-<h5 id="双缓冲机制"><a href="#双缓冲机制" class="headerlink" title="双缓冲机制"></a>双缓冲机制</h5><p>显示系统通常会引入两个缓冲区，即双缓冲机制。在这种情况下，GPU 会预先渲染好一帧放入一个缓冲区内，让视频控制器读取，当下一帧渲染好后，GPU 会直接把视频控制器的指针指向第二个缓冲器。如此一来效率会有很大的提升。</p>
-<p>双缓冲虽然能解决效率问题，但会引入一个新的问题。当视频控制器还未读取完成时，即屏幕内容刚显示一半时，GPU 将新的一帧内容提交到帧缓冲区并把两个缓冲区进行交换后，视频控制器就会把新的一帧数据的下半段显示到屏幕上，造成画面撕裂现象。</p>
-<p>为了解决这个问题，GPU 通常有一个机制叫做垂直同步（简写也是 V-Sync），当开启垂直同步后，GPU 会等待显示器的 VSync 信号发出后，才进行新的一帧渲染和缓冲区更新。这样能解决画面撕裂现象，也增加了画面流畅度，但需要消费更多的计算资源，也会带来部分延迟。</p>
-<h5 id="界面卡顿的实质"><a href="#界面卡顿的实质" class="headerlink" title="界面卡顿的实质"></a>界面卡顿的实质</h5><p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2374" alt="5f16df9fe174ef3a6879c2bb1f066d27.png"> </p>
-<p>在 VSync 信号到来后，系统图形服务会通过 CADisplayLink 等机制通知 App，App 主线程开始在 CPU 中计算显示内容，比如视图的创建、布局计算、图片解码、文本绘制等。随后 CPU 会将计算好的内容提交到 GPU 去，由 GPU 进行变换、合成、渲染。随后 GPU 会把渲染结果提交到帧缓冲区去，等待下一次 VSync 信号到来时显示到屏幕上。由于垂直同步的机制，如果在一个 VSync 时间内，CPU 或者 GPU 没有完成内容提交，则那一帧就会被丢弃，等待下一次机会再显示，而这时显示屏会保留之前的内容不变。这就是界面卡顿的原因。</p>
-<h5 id="UIKit-性能瓶颈"><a href="#UIKit-性能瓶颈" class="headerlink" title="UIKit 性能瓶颈"></a>UIKit 性能瓶颈</h5><p>大部分 UIKit 组件的绘制是在主线程进行，需要 CPU 来进行绘制，当同一时刻过多组件需要绘制或者组件元素过于复杂时，必然会给 CPU 带来压力，这个时候就很容易掉帧（主要是文本控件，大量文本内容的计算和绘制过程都相当繁琐）。</p>
-<h5 id="UIKit-替代方案：CoreAnimation-或-CoreGraphics"><a href="#UIKit-替代方案：CoreAnimation-或-CoreGraphics" class="headerlink" title="UIKit 替代方案：CoreAnimation 或 CoreGraphics"></a>UIKit 替代方案：CoreAnimation 或 CoreGraphics</h5><h6 id="CoreAnimation"><a href="#CoreAnimation" class="headerlink" title="CoreAnimation"></a>CoreAnimation</h6><p>首选优化方案是 CoreAnimation 框架。CALayer 的大部分属性都是由 GPU 绘制的 (硬件层面)，不需要 CPU (软件层面) 做任何绘制。CA 框架下的 CAShapeLayer (多边形绘制)、CATextLayer(文本绘制)、CAGradientLayer (渐变绘制) 等都有较高的效率，非常实用。</p>
-<h6 id="CoreGraphics"><a href="#CoreGraphics" class="headerlink" title="CoreGraphics"></a>CoreGraphics</h6><p>其次在适当的地方可以考虑 CoreGraphics 框架。CoreGraphics 依托于 CPU 的软件绘制。在实现 CALayerDelegate 协议的 -drawLayer:inContext: 方法时（等同于UIView 二次封装的 -drawRect:方法），需要分配一个内存占用较高的上下文 context，与此同时，CALayer 或者其子类需要创建一个等大的寄宿图 contents。当基于 CPU 的软件绘制完成，还需要通过 IPC (进程间通信) 传递给设备显示系统。值得注意的是：当重绘时需要抹除这个上下文重新分配内存。</p>
-<p>不管是创建上下文、重绘带来的内存重新分配、IPC 都会带来性能上的较大开销。所以 CoreGraphics 的性能比较差，日常开发中要尽量避免直接在主线程使用。通常情况下，直接给 CALayer 的 contents 赋值 CGImage 图片或者使用 CALayer 的衍生类就能实现大部分需求，还能充分利用硬件支持，图像处理交给 GPU 当然更加放心。</p>
-<h5 id="多核设备带来的可能性"><a href="#多核设备带来的可能性" class="headerlink" title="多核设备带来的可能性"></a>多核设备带来的可能性</h5><p>通过以上说明，可以了解 CoreGraphics 较为糟糕的性能。然而可喜的是，市面上的设备都已经不是单核了，这就意味着可以通过后台线程处理耗时任务，主线程只需要负责调度显示。</p>
-<p>CoreGraphics 框架可以通过图片上下文将绘制内容制作为一张位图，并且这个操作可以在非主线程执行。那么，当有 n 个绘制任务时，可以开辟多个线程在后台异步绘制，绘制成功拿到位图回到主线程赋值给 CALayer 的寄宿图属性。</p>
-<p>这就是 YYAsyncLayer 框架的核心思想。</p>
-<p>虽然多个线程异步绘制会消耗大量的内存，但是对于性能敏感界面来说，只要工程师控制好内存峰值，可以极大的提高交互流畅度。优化很多时候就是空间换时间，所谓鱼和熊掌不可兼得。这也说明了一个问题，实际开发中要做有针对性的优化，不可盲目跟风。</p>
-<h3 id="框架概述"><a href="#框架概述" class="headerlink" title="框架概述"></a>框架概述</h3><p>类文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">YYSentinel.h (.m)</span><br><span class="line">YYTransaction.h (.m)</span><br><span class="line">YYAsyncLayer.h (.m)</span><br></pre></td></tr></table></figure>
+<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>1个进程中可以开启多条线程，每条线程可以并行（同时）执行不同的任务<br>多线程技术可以提高程序的执行效率</p>
+<h5 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h5><p>显示\刷新UI界面、处理UI事件（比如点击事件、滚动事件、拖拽事件等）在主线程执行。</p>
+<p>耗时操作，开启子线程执行。</p>
+<h5 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h5><p>同一时间，CPU只能处理1条线程，只有1条线程在工作（执行），多线程并发（同时）执行，其实是CPU快速地在多条线程之间调度（切换），如果CPU调度线程的时间足够快，就造成了多线程并发执行的假象。</p>
+<p>如果线程非常多，CPU会在N多线程之间调度，会消耗大量CPU资源，同时每条线程被调度执行的频次也会会降低（线程的执行效率降低）。<br>因此我们一般只开3-5条线程。</p>
+<h5 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h5><p>能适当提高程序的执行效率<br>能适当提高资源利用率（CPU、内存利用率）</p>
+<h5 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h5><p>创建线程是有开销的，iOS下主要成本包括：内核数据结构（大约1KB）、栈空间（子线程512KB、主线程1MB，也可以使用-setStackSize:设置，但必须是4K的倍数，而且最小是16K），创建线程大约需要90毫秒的创建时间<br>如果开启大量的线程，会降低程序的性能，线程越多，CPU在调度线程上的开销就越大。<br>程序设计更加复杂：比如线程之间的通信、多线程的数据共享等问题。</p>
+<h3 id="多线程方案"><a href="#多线程方案" class="headerlink" title="多线程方案"></a>多线程方案</h3><p>在iOS中多线程方案有多中，但最常用的属GCD和NSOperation，然后NSThread、pthread很少使用。本文主要研究GCD这块内容。</p>
+<h3 id="GCD"><a href="#GCD" class="headerlink" title="GCD"></a>GCD</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Grand Central Dispatch (GCD), contains language features, runtime libraries, and system enhancements that provide systemic, comprehensive improvements to the support for concurrent code execution on multicore hardware in macOS, iOS, watchOS, and tvOS.</span><br><span class="line"></span><br><span class="line">The BSD subsystem, Core Foundation, and Cocoa APIs have all been extended to use these enhancements to help both the system and your application to run faster, more efficiently, and with improved responsiveness. Consider how difficult it is for a single application to use multiple cores effectively, let alone to do it on different computers with different numbers of computing cores or in an environment with multiple applications competing for those cores. GCD, operating at the system level, can better accommodate the needs of all running applications, matching them to the available system resources in a balanced fashion.</span><br></pre></td></tr></table></figure>
 
+<p>GCD全称为Grand Central Dispatch，包含语言功能，运行时库和系统增强功能，这些功能提供了系统的，全面的改进，以支持在macOS，iOS，watchOS和tvOS中的多核硬件上并发代码执行的支持。</p>
+<p>BSD子系统，Core Foundation和Cocoa API均已扩展为使用这些增强功能，以帮助系统和您的应用程序更快，更高效地运行，并提高响应速度。单个应用程序有效地使用多个内核很困难，在具有不同数量计算内核的不同计算机上或在多个应用程序竞争那些内核的环境中进行操作就更困难了。在系统级别运行的GCD可以更好地满足所有正在运行的应用程序的需求，并以平衡的方式将它们与可用的系统资源进行匹配。</p>
+<h5 id="队列"><a href="#队列" class="headerlink" title="队列"></a>队列</h5><h6 id="串行"><a href="#串行" class="headerlink" title="串行"></a>串行</h6><p>让任务串行执行（一个任务执行完毕后，再执行下一个任务）</p>
+<h6 id="并发"><a href="#并发" class="headerlink" title="并发"></a>并发</h6><p>让多个任务并发执行（自动开启多个线程同时执行任务）<br>并发功能只有在异步（dispatch_async）函数下才有效</p>
+<h6 id="dispatch-queue-set-specific"><a href="#dispatch-queue-set-specific" class="headerlink" title="dispatch_queue_set_specific"></a>dispatch_queue_set_specific</h6><p>向指定队列里面设置一个标识</p>
+<p>向queue1对了中设置一个queueKey1标识:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dispatch_queue_set_specific(queue1, queueKey1, &amp;queueKey1,NULL);</span><br></pre></td></tr></table></figure>
 
-<h5 id="YYSentinel"><a href="#YYSentinel" class="headerlink" title="YYSentinel"></a>YYSentinel</h5><p>计数的类，自增int32_t类型变量value，是为了记录最新的布局请求标识，便于及时的放弃多余的绘制逻辑以减少开销。</p>
-<p>在框架中的应用是，异步绘制操作之前取出value作为局部变量保存</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int32_t value &#x3D; sentinel.value;</span><br></pre></td></tr></table></figure>
+<h6 id="dispatch-queue-get-specific"><a href="#dispatch-queue-get-specific" class="headerlink" title="dispatch_queue_get_specific"></a>dispatch_queue_get_specific</h6><p>是获取指定调度队列的上下文键/值数据。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">    const void * queueKey &#x3D; &quot;queueKey&quot;;</span><br><span class="line">    const void * queueKey2 &#x3D; &quot;queueKey2&quot;;</span><br><span class="line">    dispatch_queue_t queue &#x3D; dispatch_queue_create(queueKey, NULL);</span><br><span class="line">    dispatch_queue_t queue2 &#x3D; dispatch_queue_create(queueKey2, NULL);</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F;调用此方法会触发queueFunction函数，留个疑问queueFunction是在什么时候触发？</span><br><span class="line">    dispatch_queue_set_specific(queue, queueKey, &amp;queueKey, queueFunction);</span><br><span class="line">    dispatch_queue_set_specific(queue2, queueKey2, &amp;queueKey2, NULL);</span><br><span class="line">    </span><br><span class="line">    dispatch_sync(queue, ^&#123;</span><br><span class="line">        go();</span><br><span class="line">    &#125;);</span><br><span class="line">    dispatch_sync(queue2, ^&#123;</span><br><span class="line">        go();</span><br><span class="line">    &#125;);</span><br><span class="line">    </span><br><span class="line">    if (dispatch_queue_get_specific(queue, queueKey)) &#123;</span><br><span class="line">        NSLog(@&quot;__run in queue&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;main queue中找不到queueKey，所以这段Log不会触发，使用dispatch_get_specific(queueKey)的原理也一样</span><br><span class="line">    if (dispatch_queue_get_specific(dispatch_get_main_queue(), queueKey)) &#123;</span><br><span class="line">        NSLog(@&quot;__run in main queue&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    if (dispatch_get_specific(queueKey)) &#123;</span><br><span class="line">        NSLog(@&quot;__run in main queue&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">void go() &#123;</span><br><span class="line">    &#x2F;&#x2F;使用dispatch_sync改变了当前的执行队列，所以这里可以检索到queueKey</span><br><span class="line">    if(dispatch_get_specific(&quot;queueKey&quot;)) &#123;</span><br><span class="line">        NSLog(@&quot;queue&quot;);</span><br><span class="line">    &#125; else if(dispatch_get_specific(&quot;queueKey2&quot;)) &#123;</span><br><span class="line">        NSLog(@&quot;queue2&quot;);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        NSLog(@&quot;main queue&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void queueFunction() &#123;</span><br><span class="line">    NSLog(@&quot;__queueFunction&quot;);</span><br><span class="line">&#125;    </span><br></pre></td></tr></table></figure>
 
-<p>然后定义isCancelled block判断是否取消绘制操作了</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">BOOL (^isCancelled)() &#x3D; ^BOOL() &#123;</span><br><span class="line">    &#x2F;&#x2F;value产生变化说明取消绘制操作</span><br><span class="line">    return value !&#x3D; sentinel.value;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h6 id="dispatch-get-specific"><a href="#dispatch-get-specific" class="headerlink" title="dispatch_get_specific"></a>dispatch_get_specific</h6><p>在当前队列中取出标识</p>
+<p>注意iOS中线程和队列的关系，所有的动作都是在队列中执行的！</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;Foundation&#x2F;Foundation.h&gt;</span><br><span class="line"> </span><br><span class="line">int main(int argc, const char * argv[]) &#123;</span><br><span class="line">    @autoreleasepool &#123;</span><br><span class="line">        static void *queueKey1 &#x3D; &quot;queueKey1&quot;;</span><br><span class="line">        </span><br><span class="line">        dispatch_queue_t queue1 &#x3D; dispatch_queue_create(queueKey1, DISPATCH_QUEUE_SERIAL);</span><br><span class="line">        dispatch_queue_set_specific(queue1, queueKey1, &amp;queueKey1, NULL);</span><br><span class="line">        </span><br><span class="line">        NSLog(@&quot;1. 当前线程是: %@, 当前队列是: %@ 。&quot;,[NSThread currentThread],dispatch_get_current_queue());</span><br><span class="line">        </span><br><span class="line">        if (dispatch_get_specific(queueKey1)) &#123;</span><br><span class="line">            &#x2F;&#x2F;当前队列是主队列，不是queue1队列，所以取不到queueKey1对应的值，故而不执行</span><br><span class="line">            NSLog(@&quot;2. 当前线程是: %@, 当前队列是: %@ 。&quot;,[NSThread currentThread],dispatch_get_current_queue());</span><br><span class="line">            [NSThread sleepForTimeInterval:1];</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            NSLog(@&quot;3. 当前线程是: %@, 当前队列是: %@ 。&quot;,[NSThread currentThread],dispatch_get_current_queue());</span><br><span class="line">            [NSThread sleepForTimeInterval:1];</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        dispatch_sync(queue1, ^&#123;</span><br><span class="line">            NSLog(@&quot;4. 当前线程是: %@, 当前队列是: %@ 。&quot;,[NSThread currentThread],dispatch_get_current_queue());</span><br><span class="line">            [NSThread sleepForTimeInterval:1];</span><br><span class="line">            </span><br><span class="line">            if (dispatch_get_specific(queueKey1)) &#123;</span><br><span class="line">                 &#x2F;&#x2F;当前队列是queue1队列，所以能取到queueKey1对应的值，故而执行</span><br><span class="line">                NSLog(@&quot;5. 当前线程是: %@, 当前队列是: %@ 。&quot;,[NSThread currentThread],dispatch_get_current_queue());</span><br><span class="line">                [NSThread sleepForTimeInterval:1];</span><br><span class="line">            &#125;else&#123;</span><br><span class="line">                NSLog(@&quot;6. 当前线程是: %@, 当前队列是: %@ 。&quot;,[NSThread currentThread],dispatch_get_current_queue());</span><br><span class="line">                [NSThread sleepForTimeInterval:1];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        dispatch_async(queue1, ^&#123;</span><br><span class="line">            NSLog(@&quot;7. t当前线程是: %@, 当前队列是: %@ 。&quot;,[NSThread currentThread],dispatch_get_current_queue());</span><br><span class="line">            [NSThread sleepForTimeInterval:1];</span><br><span class="line">        &#125;);</span><br><span class="line">        </span><br><span class="line">        [NSThread sleepForTimeInterval:5];</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<p>取消绘制操作</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- (void)_cancelAsyncDisplay &#123;</span><br><span class="line">    &#x2F;&#x2F;对 value 进行自增，这样value就产生了变化</span><br><span class="line">    [_sentinel increase];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">2016-02-19 14:31:23.390 gcd[96865:820267] 1.当前线程是: &lt;NSThread: 0x1001053e0&gt;&#123;number &#x3D; 1, name &#x3D; main&#125;,当前队列是: &lt;OS_dispatch_queue: com.apple.main-thread[0x100059ac0]&gt;。</span><br><span class="line"></span><br><span class="line">2016-02-19 14:31:23.391 gcd[96865:820267] 3.当前线程是: &lt;NSThread: 0x1001053e0&gt;&#123;number &#x3D; 1, name &#x3D; main&#125;,当前队列是: &lt;OS_dispatch_queue: com.apple.main-thread[0x100059ac0]&gt;。</span><br><span class="line"></span><br><span class="line">2016-02-19 14:31:24.396 gcd[96865:820267] 4.当前线程是: &lt;NSThread: 0x1001053e0&gt;&#123;number &#x3D; 1, name &#x3D; main&#125;,当前队列是: &lt;OS_dispatch_queue: queueKey1[0x103000000]&gt;。</span><br><span class="line"></span><br><span class="line">2016-02-19 14:31:25.400 gcd[96865:820267] 5.当前线程是: &lt;NSThread: 0x1001053e0&gt;&#123;number &#x3D; 1, name &#x3D; main&#125;,当前队列是: &lt;OS_dispatch_queue: queueKey1[0x103000000]&gt;。</span><br><span class="line"></span><br><span class="line">2016-02-19 14:31:26.402 gcd[96865:820367] 7. t当前线程是: &lt;NSThread: 0x100105e10&gt;&#123;number &#x3D; 2, name &#x3D; (null)&#125;,当前队列是: &lt;OS_dispatch_queue: queueKey1[0x103000000]&gt;。</span><br><span class="line"></span><br><span class="line">Program ended with exit code: 0 </span><br></pre></td></tr></table></figure>
 
-<h5 id="YYTransaction"><a href="#YYTransaction" class="headerlink" title="YYTransaction"></a>YYTransaction</h5><p>事务类，捕获主线程 runloop 的某个时机回调，用于处理异步绘制事件。</p>
-<h5 id="YYAsyncLayer"><a href="#YYAsyncLayer" class="headerlink" title="YYAsyncLayer"></a>YYAsyncLayer</h5><p>继承自 CALayer ，封装了异步绘制的逻辑便于使用。</p>
-<h3 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h3><h5 id="YYSentinel-1"><a href="#YYSentinel-1" class="headerlink" title="YYSentinel"></a>YYSentinel</h5><p>.h</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@interface YYSentinel : NSObject </span><br><span class="line">@property (readonly) int32_t value; </span><br><span class="line">- (int32_t)increase; </span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
-<p>.m</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;YYSentinel.h&quot;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 若需要保证整形数值变量的线程安全，可以使用 OSAtomic 框架下的方法，它往往性能比使用各种“锁”更为优越，并且代码优雅。</span><br><span class="line">#import &lt;libkern&#x2F;OSAtomic.h&gt;</span><br><span class="line"></span><br><span class="line">@implementation YYSentinel &#123;</span><br><span class="line">    int32_t _value;</span><br><span class="line">&#125;</span><br><span class="line">- (int32_t)value &#123;</span><br><span class="line">    return _value;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 使用 OSAtomicIncrement32() 方法来对 value 执行自增。</span><br><span class="line">&#x2F;&#x2F; OSAtomicIncrement32() 是原子自增方法，线程安全。</span><br><span class="line">- (int32_t)increase &#123;</span><br><span class="line">    return OSAtomicIncrement32(&amp;_value);</span><br><span class="line">&#125;</span><br><span class="line">@end </span><br></pre></td></tr></table></figure>
+<h5 id="任务"><a href="#任务" class="headerlink" title="任务"></a>任务</h5><h6 id="同步"><a href="#同步" class="headerlink" title="同步"></a>同步</h6><p>在当前线程中执行任务，不具备开启新线程的能力。</p>
+<p>注意：使用sync函数往当前串行队列中添加任务，会卡住当前的串行队列（产生死锁）</p>
+<p>demo：</p>
+<p>无论怎样都不会开启新线程</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;*</span><br><span class="line"> 同步+并发  不会开启新线程，依旧在当前线程执行任务</span><br><span class="line"> *&#x2F;</span><br><span class="line">- (void)test3 &#123;</span><br><span class="line">    dispatch_queue_t queue &#x3D; dispatch_queue_create(&quot;syncConcrrent&quot;, DISPATCH_QUEUE_CONCURRENT);</span><br><span class="line">    dispatch_sync(queue, ^&#123;</span><br><span class="line">        NSLog(@&quot;1 %@&quot;, [NSThread currentThread]);</span><br><span class="line">    &#125;);</span><br><span class="line">    </span><br><span class="line">    &#x2F;*</span><br><span class="line">     2019-12-20 16:22:30.890416+0800 threadDemo[30526:6608103] 1 &lt;NSThread: 0x600001b9c680&gt;&#123;number &#x3D; 1, name &#x3D; main&#125;</span><br><span class="line">     *&#x2F;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<h5 id="YYTransaction-1"><a href="#YYTransaction-1" class="headerlink" title="YYTransaction"></a>YYTransaction</h5><p>YYTransaction 使用集合来管理任务。</p>
-<p>YYTransaction 做的事情就是记录一系列事件，并且在合适的时机调用这些事件。</p>
-<h6 id="提交任务"><a href="#提交任务" class="headerlink" title="提交任务"></a>提交任务</h6><p>YYTransaction 有两个属性：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@interface YYTransaction()</span><br><span class="line">@property (nonatomic, strong) id target;</span><br><span class="line">@property (nonatomic, assign) SEL selector;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">static NSMutableSet *transactionSet &#x3D; nil;</span><br></pre></td></tr></table></figure>
+<p>线程死锁</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">- (void)test1 &#123;</span><br><span class="line">    &#x2F;&#x2F; dispatch_async 开启的新线程，在队列 queue 中 ，往queue队列添加同步任务执行，线程卡死</span><br><span class="line">    dispatch_queue_t queue &#x3D; dispatch_queue_create(&quot;asyncSerial&quot;, DISPATCH_QUEUE_SERIAL);</span><br><span class="line">     </span><br><span class="line">    dispatch_async(queue, ^&#123; </span><br><span class="line">        NSLog(@&quot;test1 start%@&quot;, [NSThread currentThread]);</span><br><span class="line">        &#x2F;&#x2F;Thread 3: EXC_BAD_INSTRUCTION (code&#x3D;EXC_I386_INVOP, subcode&#x3D;0x0)</span><br><span class="line">        dispatch_sync(queue, ^&#123;</span><br><span class="line">            NSLog(@&quot;test1 %@&quot;, [NSThread currentThread]);</span><br><span class="line">        &#125;);</span><br><span class="line">        </span><br><span class="line">        NSLog(@&quot;test1 end%@&quot;, [NSThread currentThread]);</span><br><span class="line">    &#125;);</span><br><span class="line">    </span><br><span class="line">    &#x2F;*</span><br><span class="line">     2019-12-20 09:56:54.932893+0800 threadDemo[11409:6405262] test1 start&lt;NSThread: 0x600002235e40&gt;&#123;number &#x3D; 5, name &#x3D; (null)&#125;</span><br><span class="line">     </span><br><span class="line">     只打印了第一条。后面出现线程死锁了。</span><br><span class="line">     </span><br><span class="line">     卡住原因：</span><br><span class="line">        1、串行队列，任务需要一个任务执行完毕接着下一个才执行</span><br><span class="line">        2、现在队列queue要执行 dispatch_sync 函数添加一个同步任务block</span><br><span class="line">        3、dispatch_sync 是同步的，需要将添加的任务block立即执行</span><br><span class="line">        4、此时调用 dispatch_sync 函数所在线程处于等待状态，需要block任务执行才继续往后执行，而执行 dispatch_sync 函数的线程与block执行所在线程是同一个线程，所以这个线程一直处于等待状态。不会往后执行，也不会执行block。</span><br><span class="line">     *&#x2F;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#96;&#96;&#96; </span><br><span class="line"></span><br><span class="line">YYKit库中应用</span><br></pre></td></tr></table></figure>
+<p>/**<br> YYKit库中，在SDWebImage中也有类似的应用</p>
+<p> 用于确保任务在主线程下执行<br> */<br>static inline void _yy_dispatch_sync_on_main_queue(void (^block)(void)) {<br>    if (pthread_main_np()) {<br>        block();<br>    } else {<br>        dispatch_sync(dispatch_get_main_queue(), block);<br>    }<br>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">AFNetworking库中应用</span><br></pre></td></tr></table></figure>
+<p>/**<br> AFNetworking库中</p>
+<p> AFURLSessionManager 中session创建时用到：<br>    由于session创建在iOS8之前是线程不安全的，所以使用同步+串行队列实现锁的功能</p>
+<p> 注意：当前队列与同步函数中任务的队列不是一个队列<br> */<br>//    static void url_session_manager_create_task_safely(dispatch_block_t block) {<br>//        if (NSFoundationVersionNumber &lt; NSFoundationVersionNumber_With_Fixed_5871104061079552_bug) {<br>//            // Fix of bug<br>//            // Open Radar:<a target="_blank" rel="noopener" href="http://openradar.appspot.com/radar?id=5871104061079552">http://openradar.appspot.com/radar?id=5871104061079552</a> (status: Fixed in iOS8)<br>//            // Issue about:<a href="https://github.com/AFNetworking/AFNetworking/issues/2093">https://github.com/AFNetworking/AFNetworking/issues/2093</a><br>//            dispatch_sync(url_session_manager_creation_queue(), block);<br>//        } else {<br>//            block();<br>//        }<br>//    }</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">###### 异步</span><br><span class="line"></span><br><span class="line">在新的线程中执行任务，具备开启新线程的能力</span><br><span class="line"></span><br><span class="line">demo:</span><br><span class="line"></span><br><span class="line">在主队列，异步执行任务，不会开启新线程</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>(void)test1 {<br>  dispatch_queue_t queue = dispatch_get_main_queue();</p>
+<p>  dispatch_async(queue, ^{ NSLog(@”1 %@”, [NSThread currentThread]); });<br>  dispatch_async(queue, ^{ NSLog(@”2 %@”, [NSThread currentThread]); });<br>  dispatch_async(queue, ^{ NSLog(@”3 %@”, [NSThread currentThread]); });</p>
+<p>  /**</p>
+<pre><code>  2019-12-18 11:50:33.358149+0800 threadDemo[4613:5504490] 1 &lt;NSThread: 0x600001cde1c0&gt;&#123;number = 1, name = main&#125;
+  2019-12-18 11:50:33.358549+0800 threadDemo[4613:5504490] 2 &lt;NSThread: 0x600001cde1c0&gt;&#123;number = 1, name = main&#125;
+  2019-12-18 11:50:33.358696+0800 threadDemo[4613:5504490] 3 &lt;NSThread: 0x600001cde1c0&gt;&#123;number = 1, name = main&#125;</code></pre>
+<p>   */<br>}</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">除主队列外，异步执行任务，都会开启新线程</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>(void)test2 {<br>  dispatch_queue_t queue1= dispatch_queue_create(“asyncSerial”, DISPATCH_QUEUE_SERIAL);<br>  dispatch_async(queue1, ^{ NSLog(@”1-1 %@”, [NSThread currentThread]); });<br>  dispatch_async(queue1, ^{ NSLog(@”1-2 %@”, [NSThread currentThread]); });<br>  dispatch_async(queue1, ^{ NSLog(@”1-3 %@”, [NSThread currentThread]); });</p>
+<p>  /**</p>
+<pre><code>  2019-12-18 11:53:59.972777+0800 threadDemo[4656:5507191] 1 &lt;NSThread: 0x6000012fd380&gt;&#123;number = 3, name = (null)&#125;
+  2019-12-18 11:53:59.973284+0800 threadDemo[4656:5507191] 2 &lt;NSThread: 0x6000012fd380&gt;&#123;number = 3, name = (null)&#125;
+  2019-12-18 11:53:59.973437+0800 threadDemo[4656:5507191] 3 &lt;NSThread: 0x6000012fd380&gt;&#123;number = 3, name = (null)&#125;</code></pre>
+<p>   */</p>
+</li>
+</ul>
+<p>//    dispatch_queue_t queue2 = dispatch_queue_create(“asyncConcurrent”, DISPATCH_QUEUE_CONCURRENT);<br>//    dispatch_async(queue2, ^{ NSLog(@”2-1 %@”, [NSThread currentThread]); });<br>//    dispatch_async(queue2, ^{ NSLog(@”2-2 %@”, [NSThread currentThread]); });<br>//    dispatch_async(queue2, ^{ NSLog(@”2-3 %@”, [NSThread currentThread]); });</p>
+<pre><code>/**
+ 2019-12-18 11:57:09.136050+0800 threadDemo[4686:5509014] 2-2 &lt;NSThread: 0x600002350000&gt;&#123;number = 6, name = (null)&#125;
+ 2019-12-18 11:57:09.136154+0800 threadDemo[4686:5509013] 2-1 &lt;NSThread: 0x60000237bd00&gt;&#123;number = 5, name = (null)&#125;
+ 2019-12-18 11:57:09.136174+0800 threadDemo[4686:5509015] 2-3 &lt;NSThread: 0x60000237b480&gt;&#123;number = 4, name = (null)&#125;
+ */</code></pre>
+<p>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">##### Dispatch Group</span><br><span class="line"></span><br><span class="line">[参考](https:&#x2F;&#x2F;xiaozhuanlan.com&#x2F;topic&#x2F;0863519247)</span><br><span class="line"> </span><br><span class="line">dispatch_group可以将GCD的任务合并到一个组里来管理，也可以同时监听组里所有任务的执行情况。</span><br><span class="line">    </span><br><span class="line">###### dispatch_group_create</span><br><span class="line"></span><br><span class="line">本质是一个初始value为LONG_MAX的semaphore，通过信号量来实现一组任务的管理，代码如下：</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>dispatch_group_t dispatch_group_create(void) {<br>    //申请内存空间<br>    dispatch_group_t dg = (dispatch_group_t)_dispatch_alloc(<br>            DISPATCH_VTABLE(group), sizeof(struct dispatch_semaphore_s));<br>    //使用LONG_MAX初始化信号量结构体<br>    _dispatch_semaphore_init(LONG_MAX, dg);<br>    return dg;<br>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">###### dispatch_group_async</span><br><span class="line"> </span><br><span class="line">加入组的任务异步执行 </span><br><span class="line"></span><br><span class="line">###### dispatch_group_enter &#x2F; leave </span><br><span class="line"></span><br><span class="line">dispatch_group_enter的逻辑是将dispatch_group_t转换成dispatch_semaphore_t后将dsema_value的值减一。</span><br><span class="line"> </span><br><span class="line">应用注意：</span><br><span class="line">1、dispatch_group_enter必须在dispatch_group_leave之前出现</span><br><span class="line">2、dispatch_group_enter和dispatch_group_leave必须成对出现</span><br><span class="line"></span><br><span class="line">demo：</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>(void)test1 {<br>  NSLog(@”1:%@”,[NSThread currentThread]);<br>  dispatch_group_t group = dispatch_group_create();<br>  dispatch_queue_t queue = dispatch_queue_create(“concurrentQueue”, DISPATCH_QUEUE_CONCURRENT);</li>
+</ul>
+<p>//    //注意不要放在这,而应该放在dispatch_group_enter / leave 最后面。<br>//    //否则可额能计数不对，导致提前回调<br>//    dispatch_group_notify(group, queue, ^{<br>//            NSLog(@”2”);<br>//    });</p>
+<pre><code>dispatch_group_enter(group);
+dispatch_async(queue, ^&#123;
+    sleep(1);
+    NSLog(@&quot;3:%@&quot;,[NSThread currentThread]);
+    dispatch_group_leave(group);
+&#125;);
 
-<p>方法接收者 (target) 和方法 (selector)。<br>一个 YYTransaction就是一个任务，全局区的 transactionSet 集合就是用来存储这些任务。提交方法-commit 不过是初始配置并且将任务装入集合。</p>
-<h6 id="合适的回调时机"><a href="#合适的回调时机" class="headerlink" title="合适的回调时机"></a>合适的回调时机</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">static void YYTransactionSetup() &#123;</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        transactionSet &#x3D; [NSMutableSet new];</span><br><span class="line">        CFRunLoopRef runloop &#x3D; CFRunLoopGetMain();</span><br><span class="line">        CFRunLoopObserverRef observer;</span><br><span class="line">        </span><br><span class="line">        observer &#x3D; CFRunLoopObserverCreate(CFAllocatorGetDefault(),</span><br><span class="line">                                           kCFRunLoopBeforeWaiting | kCFRunLoopExit,</span><br><span class="line">                                           true,      &#x2F;&#x2F; repeat</span><br><span class="line">                                           0xFFFFFF,  &#x2F;&#x2F; after CATransaction(2000000)</span><br><span class="line">                                           YYRunLoopObserverCallBack, NULL);</span><br><span class="line">        CFRunLoopAddObserver(runloop, observer, kCFRunLoopCommonModes);</span><br><span class="line">        CFRelease(observer);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+dispatch_group_enter(group);
+dispatch_async(queue, ^&#123;
+    sleep(3);
+    NSLog(@&quot;4:%@&quot;,[NSThread currentThread]);
+    dispatch_group_leave(group);
+&#125;);
 
-<p>在主线程的 RunLoop 中添加了一个 observer 监听，回调的时机是 kCFRunLoopBeforeWaiting 和 kCFRunLoopExit ，即是主线程 RunLoop 循环即将进入休眠或者即将退出的时候。</p>
-<p>observer 的优先级是 0xFFFFFF，优先级在 CATransaction 的后面.</p>
-<p>回调里面做的事情：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">static void YYRunLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActivity activity, void *info) &#123;</span><br><span class="line">    if (transactionSet.count &#x3D;&#x3D; 0) return;</span><br><span class="line">    NSSet *currentSet &#x3D; transactionSet;</span><br><span class="line">    transactionSet &#x3D; [NSMutableSet new];</span><br><span class="line">    [currentSet enumerateObjectsUsingBlock:^(YYTransaction *transaction, BOOL *stop) &#123;</span><br><span class="line">#pragma clang diagnostic push</span><br><span class="line">#pragma clang diagnostic ignored &quot;-Warc-performSelector-leaks&quot;</span><br><span class="line">        [transaction.target performSelector:transaction.selector];</span><br><span class="line">#pragma clang diagnostic pop</span><br><span class="line">    &#125;];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+dispatch_group_notify(group, queue, ^&#123;
+        NSLog(@&quot;2:%@&quot;,[NSThread currentThread]);
+&#125;);
 
-<p>只是将集合中的任务遍历执行。</p>
-<h6 id="方法重写"><a href="#方法重写" class="headerlink" title="方法重写"></a>方法重写</h6><p>重写 <code>isEqual:</code> 方法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- (BOOL)isEqual:(id)object &#123;</span><br><span class="line">    if (self &#x3D;&#x3D; object) return YES;</span><br><span class="line">    if (![object isMemberOfClass:self.class]) return NO;</span><br><span class="line">    YYTransaction *other &#x3D; object;</span><br><span class="line">    return other.selector &#x3D;&#x3D; _selector &amp;&amp; other.target &#x3D;&#x3D; _target;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+NSLog(@&quot;5:%@&quot;,[NSThread currentThread]);
 
-<p>重写 hash 算法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- (NSUInteger)hash &#123;</span><br><span class="line">    long v1 &#x3D; (long)((void *)_selector);</span><br><span class="line">    long v2 &#x3D; (long)_target;</span><br><span class="line">    return v1 ^ v2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+/**
+2019-12-18 16:03:42.575564+0800 threadDemo[5518:5610267] 1:&lt;NSThread: 0x600001c085c0&gt;&#123;number = 1, name = main&#125;
+2019-12-18 16:03:42.576226+0800 threadDemo[5518:5610267] 5:&lt;NSThread: 0x600001c085c0&gt;&#123;number = 1, name = main&#125;
+2019-12-18 16:03:43.578856+0800 threadDemo[5518:5610368] 3:&lt;NSThread: 0x600001c4ffc0&gt;&#123;number = 4, name = (null)&#125;
+2019-12-18 16:03:45.579819+0800 threadDemo[5518:5610366] 4:&lt;NSThread: 0x600001c4b580&gt;&#123;number = 6, name = (null)&#125;
+2019-12-18 16:03:45.580037+0800 threadDemo[5518:5610366] 2:&lt;NSThread: 0x600001c4b580&gt;&#123;number = 6, name = (null)&#125;
+*/</code></pre>
+<p>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">###### dispatch_group_wait</span><br><span class="line"></span><br><span class="line">同步等待，直到group里面的block全部执行完毕，才会继续往后执行。</span><br><span class="line"></span><br><span class="line">需要注意下 dispatch_group_wait 的位置，不能放在任务添加之前。</span><br><span class="line"></span><br><span class="line">demo:</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>(void)test3 {<br>  dispatch_queue_t aDQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);<br>  dispatch_group_t group = dispatch_group_create();<br>  // Add a task to the group<br>  dispatch_group_async(group, aDQueue, ^{</p>
+<pre><code>  sleep(2);
+  printf(&quot;task 1 \n&quot;);</code></pre>
+<p>  });<br>  dispatch_group_async(group, aDQueue, ^{</p>
+<pre><code>  printf(&quot;task 2 \n&quot;);</code></pre>
+<p>  });</p>
+<p>  printf(“wait 1 2 \n”);<br>  //同步等待，直到group里面的block全部执行完毕，才会继续往后执行。<br>  dispatch_group_wait(group, DISPATCH_TIME_FOREVER);<br>  printf(“task 1 2 finished \n”);</p>
+<p>  /**</p>
+<pre><code>  wait 1 2
+  task 2
+  task 1
+  task 1 2 finished</code></pre>
+<p>  */<br>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">###### dispatch_group_notify</span><br><span class="line"></span><br><span class="line">队列组拦截通知模块(内部本身是异步执行的,不会阻塞线程) </span><br><span class="line"></span><br><span class="line">需要注意下 dispatch_group_notify 的位置，不能放在任务添加之前。</span><br><span class="line"></span><br><span class="line">demo:</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>(void)test2 {<br>  NSLog(@”1:%@”,[NSThread currentThread]);<br>  // 创建队列<br>  dispatch_queue_t queue = dispatch_get_global_queue(0, 0);<br>  // 创建队列组<br>  dispatch_group_t group = dispatch_group_create();</p>
+<p>  /*<br>  // 不要写在这，没意义，我们都知道他在组内所有的任务执行完毕会调用 dispatch_group_notify 中的回调块。<br>  // 但是后面还有一句，当组内没有任务时，dispatch_group_notify 中的回调块也会立即执行。<br>  // 队列组拦截通知模块(内部本身是异步执行的,不会阻塞线程)<br>  dispatch_group_notify(group, queue, ^{</p>
+<pre><code>  NSLog(@&quot;4:%@&quot;,[NSThread currentThread]);</code></pre>
+<p>  });</p>
+<p>  2019-12-18 16:07:54.677923+0800 threadDemo[5581:5613688] 1:&lt;NSThread: 0x6000035c57c0&gt;{number = 1, name = main}<br>  2019-12-18 16:07:54.678160+0800 threadDemo[5581:5613816] 4:&lt;NSThread: 0x600003595cc0&gt;{number = 6, name = (null)}<br>  2019-12-18 16:07:55.678663+0800 threadDemo[5581:5613688] 5:&lt;NSThread: 0x6000035c57c0&gt;{number = 1, name = main}<br>  2019-12-18 16:07:56.681079+0800 threadDemo[5581:5613812] 2:&lt;NSThread: 0x6000035995c0&gt;{number = 5, name = (null)}<br>  2019-12-18 16:07:57.680645+0800 threadDemo[5581:5613815] 3:&lt;NSThread: 0x60000359f300&gt;{number = 3, name = (null)}<br>  */</p>
+<p>  //队列组异步执行任务<br>  dispatch_group_async(group, queue, ^{</p>
+<pre><code>  sleep(2);
+  NSLog(@&quot;2:%@&quot;,[NSThread currentThread]);</code></pre>
+<p>  });<br>  dispatch_group_async(group, queue, ^{</p>
+<pre><code>  sleep(3);
+  NSLog(@&quot;3:%@&quot;,[NSThread currentThread]);</code></pre>
+<p>  });<br>  // 队列组拦截通知模块(内部本身是异步执行的,不会阻塞线程)<br>  dispatch_group_notify(group, queue, ^{</p>
+<pre><code>  NSLog(@&quot;4:%@&quot;,[NSThread currentThread]);</code></pre>
+<p>  });</p>
+<p>  sleep(1);<br>  NSLog(@”5:%@”,[NSThread currentThread]);</p>
+<p>  /*<br>   2019-12-18 16:06:55.380553+0800 threadDemo[5558:5612492] 1:&lt;NSThread: 0x600003d60800&gt;{number = 1, name = main}<br>   2019-12-18 16:06:56.381177+0800 threadDemo[5558:5612492] 5:&lt;NSThread: 0x600003d60800&gt;{number = 1, name = main}<br>   2019-12-18 16:06:57.384415+0800 threadDemo[5558:5612611] 2:&lt;NSThread: 0x600003d30380&gt;{number = 5, name = (null)}<br>   2019-12-18 16:06:58.385496+0800 threadDemo[5558:5612614] 3:&lt;NSThread: 0x600003d351c0&gt;{number = 3, name = (null)}<br>   2019-12-18 16:06:58.385737+0800 threadDemo[5558:5612614] 4:&lt;NSThread: 0x600003d351c0&gt;{number = 3, name = (null)}<br>   */<br>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">##### dispatch_block</span><br><span class="line"></span><br><span class="line">[dispatch_block](https:&#x2F;&#x2F;www.cnblogs.com&#x2F;KobeLuo&#x2F;p&#x2F;6464233.html)</span><br><span class="line"></span><br><span class="line">[dispatch_block](https:&#x2F;&#x2F;www.jianshu.com&#x2F;p&#x2F;5a16dfd36fad)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">##### dispatch_semaphore</span><br><span class="line"> 信号量，有三个方法：</span><br><span class="line">  </span><br><span class="line">###### dispatch_semaphore_create</span><br><span class="line"></span><br><span class="line">dispatch_semaphore_t dispatch_semaphore_create(long value);</span><br><span class="line">    创建一个信号量，信号量的值为入参 value</span><br><span class="line"></span><br><span class="line">###### dispatch_semaphore_wait</span><br><span class="line"></span><br><span class="line">long dispatch_semaphore_wait(dispatch_semaphore_t dsema, dispatch_time_t timeout);</span><br><span class="line">    接收一个信号和时间值，若信号的信号量为0，则会阻塞当前线程，直到信号量大于0或者经过输入的时间值；</span><br><span class="line">    若信号量大于0，则会使信号量减1并返回，程序继续住下执行</span><br><span class="line"></span><br><span class="line">###### dispatch_semaphore_signal</span><br><span class="line"></span><br><span class="line">long dispatch_semaphore_signal(dispatch_semaphore_t dsema);</span><br><span class="line">    接收一个信号量，发送信号使信号量的值 +1并返回</span><br><span class="line"> </span><br><span class="line">###### 使用</span><br><span class="line"></span><br><span class="line">应用场景：</span><br><span class="line"></span><br><span class="line">1. 充当锁的功能</span><br><span class="line">2. 异步任务，同步返回（同步获取指定APP在AppStore中的当前版本）</span><br><span class="line">3. 并发控制（实现与NSOperationQueue中max-ConcurrentOperationCount 类似功能。）</span><br><span class="line"></span><br><span class="line">demo:</span><br><span class="line"></span><br><span class="line">并发控制</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>@implementation SemaphoreMaxConcurrentCount {<br>  dispatch_semaphore_t _semaphore;<br>  dispatch_queue_t _queue;<br>}</p>
+</li>
+<li><p>(instancetype)init {<br>  return [self initWithMaxConcurrentCount:3];;<br>}</p>
+</li>
+<li><p>(instancetype)initWithMaxConcurrentCount:(NSInteger)count {<br>  if (self = [super init]) {</p>
+<pre><code>  if (count &lt; 1) &#123;
+      count = 3;
+  &#125;
+  _semaphore = dispatch_semaphore_create(count);
+  _queue = dispatch_queue_create(&quot;asyncConcurrent&quot;, DISPATCH_QUEUE_CONCURRENT);</code></pre>
+<p>  }<br>  return self;<br>}</p>
+</li>
+</ul>
+<ul>
+<li>(void)addTask:(TaskBlock)block {<br>  dispatch_async(_queue, ^{<pre><code>  dispatch_semaphore_wait(self-&gt;_semaphore, DISPATCH_TIME_FOREVER);
+  dispatch_async(dispatch_get_global_queue(0, 0), ^&#123;
+      block();
+      dispatch_semaphore_signal(self-&gt;_semaphore);
+  &#125;);</code></pre>
+  });<br>}</li>
+</ul>
+<p>@end</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">AFNetworking库中</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>/**<br> AFNetworking库中</p>
+<p> 获取session中完成的tasks。这个 与 <code>appVersionInAppStore:</code> 方法中的作用差不多。</p>
+<p> 都是通过block获取数据，然后将数据直接返回出去，避免了其他地方获取task也要用回调的方式获取数据。</p>
+<p> */<br>//- (NSArray *)tasksForKeyPath:(NSString *)keyPath {<br>//    __block NSArray *tasks = nil;<br>//    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);<br>//    [self.session getTasksWithCompletionHandler:^(NSArray *dataTasks, NSArray *uploadTasks, NSArray *downloadTasks) {<br>//        if ([keyPath isEqualToString:NSStringFromSelector(@selector(dataTasks))]) {<br>//            tasks = dataTasks;<br>//        } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(uploadTasks))]) {<br>//            tasks = uploadTasks;<br>//        } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(downloadTasks))]) {<br>//            tasks = downloadTasks;<br>//        } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(tasks))]) {<br>//            tasks = [@[dataTasks, uploadTasks, downloadTasks] valueForKeyPath:@”@unionOfArrays.self”];<br>//        }<br>//<br>//        dispatch_semaphore_signal(semaphore);<br>//    }];<br>//<br>//    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);<br>//<br>//    return tasks;<br>//}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">充当锁的功能</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>/**<br> 充当锁的功能</p>
+<p> 当线程1执行到dispatch_semaphore_wait这一行时，semaphore的信号量为1，所以使信号量-1变为0，并且线程1继续往下执行；<br> 当在线程1NSLog这一行代码还没执行完的时候，又有线程2来访问，执行dispatch_semaphore_wait时由于此时信号量为0，且时间为DISPATCH_TIME_FOREVER,所以会一直阻塞线程2（此时线程2处于等待状态），直到线程1执行完NSLog并执行完dispatch_semaphore_signal使信号量为1后，线程2才能解除阻塞继续住下执行。<br> 这就可以保证同时只有一个线程执行NSLog这一行代码。</p>
+<p> */</p>
+<ul>
+<li><p>(void)test1 {<br>  dispatch_queue_t queue = dispatch_get_global_queue(0, 0);<br>  dispatch_semaphore_t semaphore = dispatch_semaphore_create(1);<br>  for (int i = 0; i &lt; 100; i++) {</p>
+<pre><code>  dispatch_async(queue, ^&#123;
+      // 相当于加锁
+      dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+      NSLog(@&quot;i = %d semaphore = %@&quot;, i, semaphore);
+      // 相当于解锁
+      dispatch_semaphore_signal(semaphore);
+  &#125;);</code></pre>
+<p>  }<br>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">异步任务，同步返回(同步获取指定APP在AppStore中的当前版本)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>/**<br>异步任务，同步返回</p>
+<p>同步获取指定APP在AppStore中的当前版本<br>*/</p>
+</li>
+<li><p>(NSString *)appVersionInAppStore:(NSString *)appId {<br>  __block NSString *appVersion = @””;<br>  NSString *url = [NSString stringWithFormat:@”<a target="_blank" rel="noopener" href="https://itunes.apple.com/lookup?id=%25@&quot;,appId%5D">https://itunes.apple.com/lookup?id=%@&quot;,appId]</a>;<br>  NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];</p>
+<p>  dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);</p>
+<p>  NSURLSessionDataTask *dataTask = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {</p>
+<pre><code>  NSError *err;
+  NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingMutableContainers) error:&amp;err];
+  if (!err) &#123;
+      NSArray *results = jsonData[@&quot;results&quot;];
+      if ([results isKindOfClass:[NSArray class]] &amp;&amp; results != nil &amp;&amp; results.count &gt; 0) &#123;
+          appVersion = results.firstObject[@&quot;version&quot;];
+      &#125;
+  &#125;
 
-<p>NSObject 类默认的 hash 值为 10 进制的内存地址，这里作者将 _selector和 _target 的内存地址进行一个位异或处理，意味着只要 _selector 和 _target 地址都相同时，hash 值就相同。</p>
-<p>上面定义了<code>static NSMutableSet *transactionSet = nil;</code>，transactionSet是一个集合。</p>
-<p>这么做的意义，是因为这里和其他编程语言一样 NSSet 是基于 hash 的集合，它是不能有重复元素的，而判断是否重复毫无疑问是使用 hash。作者通过重写hash算法来重新定义重复元素。</p>
-<p>将 YYTransaction 的 hash值依托于 _selector 和 _target 的内存地址，那就意味着两点：<br>    1、同一个 YYTransaction 实例，_selector 和 _target 只要有一个内存地址不同，就会在集合中体现为两个值。<br>    2、不同的 YYTransaction 实例，_selector 和 _target 的内存地址都相同，在集合中的体现为一个值。</p>
-<p>在这可以避免重复的方法调用。加入 transactionSet 中的事件会在 Runloop 即将进入休眠或者即将退出时遍历执行，相同的方法接收者 (_target) 和相同的方法 (_selector)，可以视为重复调用（这里的主要场景是避免重复绘制影响性能）。</p>
-<p>举一个实际的例子：</p>
-<p>当使用绘制来制作一个文本时，Font、Text等属性的改变都意味着要重绘，使用 YYTransaction 延迟了绘制的调用时机，并且它们在同一个 RunLoop 循环中，装入 NSSet 将直接合并为一个绘制任务，避免了重复的绘制。</p>
-<h5 id="YYAsyncLayer-1"><a href="#YYAsyncLayer-1" class="headerlink" title="YYAsyncLayer"></a>YYAsyncLayer</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@interface YYAsyncLayer : CALayer </span><br><span class="line">@property BOOL displaysAsynchronously;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
-<p>YYAsyncLayer 继承自 CALayer，对外暴露了一个方法可开闭是否异步绘制。</p>
-<h6 id="初始化配置"><a href="#初始化配置" class="headerlink" title="初始化配置"></a>初始化配置</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">- (instancetype)init &#123;</span><br><span class="line">    self &#x3D; [super init];</span><br><span class="line">    static CGFloat scale; &#x2F;&#x2F;global</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        scale &#x3D; [UIScreen mainScreen].scale;</span><br><span class="line">    &#125;);</span><br><span class="line">    self.contentsScale &#x3D; scale;</span><br><span class="line">    _sentinel &#x3D; [YYSentinel new];</span><br><span class="line">    _displaysAsynchronously &#x3D; YES;</span><br><span class="line">    return self;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+  dispatch_semaphore_signal(semaphore);</code></pre>
+<p>  }];</p>
+<p>  [dataTask resume];</p>
+<p>  dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);</p>
+<p>  return appVersion;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">##### dispatch_barrier</span><br><span class="line"> </span><br><span class="line">在一个并行队列中，有多个线程在执行多个任务，在这个并行队列中，有一个dispatch_barrier任务。这样会使所有在这个dispatch_barrier之后的任务总会等待barrier之前的所有任务结束之后，才会执行。</span><br><span class="line"></span><br><span class="line">dispatch_barrier 又分为 dispatch_barrier_sync 和 dispatch_barrier_async</span><br><span class="line"></span><br><span class="line">注意：</span><br><span class="line">1.barrier和串行队列配合是完全没有意义的。</span><br><span class="line">barrier的目的是为了在某种情况下，同一个队列中一些并发任务必须在另一些并发任务之后执行，所以需要一个类似于拦截的功能，迫使后执”</span><br><span class="line">“行的任务必须等待。那么，串行队列中的所有任务本身就是按照顺序执行的。</span><br><span class="line"></span><br><span class="line">2.在global queue中使用barrier没有意义。</span><br><span class="line">barrier实现的基本条件是，要写在同一队列中。举个例子，你现在创建了两个并行队列，你在其中一个队列中插入了一个barrier任务，那么你不可能期待他可以在第二个队列中生效，对吧。同样的，每一次使用global queue，系统分配给你的可能是不同的并行队列，你在其中插入一个barrier任务，没有意义。</span><br><span class="line"></span><br><span class="line">###### dispatch_barrier_sync</span><br><span class="line"></span><br><span class="line">dispatch_barrier_sync 中的任务同步执行，会阻塞当前线程</span><br><span class="line"></span><br><span class="line">demo:</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li><p>(void)test1 {<br>  dispatch_queue_t queue = dispatch_queue_create(“asyncConcurrent”, DISPATCH_QUEUE_CONCURRENT);</p>
+<p>  for (int i = 0; i &lt; 10; i++) {</p>
+<pre><code>  if (i % 2 == 0) &#123;
+      dispatch_async(queue, ^&#123;
+          sleep(1);
+          NSLog(@&quot;dispatch_barrier_sync 之前的任务:%d&quot;,i);
+      &#125;);
+  &#125;
+  else &#123;
+      dispatch_async(queue, ^&#123;
+          NSLog(@&quot;dispatch_barrier_sync 之前的任务:%d&quot;,i);
+      &#125;);
+  &#125;</code></pre>
+<p>  }</p>
+<p>  dispatch_barrier_sync(queue, ^{</p>
+<pre><code>  NSLog(@&quot;dispatch_barrier_sync 任务执行 %@&quot;, [NSThread currentThread]);</code></pre>
+<p>  });</p>
+<p>  NSLog(@”dispatch_barrier_sync 所在线程 %@”, [NSThread currentThread]);</p>
+<p>  for (int i = 0; i &lt; 10; i++) {</p>
+<pre><code>  if (i % 2 == 0) &#123;
+      dispatch_async(queue, ^&#123;
+          sleep(1);
+          NSLog(@&quot;dispatch_barrier_sync 之后的任务:%d&quot;,i);
+      &#125;);
+  &#125;
+  else &#123;
+      dispatch_async(queue, ^&#123;
+          NSLog(@&quot;dispatch_barrier_sync 之后的任务:%d&quot;,i);
+      &#125;);
+  &#125;</code></pre>
+<p>  }</p>
+<p>  /**<br>   2019-12-19 13:41:20.335598+0800 threadDemo[8655:6043711] dispatch_barrier_sync 之前的任务:1<br>   2019-12-19 13:41:20.335702+0800 threadDemo[8655:6044001] dispatch_barrier_sync 之前的任务:3<br>   2019-12-19 13:41:20.336030+0800 threadDemo[8655:6044003] dispatch_barrier_sync 之前的任务:5<br>   2019-12-19 13:41:20.336205+0800 threadDemo[8655:6044004] dispatch_barrier_sync 之前的任务:7<br>   2019-12-19 13:41:20.336373+0800 threadDemo[8655:6044005] dispatch_barrier_sync 之前的任务:9<br>   2019-12-19 13:41:21.340593+0800 threadDemo[8655:6043711] dispatch_barrier_sync 之前的任务:6<br>   2019-12-19 13:41:21.340593+0800 threadDemo[8655:6043998] dispatch_barrier_sync 之前的任务:0<br>   2019-12-19 13:41:21.340593+0800 threadDemo[8655:6044001] dispatch_barrier_sync 之前的任务:8<br>   2019-12-19 13:41:21.340593+0800 threadDemo[8655:6044002] dispatch_barrier_sync 之前的任务:4<br>   2019-12-19 13:41:21.340636+0800 threadDemo[8655:6044000] dispatch_barrier_sync 之前的任务:2<br>   2019-12-19 13:41:21.340931+0800 threadDemo[8655:6043503] dispatch_barrier_sync 任务执行 &lt;NSThread: 0x6000014820c0&gt;{number = 1, name = main}<br>   2019-12-19 13:41:21.341159+0800 threadDemo[8655:6043503] dispatch_barrier_sync 所在线程 &lt;NSThread: 0x6000014820c0&gt;{number = 1, name = main}<br>   2019-12-19 13:41:21.341339+0800 threadDemo[8655:6044002] dispatch_barrier_sync 之后的任务:1<br>   2019-12-19 13:41:21.341552+0800 threadDemo[8655:6043998] dispatch_barrier_sync 之后的任务:3<br>   2019-12-19 13:41:21.342288+0800 threadDemo[8655:6044002] dispatch_barrier_sync 之后的任务:5<br>   2019-12-19 13:41:21.342807+0800 threadDemo[8655:6044004] dispatch_barrier_sync 之后的任务:7<br>   2019-12-19 13:41:21.342890+0800 threadDemo[8655:6043711] dispatch_barrier_sync 之后的任务:9<br>   2019-12-19 13:41:22.345189+0800 threadDemo[8655:6044001] dispatch_barrier_sync 之后的任务:2<br>   2019-12-19 13:41:22.345189+0800 threadDemo[8655:6044005] dispatch_barrier_sync 之后的任务:4<br>   2019-12-19 13:41:22.345227+0800 threadDemo[8655:6044003] dispatch_barrier_sync 之后的任务:6<br>   2019-12-19 13:41:22.345227+0800 threadDemo[8655:6044000] dispatch_barrier_sync 之后的任务:0<br>   2019-12-19 13:41:22.345237+0800 threadDemo[8655:6043998] dispatch_barrier_sync 之后的任务:8<br>   */<br>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">###### dispatch_barrier_async</span><br><span class="line"> </span><br><span class="line">dispatch_barrier_async 中的任务异步执行，不会阻塞当前线程</span><br><span class="line"></span><br><span class="line">demo:</span><br><span class="line"></span><br><span class="line">&#96;&#96;&#96; </span><br><span class="line">- (void)test2 &#123;</span><br><span class="line">    dispatch_queue_t queue &#x3D; dispatch_queue_create(&quot;asyncConcurrent&quot;, DISPATCH_QUEUE_CONCURRENT);</span><br><span class="line">    </span><br><span class="line">    for (int i &#x3D; 0; i &lt; 10; i++) &#123;</span><br><span class="line">        if (i % 2 &#x3D;&#x3D; 0) &#123;</span><br><span class="line">            dispatch_async(queue, ^&#123;</span><br><span class="line">                sleep(1);</span><br><span class="line">                NSLog(@&quot;dispatch_barrier_sync 之前的任务:%d&quot;,i);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">        else &#123;</span><br><span class="line">            dispatch_async(queue, ^&#123;</span><br><span class="line">                NSLog(@&quot;dispatch_barrier_sync 之前的任务:%d&quot;,i);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    dispatch_barrier_async(queue, ^&#123;</span><br><span class="line">        NSLog(@&quot;dispatch_barrier_sync 任务执行 %@&quot;, [NSThread currentThread]);</span><br><span class="line">    &#125;);</span><br><span class="line">    </span><br><span class="line">    NSLog(@&quot;dispatch_barrier_async 所在线程 %@&quot;, [NSThread currentThread]);</span><br><span class="line">    </span><br><span class="line">    for (int i &#x3D; 0; i &lt; 10; i++) &#123;</span><br><span class="line">        if (i % 2 &#x3D;&#x3D; 0) &#123;</span><br><span class="line">            dispatch_async(queue, ^&#123;</span><br><span class="line">                sleep(1);</span><br><span class="line">                NSLog(@&quot;dispatch_barrier_sync 之后的任务:%d&quot;,i);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">        else &#123;</span><br><span class="line">            dispatch_async(queue, ^&#123;</span><br><span class="line">                NSLog(@&quot;dispatch_barrier_sync 之后的任务:%d&quot;,i);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    &#x2F;**</span><br><span class="line">     2019-12-19 13:40:48.135837+0800 threadDemo[8655:6043503] dispatch_barrier_async 所在线程 &lt;NSThread: 0x6000014820c0&gt;&#123;number &#x3D; 1, name &#x3D; main&#125;</span><br><span class="line">     2019-12-19 13:40:48.137458+0800 threadDemo[8655:6043615] dispatch_barrier_sync 之前的任务:1</span><br><span class="line">     2019-12-19 13:40:48.152424+0800 threadDemo[8655:6043615] dispatch_barrier_sync 之前的任务:3</span><br><span class="line">     2019-12-19 13:40:48.152613+0800 threadDemo[8655:6043615] dispatch_barrier_sync 之前的任务:5</span><br><span class="line">     2019-12-19 13:40:48.152732+0800 threadDemo[8655:6043711] dispatch_barrier_sync 之前的任务:7</span><br><span class="line">     2019-12-19 13:40:48.152829+0800 threadDemo[8655:6043615] dispatch_barrier_sync 之前的任务:9</span><br><span class="line">     2019-12-19 13:40:49.140811+0800 threadDemo[8655:6043611] dispatch_barrier_sync 之前的任务:0</span><br><span class="line">     2019-12-19 13:40:49.153305+0800 threadDemo[8655:6043710] dispatch_barrier_sync 之前的任务:6</span><br><span class="line">     2019-12-19 13:40:49.153305+0800 threadDemo[8655:6043609] dispatch_barrier_sync 之前的任务:2</span><br><span class="line">     2019-12-19 13:40:49.153305+0800 threadDemo[8655:6043709] dispatch_barrier_sync 之前的任务:4</span><br><span class="line">     2019-12-19 13:40:49.153359+0800 threadDemo[8655:6043712] dispatch_barrier_sync 之前的任务:8</span><br><span class="line">     2019-12-19 13:40:49.153667+0800 threadDemo[8655:6043712] dispatch_barrier_sync 任务执行 &lt;NSThread: 0x60000140dd00&gt;&#123;number &#x3D; 7, name &#x3D; (null)&#125;</span><br><span class="line">     2019-12-19 13:40:49.153994+0800 threadDemo[8655:6043712] dispatch_barrier_sync 之后的任务:1</span><br><span class="line">     2019-12-19 13:40:49.154061+0800 threadDemo[8655:6043710] dispatch_barrier_sync 之后的任务:3</span><br><span class="line">     2019-12-19 13:40:49.154194+0800 threadDemo[8655:6043710] dispatch_barrier_sync 之后的任务:5</span><br><span class="line">     2019-12-19 13:40:49.154419+0800 threadDemo[8655:6043714] dispatch_barrier_sync 之后的任务:7</span><br><span class="line">     2019-12-19 13:40:49.154460+0800 threadDemo[8655:6043713] dispatch_barrier_sync 之后的任务:9</span><br><span class="line">     2019-12-19 13:40:50.154831+0800 threadDemo[8655:6043709] dispatch_barrier_sync 之后的任务:0</span><br><span class="line">     2019-12-19 13:40:50.154831+0800 threadDemo[8655:6043611] dispatch_barrier_sync 之后的任务:4</span><br><span class="line">     2019-12-19 13:40:50.154869+0800 threadDemo[8655:6043712] dispatch_barrier_sync 之后的任务:6</span><br><span class="line">     2019-12-19 13:40:50.154869+0800 threadDemo[8655:6043615] dispatch_barrier_sync 之后的任务:8</span><br><span class="line">     2019-12-19 13:40:50.154867+0800 threadDemo[8655:6043609] dispatch_barrier_sync 之后的任务:2</span><br><span class="line">     </span><br><span class="line">     *&#x2F;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<p>YYAsyncLayer 的 contentsScale 为屏幕的 scale，该属性是 物理像素 / 逻辑像素，这样可以充分利用不同设备的显示器分辨率，绘制更清晰的图像。但是若 contentsGravity 设置了可拉伸的类型，CoreAnimation 将会优先满足，而忽略掉 contentsScale。UIView 和 UIImageView 默认处理了它们内部 CALayer 的 contentsScale，所以除非是直接使用 CALayer 及其衍生类，都不用显式的配置 contentsScale。</p>
-<p>同时还创建了一个 YYSentinel 实例。</p>
-<p>默认开启异步绘制。</p>
-<h6 id="重写绘制方法："><a href="#重写绘制方法：" class="headerlink" title="重写绘制方法："></a>重写绘制方法：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">- (void)setNeedsDisplay &#123;</span><br><span class="line">    [self _cancelAsyncDisplay];</span><br><span class="line">    [super setNeedsDisplay];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)display &#123;</span><br><span class="line">    super.contents &#x3D; super.contents;</span><br><span class="line">    [self _displayAsync:_displaysAsynchronously];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="dispatch-once"><a href="#dispatch-once" class="headerlink" title="dispatch_once"></a>dispatch_once</h5><p>dispatch_once能保证任务只会被执行一次，同时多线程调用也是线程安全的。</p>
+<p>原理：dispatch_once用原子性操作block执行完成标记位，同时用信号量确保只有一个线程执行block，等block执行完再唤醒所有等待中的线程。</p>
+<p>应用场景：</p>
+<ol>
+<li>dispatch_once 常被用于创建单例</li>
+<li>只需执行一次的函数都可以使用</li>
+</ol>
+<p>demo:</p>
+<p>AFNetworking 库中 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;*</span><br><span class="line"> AFNetworking 库中创建队列</span><br><span class="line"> 1、用到时才创建</span><br><span class="line"> 2、确保只要创建一次</span><br><span class="line"> 3、需要线程安全</span><br><span class="line"> 综上原因，使用 dispatch_once 是最优选择</span><br><span class="line"> </span><br><span class="line"> *&#x2F;</span><br><span class="line">&#x2F;&#x2F;static dispatch_queue_t url_session_manager_processing_queue() &#123;</span><br><span class="line">&#x2F;&#x2F;    static dispatch_queue_t af_url_session_manager_processing_queue;</span><br><span class="line">&#x2F;&#x2F;    static dispatch_once_t onceToken;</span><br><span class="line">&#x2F;&#x2F;    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">&#x2F;&#x2F;        af_url_session_manager_processing_queue &#x3D; dispatch_queue_create(&quot;com.alamofire.networking.session.manager.processing&quot;, DISPATCH_QUEUE_CONCURRENT);</span><br><span class="line">&#x2F;&#x2F;    &#125;);</span><br><span class="line">&#x2F;&#x2F;</span><br><span class="line">&#x2F;&#x2F;    return af_url_session_manager_processing_queue;</span><br><span class="line">&#x2F;&#x2F;&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<p>标记需要绘制时，会先取消目前的异步绘制。待下一轮runloop到来绘制时，通过 <code>_displayAsync:</code> 方法来进行异步绘制操作。<code>_displayAsync:</code> 方法后面分析。</p>
-<h6 id="YYAsyncLayerDisplayTask"><a href="#YYAsyncLayerDisplayTask" class="headerlink" title="YYAsyncLayerDisplayTask"></a>YYAsyncLayerDisplayTask</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@interface YYAsyncLayerDisplayTask : NSObject</span><br><span class="line">@property (nullable, nonatomic, copy) void (^willDisplay)(CALayer *layer); </span><br><span class="line">@property (nullable, nonatomic, copy) void (^display)(CGContextRef context, CGSize size, BOOL(^isCancelled)(void)); </span><br><span class="line">@property (nullable, nonatomic, copy) void (^didDisplay)(CALayer *layer, BOOL finished); </span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>单利</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">- (void)test1 &#123;</span><br><span class="line">    TDManager *manager1 &#x3D; [TDManager shareManager];</span><br><span class="line">    TDManager *manager2 &#x3D; [TDManager new];</span><br><span class="line">    TDManager *manager3 &#x3D; [[TDManager alloc] init];</span><br><span class="line">    TDManager *manager4 &#x3D; [manager1 copy];</span><br><span class="line">    TDManager *manager5 &#x3D; [manager1 mutableCopy];</span><br><span class="line">    </span><br><span class="line">    NSLog(@&quot;manager1:%p&quot;,manager1);</span><br><span class="line">    NSLog(@&quot;manager2:%p&quot;,manager2);</span><br><span class="line">    NSLog(@&quot;manager3:%p&quot;,manager3);</span><br><span class="line">    NSLog(@&quot;manager4:%p&quot;,manager4);</span><br><span class="line">    NSLog(@&quot;manager5:%p&quot;,manager5);</span><br><span class="line">    </span><br><span class="line">    &#x2F;*</span><br><span class="line">     打印内存地址都一致，起到了单利效果</span><br><span class="line">     </span><br><span class="line">     2019-12-20 17:00:15.974273+0800 threadDemo[30701:6628246] manager1:0x6000021d68b0</span><br><span class="line">     2019-12-20 17:00:15.974428+0800 threadDemo[30701:6628246] manager2:0x6000021d68b0</span><br><span class="line">     2019-12-20 17:00:15.974544+0800 threadDemo[30701:6628246] manager3:0x6000021d68b0</span><br><span class="line">     2019-12-20 17:00:15.974634+0800 threadDemo[30701:6628246] manager4:0x6000021d68b0</span><br><span class="line">     2019-12-20 17:00:15.974714+0800 threadDemo[30701:6628246] manager5:0x6000021d68b0</span><br><span class="line">     *&#x2F;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p><code>YYAsyncLayerDisplayTask</code> 是一个异步绘制任务。</p>
-<p>通过 <code>willDisplay</code> 和 <code>didDisplay</code> 回调将要绘制和结束绘制时机，通过实现<code>display</code> 在代码块里面写业务绘制逻辑。</p>
-<h6 id="YYAsyncLayerDelegate"><a href="#YYAsyncLayerDelegate" class="headerlink" title="YYAsyncLayerDelegate"></a>YYAsyncLayerDelegate</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@protocol YYAsyncLayerDelegate &lt;NSObject&gt;</span><br><span class="line">@required </span><br><span class="line">- (YYAsyncLayerDisplayTask *)newAsyncDisplayTask;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<h5 id="dispatch-apply"><a href="#dispatch-apply" class="headerlink" title="dispatch_apply"></a>dispatch_apply</h5><p>dispatch_apply类似一个for循环，会在指定的dispatch queue中运行block任务n次.<br>    如果队列是并发队列，则会并发执行block任务;<br>    如果队列是串行队列，则会串行在当前队列执行block任务;<br>    dispatch_apply是一个同步调用，block任务执行n次后才返回。</p>
+<p>demo:</p>
+<p>串行队列中执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;&#x2F; 串行队列中执行,效率还是略高于普通的 for 循环</span><br><span class="line">- (void)test1 &#123;</span><br><span class="line">    NSLog(@&quot;start&quot;);</span><br><span class="line">      </span><br><span class="line">    dispatch_queue_t queue&#x3D; dispatch_queue_create(&quot;asyncSerial&quot;, DISPATCH_QUEUE_SERIAL);</span><br><span class="line">&#x2F;&#x2F;    dispatch_queue_t queue &#x3D; dispatch_queue_create(&quot;asyncConcurrent&quot;, DISPATCH_QUEUE_CONCURRENT);</span><br><span class="line">    </span><br><span class="line">    CFTimeInterval startTimeInterval &#x3D; CACurrentMediaTime();</span><br><span class="line">    &#x2F;&#x2F;dispatch_apply是一个同步调用，block任务执行都执行完才返回，会卡住当前线程（无论串行还是并发队列）</span><br><span class="line">    dispatch_apply(10000, queue, ^(size_t i) &#123;</span><br><span class="line">        </span><br><span class="line">&#x2F;&#x2F;        [NSThread sleepForTimeInterval:arc4random()%1];</span><br><span class="line">        </span><br><span class="line">        NSLog(@&quot;%zu %@&quot;,i,[NSThread currentThread]);</span><br><span class="line">    &#125;);</span><br><span class="line">    CFTimeInterval endTimeInterval &#x3D; CACurrentMediaTime();</span><br><span class="line">    NSLog(@&quot;end&quot;);</span><br><span class="line">    </span><br><span class="line">    NSLog(@&quot;endTimeInterval - startTimeInterval:%f&quot;,endTimeInterval - startTimeInterval);</span><br><span class="line">    </span><br><span class="line">    &#x2F;*</span><br><span class="line">     2019-12-19 15:46:19.281002+0800 threadDemo[9336:6115616] 0 &lt;NSThread: 0x6000008aa0c0&gt;&#123;number &#x3D; 1, name &#x3D; main&#125;</span><br><span class="line">     2019-12-19 15:46:19.281440+0800 threadDemo[9336:6115616] 1 &lt;NSThread: 0x6000008aa0c0&gt;&#123;number &#x3D; 1, name &#x3D; main&#125;</span><br><span class="line">     2019-12-19 15:46:19.281440+0800 threadDemo[9336:6115616] 2 &lt;NSThread: 0x6000008aa0c0&gt;&#123;number &#x3D; 1, name &#x3D; main&#125;</span><br><span class="line">     2019-12-19 15:46:19.281440+0800 threadDemo[9336:6115616] 3 &lt;NSThread: 0x6000008aa0c0&gt;&#123;number &#x3D; 1, name &#x3D; main&#125;</span><br><span class="line">     ....</span><br><span class="line">     2019-12-19 15:46:19.281002+0800 threadDemo[9336:6115616] 9997 &lt;NSThread: 0x6000008aa0c0&gt;&#123;number &#x3D; 1, name &#x3D; main&#125;</span><br><span class="line">     2019-12-19 15:46:19.281440+0800 threadDemo[9336:6115616] 9998 &lt;NSThread: 0x6000008aa0c0&gt;&#123;number &#x3D; 1, name &#x3D; main&#125;</span><br><span class="line">     2019-12-19 15:46:19.282302+0800 threadDemo[9336:6115616] 9999 &lt;NSThread: 0x6000008aa0c0&gt;&#123;number &#x3D; 1, name &#x3D; main&#125;</span><br><span class="line">     2019-12-19 15:46:19.282819+0800 threadDemo[9336:6115616] end</span><br><span class="line">     2019-12-19 15:46:19.283203+0800 threadDemo[9336:6115616] endTimeInterval - startTimeInterval:4.206515</span><br><span class="line">     </span><br><span class="line">     *&#x2F;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br></pre></td></tr></table></figure>
 
-<p>通过协议提供数据源的方式，获取异步绘制的任务。</p>
-<h5 id="异步绘制的核心逻辑"><a href="#异步绘制的核心逻辑" class="headerlink" title="异步绘制的核心逻辑"></a>异步绘制的核心逻辑</h5><p>去掉一些优化代码，主要做的事情如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">dispatch_async(YYAsyncLayerGetDisplayQueue(), ^&#123;</span><br><span class="line">            UIGraphicsBeginImageContextWithOptions(size, opaque, scale);</span><br><span class="line">            CGContextRef context &#x3D; UIGraphicsGetCurrentContext(); </span><br><span class="line">            UIImage *image &#x3D; UIGraphicsGetImageFromCurrentImageContext();</span><br><span class="line">            UIGraphicsEndImageContext();</span><br><span class="line">            dispatch_async(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">                self.contents &#x3D; (__bridge id)(image.CGImage); </span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
+<p>并发队列执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;&#x2F; 并发队列中执行，比串行队列效率高</span><br><span class="line">- (void)test2 &#123;</span><br><span class="line">    NSLog(@&quot;start&quot;);</span><br><span class="line">    </span><br><span class="line">    dispatch_queue_t queue &#x3D; dispatch_queue_create(&quot;asyncConcurrent&quot;, DISPATCH_QUEUE_CONCURRENT);</span><br><span class="line">    </span><br><span class="line">    CFTimeInterval startTimeInterval &#x3D; CACurrentMediaTime();</span><br><span class="line">    &#x2F;&#x2F;dispatch_apply是一个同步调用，block任务执行都执行完才返回，会卡住当前线程（无论串行还是并发队列）</span><br><span class="line">    dispatch_apply(10000, queue, ^(size_t i) &#123;</span><br><span class="line">        </span><br><span class="line">&#x2F;&#x2F;        [NSThread sleepForTimeInterval:arc4random()%1];</span><br><span class="line">        </span><br><span class="line">        NSLog(@&quot;%zu %@&quot;,i,[NSThread currentThread]);</span><br><span class="line">    &#125;);</span><br><span class="line">    CFTimeInterval endTimeInterval &#x3D; CACurrentMediaTime();</span><br><span class="line">    NSLog(@&quot;end&quot;);</span><br><span class="line">    </span><br><span class="line">    NSLog(@&quot;endTimeInterval - startTimeInterval:%f&quot;,endTimeInterval - startTimeInterval);</span><br><span class="line">    </span><br><span class="line">    &#x2F;*</span><br><span class="line"></span><br><span class="line">     2019-12-19 16:23:13.700098+0800 threadDemo[9717:6141471] 0 &lt;NSThread: 0x600002f5a140&gt;&#123;number &#x3D; 1, name &#x3D; main&#125;</span><br><span class="line">     2019-12-19 16:23:13.700240+0800 threadDemo[9717:6141471] 1 &lt;NSThread: 0x600002f5a140&gt;&#123;number &#x3D; 1, name &#x3D; main&#125;</span><br><span class="line">     2019-12-19 16:23:13.700767+0800 threadDemo[9717:6141471] 2 &lt;NSThread: 0x600002f5a140&gt;&#123;number &#x3D; 1, name &#x3D; main&#125;</span><br><span class="line">     ...</span><br><span class="line">     2019-12-19 16:23:17.318679+0800 threadDemo[9717:6141471] 9995 &lt;NSThread: 0x600002f5a140&gt;&#123;number &#x3D; 1, name &#x3D; main&#125;</span><br><span class="line">     2019-12-19 16:23:17.318908+0800 threadDemo[9717:6141715] 9996 &lt;NSThread: 0x600002fd6900&gt;&#123;number &#x3D; 8, name &#x3D; (null)&#125;</span><br><span class="line">     2019-12-19 16:23:17.319090+0800 threadDemo[9717:6141471] 9997 &lt;NSThread: 0x600002f5a140&gt;&#123;number &#x3D; 1, name &#x3D; main&#125;</span><br><span class="line">     2019-12-19 16:23:17.319294+0800 threadDemo[9717:6141714] 9998 &lt;NSThread: 0x600002fd6780&gt;&#123;number &#x3D; 7, name &#x3D; (null)&#125;</span><br><span class="line">     2019-12-19 16:23:17.319498+0800 threadDemo[9717:6141662] 9999 &lt;NSThread: 0x600002fd6740&gt;&#123;number &#x3D; 6, name &#x3D; (null)&#125;</span><br><span class="line">     2019-12-19 16:23:17.321036+0800 threadDemo[9717:6141471] end</span><br><span class="line">     2019-12-19 16:23:17.321507+0800 threadDemo[9717:6141471] endTimeInterval - startTimeInterval:3.620898</span><br><span class="line">     *&#x2F;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>其实就是通过 <code>CoreGraphics</code> 在子线程中生成一个位图，然后进入主队列给 YYAsyncLayer 的 contents 赋值 CGImage 由 GPU 渲染过后提交到显示系统。</p>
-<h5 id="及时的结束无用的绘制"><a href="#及时的结束无用的绘制" class="headerlink" title="及时的结束无用的绘制"></a>及时的结束无用的绘制</h5><p>前面提到的 <code>YYSentinel</code> 的作用已经说明。</p>
-<p>在适当的地方进行自增value，然后在绘制过程中对比value是否发生变化来判断是否取消绘制操作。</p>
-<p>很巧妙的实现。</p>
-<h5 id="异步线程的管理"><a href="#异步线程的管理" class="headerlink" title="异步线程的管理"></a>异步线程的管理</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">static dispatch_queue_t YYAsyncLayerGetDisplayQueue() &#123;</span><br><span class="line">#ifdef YYDispatchQueuePool_h</span><br><span class="line">    return YYDispatchQueueGetForQOS(NSQualityOfServiceUserInitiated);</span><br><span class="line">#else</span><br><span class="line">#define MAX_QUEUE_COUNT 16</span><br><span class="line">    static int queueCount;</span><br><span class="line">    static dispatch_queue_t queues[MAX_QUEUE_COUNT];</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    static int32_t counter &#x3D; 0;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        queueCount &#x3D; (int)[NSProcessInfo processInfo].activeProcessorCount;</span><br><span class="line">        queueCount &#x3D; queueCount &lt; 1 ? 1 : queueCount &gt; MAX_QUEUE_COUNT ? MAX_QUEUE_COUNT : queueCount;</span><br><span class="line">        if ([UIDevice currentDevice].systemVersion.floatValue &gt;&#x3D; 8.0) &#123;</span><br><span class="line">            for (NSUInteger i &#x3D; 0; i &lt; queueCount; i++) &#123;</span><br><span class="line">                dispatch_queue_attr_t attr &#x3D; dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_USER_INITIATED, 0);</span><br><span class="line">                queues[i] &#x3D; dispatch_queue_create(&quot;com.ibireme.yykit.render&quot;, attr);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            for (NSUInteger i &#x3D; 0; i &lt; queueCount; i++) &#123;</span><br><span class="line">                queues[i] &#x3D; dispatch_queue_create(&quot;com.ibireme.yykit.render&quot;, DISPATCH_QUEUE_SERIAL);</span><br><span class="line">                dispatch_set_target_queue(queues[i], dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    int32_t cur &#x3D; OSAtomicIncrement32(&amp;counter);</span><br><span class="line">    if (cur &lt; 0) cur &#x3D; -cur;</span><br><span class="line">    return queues[(cur) % queueCount];</span><br><span class="line">#undef MAX_QUEUE_COUNT</span><br><span class="line">#endif</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="dispatch-after"><a href="#dispatch-after" class="headerlink" title="dispatch_after"></a>dispatch_after</h5><p>延时函数，不会卡住所在线程</p>
+<p>demo:</p>
+<p>任务执行所在队列为主队列，任务在主线程中执行的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">- (void)test1 &#123;</span><br><span class="line">    NSLog(@&quot;1 %@&quot;,[NSThread currentThread]);</span><br><span class="line">    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^&#123;</span><br><span class="line">        NSLog(@&quot;2 %@&quot;,[NSThread currentThread]);</span><br><span class="line">    &#125;);</span><br><span class="line">    NSLog(@&quot;3 %@&quot;,[NSThread currentThread]);</span><br><span class="line">    </span><br><span class="line">    &#x2F;*</span><br><span class="line">     2019-12-19 14:58:46.529442+0800 threadDemo[8900:6083577] 1 &lt;NSThread: 0x6000036b8b80&gt;&#123;number &#x3D; 1, name &#x3D; main&#125;</span><br><span class="line">     2019-12-19 14:58:46.529659+0800 threadDemo[8900:6083577] 3 &lt;NSThread: 0x6000036b8b80&gt;&#123;number &#x3D; 1, name &#x3D; main&#125;</span><br><span class="line">     2019-12-19 14:58:48.529967+0800 threadDemo[8900:6083577] 2 &lt;NSThread: 0x6000036b8b80&gt;&#123;number &#x3D; 1, name &#x3D; main&#125;</span><br><span class="line"></span><br><span class="line">     *&#x2F;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h6 id="要点-1-：串行队列数量和处理器数量相同"><a href="#要点-1-：串行队列数量和处理器数量相同" class="headerlink" title="要点 1 ：串行队列数量和处理器数量相同"></a>要点 1 ：串行队列数量和处理器数量相同</h6><p>一个 n 核设备同一时刻最多能 并行 执行 n 个任务，也就是最多有 n 个线程是相互不竞争 CPU 资源的。</p>
-<p>开辟的线程过多，超过了处理数量，实际上某些并行的线程之间就可能竞争同一个处理器的资源，频繁的切换上下文也会消耗处理器资源。</p>
-<p>而串行队列中只有一个线程，该框架中，作者使用和处理器相同数量的串行队列来轮询处理异步任务，有效的减少了线程调度操作。</p>
-<h6 id="要点-2-：创建串行队列，设置优先级"><a href="#要点-2-：创建串行队列，设置优先级" class="headerlink" title="要点 2 ：创建串行队列，设置优先级"></a>要点 2 ：创建串行队列，设置优先级</h6><p>在 8.0 以上的系统，队列的优先级为 QOS_CLASS_USER_INITIATED，低于用户交互相关的 QOS_CLASS_USER_INTERACTIVE。</p>
-<p>在 8.0 以下的系统，通过 dispatch_set_target_queue() 函数设置优先级为 DISPATCH_QUEUE_PRIORITY_DEFAULT (第二个参数如果使用串行队列会强行将我们创建的所有线程串行执行任务)。</p>
-<p>可以猜测主队列的优先级是大于或等于 QOS_CLASS_USER_INTERACTIVE的，让这些串行队列的优先级低于主队列，避免框架创建的线程和主线程竞争资源。</p>
-<h6 id="要点-3-：轮询返回队列"><a href="#要点-3-：轮询返回队列" class="headerlink" title="要点 3 ：轮询返回队列"></a>要点 3 ：轮询返回队列</h6><p>使用原子自增函数 OSAtomicIncrement32() 对局部静态变量 counter进行自增，然后通过取模运算轮询返回队列。</p>
-<p>注意这里使用了一个判断：if (cur &lt; 0) cur = -cur;，当 cur 自增越界时就会变为负数最大值（在二进制层面，是用正整数的反码加一来表示其负数的）。</p>
-<h6 id="为什么要使用-n-个串行队列实现并发"><a href="#为什么要使用-n-个串行队列实现并发" class="headerlink" title="为什么要使用 n 个串行队列实现并发"></a>为什么要使用 n 个串行队列实现并发</h6><p>为什么这里需要使用 n 个串行队列来调度，而不用一个并行队列。</p>
-<p>主要是因为并行队列无法精确的控制线程数量，很有可能创建过多的线程，导致 CPU 线程调度过于频繁，影响交互性能。</p>
-<p>可能会想到用信号量 (dispatch_semaphore_t) 来控制并发，然而这样只能控制并发的任务数量，而不能控制线程数量，并且使用起来不是很优雅。而使用串行队列就很简单了，我们可以很明确的知道自己创建的线程数量，一切皆在掌控之中。</p>
-<h3 id="学习"><a href="#学习" class="headerlink" title="学习"></a>学习</h3><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/154451e4bd42">YYAsyncLayer 源码剖析：异步绘制</a></p>
+<p>修改任务执行所在队列为并发队列. 任务是在子线程中执行的.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">- (void)test2 &#123;</span><br><span class="line">    NSLog(@&quot;1 %@&quot;,[NSThread currentThread]);</span><br><span class="line">    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_global_queue(0, 0), ^&#123;</span><br><span class="line">        NSLog(@&quot;2 %@&quot;,[NSThread currentThread]);</span><br><span class="line">    &#125;);</span><br><span class="line">    NSLog(@&quot;3 %@&quot;,[NSThread currentThread]);</span><br><span class="line">    </span><br><span class="line">    &#x2F;*</span><br><span class="line">     2019-12-19 15:00:48.693679+0800 threadDemo[8943:6085531] 1 &lt;NSThread: 0x600000d72ac0&gt;&#123;number &#x3D; 1, name &#x3D; main&#125;</span><br><span class="line">     2019-12-19 15:00:48.694252+0800 threadDemo[8943:6085531] 3 &lt;NSThread: 0x600000d72ac0&gt;&#123;number &#x3D; 1, name &#x3D; main&#125;</span><br><span class="line">     2019-12-19 15:00:50.855673+0800 threadDemo[8943:6085641] 2 &lt;NSThread: 0x600000d21080&gt;&#123;number &#x3D; 3, name &#x3D; (null)&#125;</span><br><span class="line"></span><br><span class="line">     *&#x2F;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>修改任务执行所在队列为自定义的串行队列. 任务是在子线程中执行的.<br>通过查看打印结果，很明显延时函数底层肯定是异步执行任务。只有在主队列时任务才在主线程执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">- (void)test3 &#123;</span><br><span class="line">    NSLog(@&quot;1 %@&quot;,[NSThread currentThread]);</span><br><span class="line">    dispatch_queue_t queue &#x3D; dispatch_queue_create(&quot;syncConcrrent&quot;, DISPATCH_QUEUE_CONCURRENT);</span><br><span class="line">    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), queue, ^&#123;</span><br><span class="line">        NSLog(@&quot;2 %@&quot;,[NSThread currentThread]);</span><br><span class="line">    &#125;);</span><br><span class="line">    NSLog(@&quot;3 %@&quot;,[NSThread currentThread]);</span><br><span class="line">    </span><br><span class="line">    &#x2F;*</span><br><span class="line">     2019-12-19 15:09:06.207532+0800 threadDemo[9037:6090879] 1 &lt;NSThread: 0x600001960f40&gt;&#123;number &#x3D; 1, name &#x3D; main&#125;</span><br><span class="line">     2019-12-19 15:09:06.207745+0800 threadDemo[9037:6090879] 3 &lt;NSThread: 0x600001960f40&gt;&#123;number &#x3D; 1, name &#x3D; main&#125;</span><br><span class="line">     2019-12-19 15:09:08.207879+0800 threadDemo[9037:6090962] 2 &lt;NSThread: 0x6000019ee4c0&gt;&#123;number &#x3D; 8, name &#x3D; (null)&#125;</span><br><span class="line">     *&#x2F;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="Dispatch-Source"><a href="#Dispatch-Source" class="headerlink" title="Dispatch Source"></a>Dispatch Source</h5><p>Dispatch Source是BSD系统内核惯有功能kqueue的包装，kqueue是在XNU内核中发生各种事件时，在应用程序编程方执行处理的技术。<br> 它的CPU负荷非常小，尽量不占用资源。当事件发生时，Dispatch Source会在指定的Dispatch Queue中执行事件的处理。</p>
+<p> dispatch_source_t<br> 一共有一下几种类型（dispatch_source_type_t):</p>
+<p> 监控进程：DISPATCH_SOURCE_TYPE_PROC,<br> 定时器：DISPATCH_SOURCE_TYPE_TIMER,<br> 从描述符中读取数据：DISPATCH_SOURCE_TYPE_READ,<br> 向描述符中写入字符：DISPATCH_SOURCE_TYPE_WRITE,<br> 监控文件系统对象:DISPATCH_SOURCE_TYPE_VNODE,…..</p>
+<p> demo演示定时器使用</p>
+<p> Dispatch Source使用最多的就是用来实现定时器，source创建后默认是暂停状态，需要手动调用dispatch_resume启动定时器。dispatch_after只是封装调用了dispatch source定时器，然后在回调函数中执行定义的block。</p>
+<p> Dispatch Source定时器使用时也有一些需要注意的地方，不然很可能会引起crash：</p>
+<p> 1、循环引用：因为dispatch_source_set_event_handler回调是个block，在添加到source的链表上时会执行copy并被source强引用，如果block里持有了self，self又持有了source的话，就会引起循环引用。正确的方法是使用weak+strong或者提前调用dispatch_source_cancel取消timer。</p>
+<p> 2、dispatch_resume和dispatch_suspend调用次数需要平衡，如果重复调用dispatch_resume则会崩溃,因为重复调用会让dispatch_resume代码里if分支不成立，从而执行了DISPATCH_CLIENT_CRASH(“Over-resume of an object”)导致崩溃。</p>
+<p> 3、source在suspend状态下，如果直接设置source = nil或者重新创建source都会造成crash。正确的方式是在resume状态下调用dispatch_source_cancel(source)后再重新创建。</p>
+<h6 id="GCD定时器"><a href="#GCD定时器" class="headerlink" title="GCD定时器"></a>GCD定时器</h6><p>定时器不受runloop影响，效率高。</p>
+<p>demo:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">- (void)test1 &#123;</span><br><span class="line">    __block int timeout&#x3D;30; &#x2F;&#x2F;倒计时时间</span><br><span class="line">    dispatch_source_t _timer &#x3D; dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue());</span><br><span class="line">    dispatch_source_set_timer(_timer, dispatch_time(DISPATCH_TIME_NOW, 0), 1 * NSEC_PER_SEC, 0);</span><br><span class="line">    dispatch_source_set_event_handler(_timer, ^&#123;</span><br><span class="line">        if(timeout&lt;&#x3D;0)&#123; &#x2F;&#x2F;倒计时结束，关闭</span><br><span class="line">            dispatch_source_cancel(_timer);</span><br><span class="line">            dispatch_async(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">                &#x2F;&#x2F;设置界面的按钮显示 根据自己需求设置</span><br><span class="line">                NSLog(@&quot;time 倒计时结束&quot;);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            int minutes &#x3D; timeout &#x2F; 60;</span><br><span class="line">            int seconds &#x3D; timeout % 60;</span><br><span class="line">            NSString *strTime &#x3D; [NSString stringWithFormat:@&quot;%d分%.2d秒后重新获取验证码&quot;,minutes, seconds];</span><br><span class="line">            dispatch_async(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">                &#x2F;&#x2F;设置界面的按钮显示 根据自己需求设置</span><br><span class="line">                NSLog(@&quot;strTime %@&quot;,strTime);</span><br><span class="line">            &#125;);</span><br><span class="line">            timeout--;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    &#x2F;&#x2F;启动timer</span><br><span class="line">    dispatch_resume(_timer);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="线程安全"><a href="#线程安全" class="headerlink" title="线程安全"></a>线程安全</h3><p>只有当多个线程同时去访问并且修改一块资源的内容时可能会有线程安全问题。</p>
+<p>当多线程只是访问并不做修改，不会出现线程安全问题。</p>
+<p>举例：</p>
+<p>假设银行卡有余额1000元，有2个线程A、B；<br>现在A、B同时查询余额，得到的都是1000元；<br>然后A线程存入1000元，余额为1000 + 1000 = 2000；<br>然后B线程取出500元，余额为1000 - 500 = 500；<br>这样就出现线程安全问题了，下次去查询余额就只有500了😹</p>
+<p>为了保证线程安全，需要给线程加锁。</p>
+<h5 id="同步方案"><a href="#同步方案" class="headerlink" title="同步方案"></a>同步方案</h5><h6 id="OSSpinLock"><a href="#OSSpinLock" class="headerlink" title="OSSpinLock"></a>OSSpinLock</h6><p>OSSpinLock叫做”自旋锁”，等待锁的线程会处于忙等（busy-wait）状态，一直占用着CPU资源</p>
+<p>目前已经不再安全，可能会出现优先级反转问题</p>
+<p>如果等待锁的线程优先级较高，它会一直占用着CPU资源，优先级低的线程就无法释放锁</p>
+<p>需要导入头文件#import &lt;libkern/OSAtomic.h&gt;</p>
+<h6 id="os-unfair-lock"><a href="#os-unfair-lock" class="headerlink" title="os_unfair_lock"></a>os_unfair_lock</h6><p>os_unfair_lock用于取代不安全的OSSpinLock ，从iOS10开始才支持</p>
+<p>从底层调用看，等待os_unfair_lock锁的线程会处于休眠状态，并非忙等</p>
+<p>需要导入头文件#import &lt;os/lock.h&gt;</p>
+<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2361" alt="6a32356cd62bffb395c55eff0729375d.png"> </p>
+<h6 id="pthread-mutex"><a href="#pthread-mutex" class="headerlink" title="pthread_mutex"></a>pthread_mutex</h6><p>mutex叫做”互斥锁”，等待锁的线程会处于休眠状态</p>
+<p>需要导入头文件#import &lt;pthread.h&gt;</p>
+<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2362" alt="9848ab391ea130b47de60ac90949c5d7.png"><br><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2363" alt="1e9bf9133cafc7fe1e68e53239f70754.png"><br><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2364" alt="8d423ed41c44ae90fe1f4e55b26964f9.png"><br><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2365" alt="eeeb5c6a5d872001eb1f1c7917d810e0.png"></p>
+<h6 id="dispatch-semaphore"><a href="#dispatch-semaphore" class="headerlink" title="dispatch_semaphore"></a>dispatch_semaphore</h6><p>semaphore叫做”信号量”</p>
+<p>信号量的初始值，可以用来控制线程并发访问的最大数量</p>
+<p>信号量的初始值为1，代表同时只允许1条线程访问资源，保证线程同步</p>
+<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2366" alt="844e0aa7a21c56f9568325ebf1df04b2.png"></p>
+<h6 id="dispatch-queue-DISPATCH-QUEUE-SERIAL"><a href="#dispatch-queue-DISPATCH-QUEUE-SERIAL" class="headerlink" title="dispatch_queue(DISPATCH_QUEUE_SERIAL)"></a>dispatch_queue(DISPATCH_QUEUE_SERIAL)</h6><p>直接使用GCD的串行队列，也是可以实现线程同步的</p>
+<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2367" alt="4da7c092e947d453289322166866701b.png"></p>
+<h6 id="NSLock、NSRecursiveLock"><a href="#NSLock、NSRecursiveLock" class="headerlink" title="NSLock、NSRecursiveLock"></a>NSLock、NSRecursiveLock</h6><p>NSLock是对mutex普通锁的封装</p>
+<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2371" alt="1cb32ab8ac4967086fbbee75dbb15433.png"><br><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2372" alt="f288c06d4f718baddb110b329023936d.png"><br><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2373" alt="c02fbd60aa09ed858fec23c3b8d4a6a3.png"></p>
+<p>NSRecursiveLock也是对mutex递归锁的封装，API跟NSLock基本一致</p>
+<h6 id="NSCondition"><a href="#NSCondition" class="headerlink" title="NSCondition"></a>NSCondition</h6><p>NSCondition是对mutex和cond的封装</p>
+<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2370" alt="5f93ec4282fecd19e347dd383be722ec.png"></p>
+<h6 id="NSConditionLock"><a href="#NSConditionLock" class="headerlink" title="NSConditionLock"></a>NSConditionLock</h6><p>NSConditionLock是对NSCondition的进一步封装，可以设置具体的条件值</p>
+<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2369" alt="65483fd9373eed4ce11ef7ecb2b60fda.png"></p>
+<h6 id="synchronized"><a href="#synchronized" class="headerlink" title="@synchronized"></a>@synchronized</h6><p>@synchronized是对mutex递归锁的封装</p>
+<p>源码查看：objc4中的objc-sync.mm文件</p>
+<p>@synchronized(obj)内部会生成obj对应的递归锁，然后进行加锁、解锁操作</p>
+<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2368" alt="27d559c23065755f60c6afe842dd3096.png"></p>
+<h5 id="同步方案性能比较"><a href="#同步方案性能比较" class="headerlink" title="同步方案性能比较"></a>同步方案性能比较</h5><p>性能从高到低排序<br>os_unfair_lock<br>OSSpinLock<br>dispatch_semaphore<br>pthread_mutex<br>dispatch_queue(DISPATCH_QUEUE_SERIAL)<br>NSLock<br>NSCondition<br>pthread_mutex(recursive)<br>NSRecursiveLock<br>NSConditionLock<br>@synchronized</p>
+<h5 id="自旋-互斥锁"><a href="#自旋-互斥锁" class="headerlink" title="自旋 / 互斥锁"></a>自旋 / 互斥锁</h5><h6 id="什么是自旋锁"><a href="#什么是自旋锁" class="headerlink" title="什么是自旋锁"></a>什么是自旋锁</h6><p>等待锁的线程会处于忙等（busy-wait）状态，一直占用着CPU资源</p>
+<h6 id="什么是互斥锁"><a href="#什么是互斥锁" class="headerlink" title="什么是互斥锁"></a>什么是互斥锁</h6><p>等待锁的线程会处于休眠状态</p>
+<h6 id="什么情况使用自旋锁更划算？"><a href="#什么情况使用自旋锁更划算？" class="headerlink" title="什么情况使用自旋锁更划算？"></a>什么情况使用自旋锁更划算？</h6><p>预计线程等待锁的时间很短<br>加锁的代码（临界区）经常被调用，但竞争情况很少发生<br>CPU资源不紧张<br>多核处理器</p>
+<h6 id="什么情况使用互斥锁更划算？"><a href="#什么情况使用互斥锁更划算？" class="headerlink" title="什么情况使用互斥锁更划算？"></a>什么情况使用互斥锁更划算？</h6><p>预计线程等待锁的时间较长<br>单核处理器<br>临界区有IO操作<br>临界区代码复杂或者循环量大<br>临界区竞争非常激烈 </p>
+<h5 id="高性能读写安全方案"><a href="#高性能读写安全方案" class="headerlink" title="高性能读写安全方案"></a>高性能读写安全方案</h5><h6 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h6><p>同一时间，只能有1个线程进行写的操作<br>同一时间，允许有多个线程进行读的操作<br>同一时间，不允许既有写的操作，又有读的操作</p>
+<h6 id="实现方案"><a href="#实现方案" class="headerlink" title="实现方案"></a>实现方案</h6><p>“多读单写”，经常用于文件等数据的读写操作，实现方案有<br>pthread_rwlock：读写锁<br>dispatch_barrier_async：异步栅栏调用</p>
+<p>demo:</p>
+<p>由于 NSMutableDictionary 线程是不安全的。</p>
+<p>现在实现一个线程安全的可变字典</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">typedef void (^ThreadSafeBlock)(ThreadSafeMutableDictionary *dict, NSString *key, id object);</span><br><span class="line"></span><br><span class="line">@implementation ThreadSafeMutableDictionary &#123;</span><br><span class="line">    dispatch_queue_t _concurrentQueue;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (instancetype)init &#123;</span><br><span class="line">    if (self &#x3D; [super init]) &#123;</span><br><span class="line">        _concurrentQueue &#x3D; dispatch_queue_create(@&quot;com.thread.ThreadSafeMutableDictionary&quot;, DISPATCH_QUEUE_CONCURRENT);</span><br><span class="line">    &#125;</span><br><span class="line">    return self;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)objectForKey:(NSString *)key block:(ThreadSafeBlock)block &#123;</span><br><span class="line">    id cKey &#x3D; [key copy];</span><br><span class="line">    __weak __typeof__(self) weakSelf &#x3D; self;</span><br><span class="line"></span><br><span class="line">    dispatch_sync(_concurrentQueue, ^&#123;</span><br><span class="line">        ThreadSafeMutableDictionary *strongSelf &#x3D; weakSelf;</span><br><span class="line">        if (!strongSelf) &#123;</span><br><span class="line">            block(nil,cKey,nil);</span><br><span class="line">            return ;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        id object &#x3D; [strongSelf objectForKey:cKey];</span><br><span class="line">        block(strongSelf,cKey,object);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)setObject:(id)object forKey:(NSString *)key block:(ThreadSafeBlock)block &#123;</span><br><span class="line">    if (!key || !object) &#123;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    NSString *aKey &#x3D; [key copy];</span><br><span class="line">    __weak __typeof__(self) weakSelf &#x3D; self;</span><br><span class="line">    dispatch_barrier_async(_concurrentQueue, ^&#123;</span><br><span class="line">        ThreadSafeMutableDictionary *strongSelf &#x3D; weakSelf;</span><br><span class="line">        if (!strongSelf) &#123;</span><br><span class="line">            block(nil,aKey,nil);</span><br><span class="line">            return ;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        [self setObject:object forKey:aKey];</span><br><span class="line">        if (block) &#123;</span><br><span class="line">            block(strongSelf,aKey,object);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="多线程优化"><a href="#多线程优化" class="headerlink" title="多线程优化"></a>多线程优化</h3><h5 id="优化思路"><a href="#优化思路" class="headerlink" title="优化思路"></a>优化思路</h5><h6 id="尽量减少队列切换"><a href="#尽量减少队列切换" class="headerlink" title="尽量减少队列切换"></a>尽量减少队列切换</h6><p>当线程数量超过 CPU 核心数量，CPU 核心通过线程调度切换用户态线程，意味着有上下文的转换，过多的上下文切换会带来资源开销。 </p>
+<p>如下代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">dispatch_queue_t queue &#x3D; dispatch_queue_create(&quot;x.x.x&quot;, DISPATCH_QUEUE_CONCURRENT);</span><br><span class="line">- (void)tast1 &#123;</span><br><span class="line">    dispatch_async(queue, ^&#123;</span><br><span class="line">        &#x2F;&#x2F;执行任务1</span><br><span class="line">        dispatch_async(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">            &#x2F;&#x2F;任务1完成</span><br><span class="line">            [self tast2];</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line">- (void)tast2 &#123;</span><br><span class="line">    dispatch_async(queue, ^&#123;</span><br><span class="line">        &#x2F;&#x2F;执行任务2</span><br><span class="line">        dispatch_async(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">            &#x2F;&#x2F;任务2完成</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里创建了一个并行队列，调用 tast1 会执行两个任务，任务2要等待任务1执行完成，这里一共有四次队列的切换。其实是没必要的。</p>
+<p>优化后：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">dispatch_queue_t queue &#x3D; dispatch_queue_create(&quot;x.x.x&quot;, DISPATCH_QUEUE_SERIAL);</span><br><span class="line">dispatch_async(queue, ^&#123;</span><br><span class="line">    &#x2F;&#x2F;执行任务1</span><br><span class="line">    &#x2F;&#x2F;执行任务2</span><br><span class="line">    dispatch_async(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">        &#x2F;&#x2F;任务1、2完成</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h6 id="控制线程数量"><a href="#控制线程数量" class="headerlink" title="控制线程数量"></a>控制线程数量</h6><p>使用 GCD 并行队列，当任务过多且耗时较长时，队列会开辟大量的线程，而部分线程里面的耗时任务已经耗尽了 CPU 资源，所以其他的线程也只能等待 CPU 时间片，过多的线程也会让线程调度过于频繁。</p>
+<p>GCD 中并行队列并不能限制线程数量，可以创建多个串行队列来模拟并行的效果，业界知名框架 YYKit 就做了这个逻辑，通过和 CPU 核心数量相同的串行队列轮询返回来达到并行队列的效果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">static dispatch_queue_t YYAsyncLayerGetDisplayQueue() &#123;</span><br><span class="line">&#x2F;&#x2F;最大队列数量</span><br><span class="line">#define MAX_QUEUE_COUNT 16</span><br><span class="line">&#x2F;&#x2F;队列数量</span><br><span class="line">    static int queueCount;</span><br><span class="line">&#x2F;&#x2F;使用栈区的数组存储队列</span><br><span class="line">    static dispatch_queue_t queues[MAX_QUEUE_COUNT];</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    static int32_t counter &#x3D; 0;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">&#x2F;&#x2F;串行队列数量和处理器数量相同</span><br><span class="line">        queueCount &#x3D; (int)[NSProcessInfo processInfo].activeProcessorCount;</span><br><span class="line">        queueCount &#x3D; queueCount &lt; 1 ? 1 : queueCount &gt; MAX_QUEUE_COUNT ? MAX_QUEUE_COUNT : queueCount;</span><br><span class="line">&#x2F;&#x2F;创建串行队列，设置优先级</span><br><span class="line">        if ([UIDevice currentDevice].systemVersion.floatValue &gt;&#x3D; 8.0) &#123;</span><br><span class="line">            for (NSUInteger i &#x3D; 0; i &lt; queueCount; i++) &#123;</span><br><span class="line">                dispatch_queue_attr_t attr &#x3D; dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_USER_INITIATED, 0);</span><br><span class="line">                queues[i] &#x3D; dispatch_queue_create(&quot;com.ibireme.yykit.render&quot;, attr);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            for (NSUInteger i &#x3D; 0; i &lt; queueCount; i++) &#123;</span><br><span class="line">                queues[i] &#x3D; dispatch_queue_create(&quot;com.ibireme.yykit.render&quot;, DISPATCH_QUEUE_SERIAL);</span><br><span class="line">                dispatch_set_target_queue(queues[i], dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#x2F;&#x2F;轮询返回队列</span><br><span class="line">    uint32_t cur &#x3D; (uint32_t)OSAtomicIncrement32(&amp;counter);</span><br><span class="line">    return queues[cur % queueCount];</span><br><span class="line">#undef MAX_QUEUE_COUNT</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h6 id="线程优先级权衡"><a href="#线程优先级权衡" class="headerlink" title="线程优先级权衡"></a>线程优先级权衡</h6><p>线程调度除了轮转法以外，还有优先级调度的方案，在线程调度时，高优先级的线程会更早的执行。有两个概念需要明确：<br>    a. IO 密集型线程：频繁等待的线程，等待的时候会让出时间片。<br>    b. CPU 密集型线程：很少等待的线程，意味着长时间占用着 CPU。 </p>
+<p>这样就会存在一个问题：<br>    当CPU密集型线程优先级较高，而且长期霸占CPU大部分资源，这样IO密集型线程由于优先级较低，就持续的等待，产生线程饿死的现象。这时系统会根据情况提高IO密集型线程的优先级，但即使这样，等待也是需要时间的。</p>
+<p>这样可以考虑优化的方向：<br>    a. 让 IO 密集型线程优先级高于 CPU 密集型线程。<br>    b. 让紧急的任务拥有更高的优先级。</p>
+<h6 id="主线程任务的优化"><a href="#主线程任务的优化" class="headerlink" title="主线程任务的优化"></a>主线程任务的优化</h6><p>这摘抄了yykit作者的提出的部分内容<a target="_blank" rel="noopener" href="https://blog.ibireme.com/2015/11/12/smooth_user_interfaces_for_ios/">iOS 保持界面流畅的技巧</a></p>
+<p>一些耗时的操作尽量移动到子线程执行。</p>
+<p>但是有些操作必须在主线程，比如 UI 类组件的初始化及其布局。 </p>
+<p>那么主线程的优化有哪些方案可以参考呢？</p>
+<p>1、尽量使用轻量级对象</p>
+<p>对象的创建会分配内存、调整属性、甚至还有读取文件等操作，比较消耗 CPU 资源。比如 CALayer 比 UIView 要轻量许多，那么不需要响应触摸事件的控件，用 CALayer 显示会更加合适。</p>
+<p>2、尽量减少对象的调整</p>
+<p>当视图层次调整时，UIView、CALayer 之间会出现很多方法调用与通知，所以在优化性能时，应该尽量避免调整视图层次、添加和移除视图。</p>
+<p>3、对象销毁其实是可以在后台线程执行的</p>
+<p>这时yykit作者提倡的方式：</p>
+<p>需要注意的是下面的例子中，如果self.array在别的地方还有依赖，那tmp不是唯一的销毁helper。这一套就没用了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">NSArray *tmp &#x3D; self.array;</span><br><span class="line">self.array &#x3D; nil;</span><br><span class="line">dispatch_async(queue, ^&#123;</span><br><span class="line">    [tmp class];</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>4、内存复用</p>
+<p>最常见的就是cell复用，避免了大量cell对象的创建，节省内存的同时也节省了开辟内存所消耗的时间。</p>
+<p>5、懒加载任务</p>
+<p>懒加载对象，用到时再创建，可以减少没必要的内存开销。开辟内存是要时间的。勉强算是变相的吧任务进行了拆分，不必初始化时就创建一系列对象。</p>
+<p>6、任务拆分排队执行</p>
+<p>将大量的任务拆分开来，监听Runloop运行状态，当runloop将要休息的时候，让 Runloop 循环周期执行少量任务。</p>
+<p>。。。</p>
+<h3 id="学习"><a href="#学习" class="headerlink" title="学习"></a>学习</h3><p><a href="https://github.com/apple/swift-corelibs-libdispatch">GCD源码</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.gnustep.org/resources/downloads.php">GNUstep</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.ibireme.com/2016/01/16/spinlock_is_unsafe_in_ios/">不再安全的 OSSpinLock</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.ibireme.com/2015/11/12/smooth_user_interfaces_for_ios/">iOS 保持界面流畅的技巧</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/594d15d6c6a7">iOS 如何高效的使用多线程</a></p>
+<p><a target="_blank" rel="noopener" href="https://xiaozhuanlan.com/u/3785694919">深入浅出 GCD</a></p>
+<h3 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a>Demo</h3><p><a href="https://github.com/Baichenghui/Study/tree/master/threadDemo">threadDemo</a></p>
 
     
 
     
+    <div class="page-reward">
+      <a href="javascript:void(0);" class="page-reward-btn tooltip-top" target="_self">
+        <div class="tooltip tooltip-east">
+          <span class="tooltip-item">
+            赏
+          </span>
+          <span class="tooltip-content">
+            <span class="tooltip-text">
+              <span class="tooltip-inner">
+                <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i
+                    class="icon icon-quo-right"></i></p>
+                <div class="reward-box">
+                  
+                  <div class="reward-box-item">
+                    <img class="reward-img" src="/img/alipay.jpg">
+                    <span class="reward-type">支付宝</span>
+                  </div>
+                  
+                  
+                  <div class="reward-box-item">
+                    <img class="reward-img" src="/img/weixin.png">
+                    <span class="reward-type">微信</span>
+                  </div>
+                  
+                </div>
+              </span>
+            </span>
+          </span>
+        </div>
+      </a>
+    </div>
+    
 
+    
+    <div class="declare"> 
+      <ul class="post-copyright">
+        <li>
+          <strong>本文作者：</strong>
+          b9i60000
+        </li>
+        <li>
+          <strong>本文链接：</strong>
+          <a href="https://github.com/Baichenghui/2019/10/20/GCD研究/" title="GCD研究" target="_blank">https://github.com/Baichenghui/2019/10/20/GCD研究/</a>
+        </li>
+        
+        <li>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
+        </li>
+        
+      </ul>
+    </div>
     
 
   </div>
@@ -362,16 +715,85 @@
     
 
     
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2019/10/20/YYAsyncLayer-%E7%A0%94%E7%A9%B6/">展开全文 >></a>
-    </p>
+
     
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://github.com/Baichenghui/2019/10/20/GCD%E7%A0%94%E7%A9%B6/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
 
     
     <div class="clearfix"></div>
   </div>
   </div>
 </article>
+
+
+<nav id="article-nav">
+  
+    <a href="/2019/10/20/iOS-%E9%95%BF%E8%BF%9E%E6%8E%A5-socket-%E8%82%A1%E7%A5%A8%E6%96%B9%E5%90%91%E7%A0%94%E7%A9%B6/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          iOS 长连接 socket 股票方向研究
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/10/20/YBTaskScheduler-%E7%A0%94%E7%A9%B6/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">YBTaskScheduler 研究</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -392,533 +814,14 @@
 
 
 
-  
-    <article id="post-图像和图形的最佳实践（WWDC-2018-session-219）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2019/10/20/%E5%9B%BE%E5%83%8F%E5%92%8C%E5%9B%BE%E5%BD%A2%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%EF%BC%88WWDC-2018-session-219%EF%BC%89/" target="_blank">图像和图形的最佳实践（WWDC 2018 session 219）</a>
-  
-    </h1>
-  
 
 
-  
-  
-<a href="/2019/10/20/%E5%9B%BE%E5%83%8F%E5%92%8C%E5%9B%BE%E5%BD%A2%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%EF%BC%88WWDC-2018-session-219%EF%BC%89/" class="archive-article-date">
-        <time datetime="2019-10-20T02:51:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-20</time>
-</a>
 
-  
-  
-    
 
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>[TOC]</p>
-<h3 id="UIImage和UIImageView"><a href="#UIImage和UIImageView" class="headerlink" title="UIImage和UIImageView"></a>UIImage和UIImageView</h3><p>UIImage在UIKit中表示一个图形的内容，而UIImageView在UIKit中用来呈现一个视图。但是在这之外还有一个隐藏的、影响程序性能的过程，叫做解码(Decode)。</p>
-<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2377" alt="408ae032ad58fa3ed7567c071056843a.png"></p>
-<h5 id="图片的解码"><a href="#图片的解码" class="headerlink" title="图片的解码"></a>图片的解码</h5><p>当你用 UIImage 或 CGImageSource 的那几个方法创建图片时，图片数据并不会立刻解码。图片设置到 UIImageView 或者 CALayer.contents 中去，并且 CALayer 被提交到 GPU 前，CGImage 中的数据才会得到解码。这一步是发生在主线程的，并且不可避免。</p>
-<p>如果想要绕开这个机制，常见的做法是在后台线程先把图片绘制到 CGBitmapContext 中，然后从 Bitmap 直接创建图片。目前常见的网络图片库都自带这个功能。</p>
-<p>在了解Decode的过程中，我们首先要了解一个概念：缓冲区(Buffer)。</p>
-<h5 id="缓冲区-Buffer"><a href="#缓冲区-Buffer" class="headerlink" title="缓冲区(Buffer)"></a>缓冲区(Buffer)</h5><ol>
-<li>缓冲区是在内存中连续的区域。</li>
-<li>通常被视为元素序列。</li>
-</ol>
-<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2380" alt="6234b17718adc25d94d92591359cb113.png"></p>
-<h6 id="图像缓冲区-Image-Buffer-："><a href="#图像缓冲区-Image-Buffer-：" class="headerlink" title="图像缓冲区(Image Buffer)："></a>图像缓冲区(Image Buffer)：</h6><p>图像缓冲区中每个元素表示的是图像中一个像素的颜色信息。所以，该Buffer在内存中的大小与图像大小成正比。</p>
-<h6 id="帧缓冲区-Frame-Buffer-："><a href="#帧缓冲区-Frame-Buffer-：" class="headerlink" title="帧缓冲区(Frame Buffer)："></a>帧缓冲区(Frame Buffer)：</h6><p>帧缓冲区是保存应用实际呈现输出的缓冲区。<br>在应用更新视图层次结构时，UIKit会把应用程序的Window以及子视图渲染到帧缓冲区中。这个更新频率在iPhone上是60FPS，在iPad上是120FPS。<br><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2379" alt="5d0b29cb1cf62a7f88ed9d104971a358.gif"></p>
-<h6 id="数据缓冲区-Data-Buffer"><a href="#数据缓冲区-Data-Buffer" class="headerlink" title="数据缓冲区(Data Buffer)"></a>数据缓冲区(Data Buffer)</h6><p>数据缓冲区为保存一系列bytes数据的缓冲区。<br>在图像例子中，数据缓冲区就是保存从网络下载或者保存在磁盘中的图像的数据，这些数据并不直接描述每一个像素的信息。<br><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2378" alt="f70e8ce6d59fbd8b9437a04e4e05e48f.png"></p>
-<h5 id="加载过程"><a href="#加载过程" class="headerlink" title="加载过程"></a>加载过程</h5><h6 id="加载准备"><a href="#加载准备" class="headerlink" title="加载准备"></a>加载准备</h6><p>准备一个图像元数据，一个UIImage，以及一个加载在视图上的UIImageView，如下：<br><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2381" alt="facc0c35e7982012157d52ed9c5323f8.png"></p>
-<h6 id="获取像素信息"><a href="#获取像素信息" class="headerlink" title="获取像素信息"></a>获取像素信息</h6><p>为了将图像中每个像素信息填充到Frame Buffer中，我们需要得到图像像素信息。</p>
-<p>UIImage会为我们处理这一点：UIImage会创建一个与图片大小一致的Image Buffer用来存储解码(Decode)之后的图像像素信息。</p>
-<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2382" alt="00656289e1fe1ef8f2e0ad2c3739ffab.png"></p>
-<h6 id="显示在屏幕上"><a href="#显示在屏幕上" class="headerlink" title="显示在屏幕上"></a>显示在屏幕上</h6><p>UIImageView读取UIImage创建的Image Buffer数据，交由UIKit显示。UIKit会对像素数据缩放到显示大小进行显示。</p>
-<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2383" alt="048fdec73f278bcdd057bc0304705253.png"></p>
-<p>在加载过程中，UIKit会重复多次的要求UIImageView去进行渲染，这就造成了UIImage会多次的解码Data Buffer。</p>
-<p>为了解决这个问题，UIImage会只进行一次Data Buffer的解码，在解码之后，会挂起解码后的Image Buffer。</p>
-<p>所以，在这种情况下，应用对于每一个UIImage解码后，都会在内存中挂起一个Image Buffer。</p>
-<p>由于Image Buffer与图像大小成正比，所以在加载大图片时，应用程序会在内存中挂起很多大的Image Buffer，这可能会造成操作系统介入，并最终杀死应用。</p>
-<h5 id="下采样-downsampling"><a href="#下采样-downsampling" class="headerlink" title="下采样(downsampling)"></a>下采样(downsampling)</h5><p>针对于我们上述提到的问题，我们可以采用叫做下采用(downsampling)的技术。</p>
-<p>我们注意到，我们最终显示在屏幕上的视图往往比实际图片的尺寸要小，而通常情况下，Core Animation Framework会负责缩小图像。</p>
-<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2384" alt="71a31df9d652df1bdcf9cc9021b8b3db.png"></p>
-<p>现在要做的，本质上是把缩放图像操作捕获为一个叫缩略图的对象。由于减小了Image Buffer的大小，进而减小了在加载图片中的使用的内存总大小。</p>
-<p>同时，我们在解码后，将图片像素信息交给UIImageView去渲染至屏幕后，可以丢弃掉对应的Data Buffer，进一步减少内存的使用。</p>
-<p>这个过程如下图：</p>
-<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2385" alt="c8194124dbec3c8245dd3ae3189e8ce9.gif"></p>
-<h6 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h6><p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2386" alt="d6d28e69f0db0002580d99cf353a4431.png"></p>
-<p>几个重要的点：</p>
-<ol>
-<li>创建CGImageSourceRef</li>
-<li>计算需要渲染至屏幕的真实尺寸、</li>
-<li>获取缩略图</li>
-</ol>
-<h6 id="下采样之后效果"><a href="#下采样之后效果" class="headerlink" title="下采样之后效果"></a>下采样之后效果</h6><p>通过以上的改进方式，可以大幅度的缩减内存的使用。以下为一组测试数据：<br>测试环境：Xcode9.4，iPhone 6s Plus, 5184*3456的5.1MB大小的JPG格式图片。</p>
-<ol>
-<li>不使用改进方法，消耗内存为：49.3M</li>
-<li>使用改进方法，消耗内存为：9.4M</li>
-</ol>
-<h5 id="针对滚动视图的优化"><a href="#针对滚动视图的优化" class="headerlink" title="针对滚动视图的优化"></a>针对滚动视图的优化</h5><p>如果我们需要一个滚动视图来展示一大组质量很大的图片时，我们也会遇到内存过高的问题，接下来我们以UICollectionView加载图片来做分析和优化。</p>
-<h6 id="使用下采样-downsampling-的方式优化"><a href="#使用下采样-downsampling-的方式优化" class="headerlink" title="使用下采样(downsampling)的方式优化"></a>使用下采样(downsampling)的方式优化</h6><p>首先我们采用我们上一步优化图片的方式来为每一个cell中的图片进行优化，代码可能如下：</p>
-<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2387" alt="7e545fe88c4125e701978615815333f0.png"></p>
-<p>这样我们为每一个cell上的图片显示进行了优化，进而使得整体内存使用有一个明显的降低。</p>
-<p>但是，这样会引起另一个问题：如果此时滚动视图，CPU可能会很快的将所需展示的内容渲染到帧缓冲区，但是如果滚动过快，CPU还需参与Core Graphics对于新图像的解帧，这个操作是非常耗时的，这样就可能会造成在硬件读取帧缓冲区数据显示至屏幕时，帧缓冲区数据并没有准备好，进而导致用户视角中的卡顿。另外对于电池来说，在CPU不稳定时，可能会影响到电池使用寿命。</p>
-<h6 id="进一步优化"><a href="#进一步优化" class="headerlink" title="进一步优化"></a>进一步优化</h6><p>有两种技术可以帮助我们解决上述问题。</p>
-<ol>
-<li>预取(prefetching)：在某一时刻，我们不需要某个cell，但是在不久的将来会需要这个cell，所以可以把某些工作提前至这个时刻来进行。</li>
-<li>后台执行(performing work in the background)。</li>
-</ol>
-<p>针对于UICollectionView，我们可以做以下处理：</p>
-<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2388" alt="489fb1b6693c03fc68a08655a3b23e53.png">  </p>
-<p>我们为预取的cell进行在后台即全局异步队列(global<br>asynchronous queues)的图像解码，这是我们提到的两种优化技术。</p>
-<p>但是，在使用全局异步队列的时候，可能会出现线程爆炸的问题：如果我们一次性处理多张图像，但是设备只有2个CPU时，此时GCD会创建新的线程来处理解码工作。创建新线程以及在不同线程之间切换是十分消耗时间和资源的。</p>
-<h6 id="解决线程爆炸问题"><a href="#解决线程爆炸问题" class="headerlink" title="解决线程爆炸问题"></a>解决线程爆炸问题</h6><p>我们可以将解码操作异步的分派到串行队列中，如下图：</p>
-<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2389" alt="57beaadf105a2ca2d77631641f2415c9.png"></p>
-<p>这样做可能使得某些图像的解码过程延后，但是更多的是减少了在线程切换过程中浪费的时间和资源。</p>
-<p>至此，我们完成了对于滚动视图加载多张图片的优化。</p>
-<h5 id="图片资源的优化"><a href="#图片资源的优化" class="headerlink" title="图片资源的优化"></a>图片资源的优化</h5><p>在目前的程序中，可以展示的图像资源来源可能有一下几种：</p>
-<ol>
-<li>存储在Image Assets中</li>
-<li>存储在Application或者Bundle的包中</li>
-<li>存储在沙盒的Document或者Cache文件中</li>
-<li>从网络下载的数据中</li>
-</ol>
-<p>对于程序中自带的图像资源，苹果官方推荐我们使用Image Assets来存储，以下是使用该方式的几个优点：</p>
-<ol>
-<li>Image Assets针对基于名称和特性的查找进行了优化，它比在磁盘上搜索文件要快。</li>
-<li>在管理缓冲区方面也有优化。</li>
-<li>允许对设备安装包进行优化，在下载App的时候会只下载能最高效果显示在对应设备的图像资源，从而减小安装包大小。</li>
-<li>对Vector Artwork的支持。</li>
-</ol>
-<h6 id="Vector-Artwork"><a href="#Vector-Artwork" class="headerlink" title="Vector Artwork"></a>Vector Artwork</h6><p>Vector Artwork是iOS 11引入的新特性。我们可以在Image Assets中勾选Preserve Vector Data来启用它。如果启用了Vector Artwork的话，当我们将图像显示到一个比它原始尺寸大或者小的视图中时，这个图像不会变的模糊。因为显示的图像是从矢量图形中重新光栅化而来的，从而使得图像有清晰的边缘。</p>
-<p>启用Vector Artwork后，图像的处理方式和之前图片的处理方式类似，只是将解码阶段变为了光栅化阶段，光栅化阶段将矢量数据转换为位图数据，进而供帧缓冲区读取。</p>
-<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2390" alt="261beb86f4101804b5cfdf75201997c4.png"></p>
-<p>如果我们把应用中所有的图像资源进行了Preserve Vector Data处理的话，会造成一些CPU的使用。<br>所以Xcode对这些情况做了一些处理：如果选中了Preserve Vector Data选项，但是在视图上展示为原始尺寸大小时，Image Assets实际上已经完成了原始尺寸的光栅化，并把相关数据保存在Image Assets中了，所以这种情况可以直接对存储的数据进行解码，而不进行光栅化。</p>
-<p>另外一个建议是：如果计划展示的尺寸为固定的几个尺寸，那么不要依赖Preserve Vector Data，而是准备好对应尺寸的图像资源，从而加快CPU对图像资源的处理。</p>
-<h3 id="自定义绘制内容"><a href="#自定义绘制内容" class="headerlink" title="自定义绘制内容"></a>自定义绘制内容</h3><p>我们有时需要在程序中进行一些自定义的绘制，例如绘制一个如下样式的视图：</p>
-<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2391" alt="ff0b012d2fa40975005f5be41176c647.png"></p>
-<p>我们可以继承UIView，然后在draw方法中进行相应的绘制：</p>
-<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2392" alt="bbe84f6a2a0164c69e23ee7590de4d55.png"></p>
-<p>UIView是基于CALayer来显示内容的；</p>
-<p>而对于UIImageView来说，UIImageView会将UIImage解码后的数据交给CALayer来作为内容显示；</p>
-<p>而对于draw来说，CALayer会创建一个与图像大小成正比的backing store来存储图像数据，然后将图像数据拷贝至backing store中，然后将backing store中的内容绘制到帧缓冲区中。</p>
-<p>通过重写draw方法可能会造成多余的内存消耗以及数据的拷贝.</p>
-<h5 id="Backing-Store"><a href="#Backing-Store" class="headerlink" title="Backing Store"></a>Backing Store</h5><p>重写draw方法时，会触发创建Backing Store，此时的Backing Store的大小与视图的像素大小成正比。</p>
-<p>在iOS12中，Backing Store将会使用动态增长的方式来减少内存的使用。在以前的iOS版本中，我们可以设置CALayer的contentsFromat属性来指定Core Animation Framework在绘制时用到的颜色长度，这个设置会关闭iOS12中关于Backing Store的设置。</p>
-<h5 id="建议实现方式"><a href="#建议实现方式" class="headerlink" title="建议实现方式"></a>建议实现方式</h5><p>对于我们需要自定义绘制的视图，我们应该减少Backing Store的使用。</p>
-<p>通常的做法是将一个大视图构建为多个小视图来实现；<br>同时，系统提供的经过优化的视图属性也不会造成多余内存的使用（例如UIView的backgroundColor属性，就不会创建Backing Store。此时需要注意，使用pattern color时是一个例外，可以使用UIImageView作为UIView的子视图来替代这一效果）。</p>
-<h5 id="将大视图构建为多个小视图"><a href="#将大视图构建为多个小视图" class="headerlink" title="将大视图构建为多个小视图"></a>将大视图构建为多个小视图</h5><p>我们可以构建为以下层级：</p>
-<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2393" alt="d5e68ec0d562fc3d97870464c8cd875c.png"></p>
-<h6 id="圆角处理"><a href="#圆角处理" class="headerlink" title="圆角处理"></a>圆角处理</h6><p>在我们要进行圆角处理时，使用CALayer的cornerRadius属性，该属性不会引起多余的内存使用。而对于使用maskView和maskLayer来说，会使用到额外的内存空间。</p>
-<p>同时对于圆角之外的透明区域为复杂的不规则形状且cornerRadius满足不了需求时，可以使用UIImageView配合Resizeable的UIImage来进行处理。</p>
-<h6 id="Icon的实现"><a href="#Icon的实现" class="headerlink" title="Icon的实现"></a>Icon的实现</h6><p>Icon可以使用UIImageView来显示。</p>
-<p>为了达到UIImage的复用，UIImageView支持对单色图像着色，同时可以直接渲染到帧缓冲区中。</p>
-<p>这个设置需要对UIImage进行renderingMode的设置或者在Image Assets中进renderingMode设置。</p>
-<p>最后，为UIImageView设置tintColor来完成最终颜色渲染。</p>
-<h6 id="UILabel的优化"><a href="#UILabel的优化" class="headerlink" title="UILabel的优化"></a>UILabel的优化</h6><p>UILabel对于显示单色字符串做了优化处理，可以节省75%大小的Backing Store的使用。</p>
-<p>UILabel对于多彩字符串以及emoji进行了动态增长Backing Store的优化。</p>
-<h3 id="简单讲述在应用中使用先进的CPU和GPU技术。"><a href="#简单讲述在应用中使用先进的CPU和GPU技术。" class="headerlink" title="简单讲述在应用中使用先进的CPU和GPU技术。"></a>简单讲述在应用中使用先进的CPU和GPU技术。</h3><h5 id="Advanced-Image-Effects"><a href="#Advanced-Image-Effects" class="headerlink" title="Advanced Image Effects"></a>Advanced Image Effects</h5><ol>
-<li>实时处理图像时考虑Core Image。</li>
-<li>尽量使用GPU来处理图像，进而解放CPU。</li>
-<li>使用CIImage创建UIImage，并交由UIImageView去展示，这个过程会默认由GPU去处理，减少对CPU的使用。</li>
-</ol>
-<h5 id="Advanced-Image-Processing"><a href="#Advanced-Image-Processing" class="headerlink" title="Advanced Image Processing"></a>Advanced Image Processing</h5><ol>
-<li>使用CVPixelBuffer将数据移动到Metal, Vision和Accelerate等框架。</li>
-<li>使用最好的初始值设定项（不要重复执行已经完成的工作）。</li>
-<li>防止在GPU和CPU直接来回切换。</li>
-<li>确保交给Accelerate的buffers是正确的格式。</li>
-</ol>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ol>
-<li>异步的进行预处理。</li>
-<li>使用UIImageView和UILabel来减少Backing Store的使用。</li>
-<li>不要禁止自定义绘制时系统做的新优化。</li>
-<li>使用Image Assets来存储图像。</li>
-<li>如果要展示相同图片的不同尺寸，不要过多依赖Preserve Vector Data。</li>
-</ol>
-<h3 id="学习"><a href="#学习" class="headerlink" title="学习"></a>学习</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/TuGeLe/article/details/81137995">图像和图形的最佳实践（WWDC 2018 session 219）</a></p>
-<p><a target="_blank" rel="noopener" href="https://developer.apple.com/videos/play/wwdc2018/219/">WWDC 2018 session 219</a></p>
 
-    
 
-    
 
-    
 
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2019/10/20/%E5%9B%BE%E5%83%8F%E5%92%8C%E5%9B%BE%E5%BD%A2%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%EF%BC%88WWDC-2018-session-219%EF%BC%89/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-iOS离屏渲染研究" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2019/10/20/iOS%E7%A6%BB%E5%B1%8F%E6%B8%B2%E6%9F%93%E7%A0%94%E7%A9%B6/" target="_blank">iOS离屏渲染研究</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2019/10/20/iOS%E7%A6%BB%E5%B1%8F%E6%B8%B2%E6%9F%93%E7%A0%94%E7%A9%B6/" class="archive-article-date">
-        <time datetime="2019-10-20T02:51:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-20</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>[TOC]</p>
-<h3 id="离屏渲染"><a href="#离屏渲染" class="headerlink" title="离屏渲染"></a>离屏渲染</h3><h6 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h6><p>如果要在显示屏上显示内容，我们至少需要一块与屏幕像素数据量一样大的frame buffer，作为像素数据存储区域，而这也是GPU存储渲染结果的地方。如果有时因为面临一些限制，无法把渲染结果直接写入frame buffer，而是先暂存在另外的内存区域，之后再写入frame buffer，那么这个过程被称之为离屏渲染。</p>
-<p>简单说就是：在当前屏幕缓冲区以外新开辟一个缓冲区进行渲染操作。</p>
-<h6 id="离屏渲染消耗性能的原因"><a href="#离屏渲染消耗性能的原因" class="headerlink" title="离屏渲染消耗性能的原因"></a>离屏渲染消耗性能的原因</h6><ol>
-<li>需要创建新的缓冲区</li>
-<li>离屏渲染的整个过程，需要多次切换上下文环境，先是从当前屏幕（On-Screen）切换到离屏（Off-Screen）；等到离屏渲染结束以后，将离屏缓冲区的渲染结果显示到屏幕上，又需要将上下文环境从离屏切换到当前屏幕</li>
-</ol>
-<h3 id="离屏渲染是在哪一步进行的？为什么？"><a href="#离屏渲染是在哪一步进行的？为什么？" class="headerlink" title="离屏渲染是在哪一步进行的？为什么？"></a>离屏渲染是在哪一步进行的？为什么？</h3><p>1、CPU”离屏渲染“</p>
-<p>在UIView中实现了drawRect方法，就算它的函数体内部实际没有代码，系统也会为这个view申请一块内存区域，等待CoreGraphics可能的绘画操作。</p>
-<p>对于类似这种“新开一块CGContext来画图“的操作，有很多文章和视频也称之为“离屏渲染”（因为像素数据是暂时存入了CGContext，而不是直接到了frame buffer）。进一步来说，其实所有CPU进行的光栅化操作（如文字渲染、图片解码），都无法直接绘制到由GPU掌管的frame buffer，只能暂时先放在另一块内存之中，说起来都属于“离屏渲染”。</p>
-<p>根据苹果工程师的说法CPU渲染就是俗称的“软件渲染”，而真正的离屏渲染发生在GPU。</p>
-<p>2、GPU离屏渲染</p>
-<p>对于每一层layer，要么能找到一种通过单次遍历就能完成渲染的算法，要么就不得不另开一块内存，借助这个临时中转区域来完成一些更复杂的、多次的修改/剪裁操作，这时就离屏渲染了。</p>
-<h3 id="设置cornerRadius一定会触发离屏渲染吗？"><a href="#设置cornerRadius一定会触发离屏渲染吗？" class="headerlink" title="设置cornerRadius一定会触发离屏渲染吗？"></a>设置cornerRadius一定会触发离屏渲染吗？</h3><p>不会</p>
-<h3 id="常见离屏渲染场景"><a href="#常见离屏渲染场景" class="headerlink" title="常见离屏渲染场景"></a>常见离屏渲染场景</h3><h6 id="1、-cornerRadius-clipsToBounds"><a href="#1、-cornerRadius-clipsToBounds" class="headerlink" title="1、 cornerRadius+clipsToBounds"></a>1、 cornerRadius+clipsToBounds</h6><p>1、将一个layer的内容裁剪成圆角，可能不存在一次遍历就能完成的方法<br>2、容器的子layer因为父容器有圆角，那么也会需要被裁剪，而这时它们还在渲染队列中排队，尚未被组合到一块画布上，自然也无法统一裁剪</p>
-<p>此时我们就不得不开辟一块独立于frame buffer的空白内存，先把容器以及其所有子layer依次画好，然后把四个角“剪”成圆形，再把结果画到frame buffer中。这就造成了GPU的离屏渲染。</p>
-<h6 id="2、shadow"><a href="#2、shadow" class="headerlink" title="2、shadow"></a>2、shadow</h6><p>原因在于，虽然layer本身是一块矩形区域，但是阴影默认是作用在其中”非透明区域“的，而且需要显示在所有layer内容的下方，因此根据画家算法必须被渲染在先。但矛盾在于此时阴影的本体（layer和其子layer）都还没有被组合到一起，怎么可能在第一步就画出只有完成最后一步之后才能知道的形状呢？这样一来又只能另外申请一块内存，把本体内容都先画好，再根据渲染结果的形状，添加阴影到frame buffer，最后把内容画上去（这只是我的猜测，实际情况可能更复杂）。</p>
-<p>不过如果我们能够预先告诉CoreAnimation（通过shadowPath属性）阴影的几何形状，那么阴影当然可以先被独立渲染出来，不需要依赖layer本体，也就不再需要离屏渲染了。</p>
-<h6 id="3、group-opacity"><a href="#3、group-opacity" class="headerlink" title="3、group opacity"></a>3、group opacity</h6><p>alpha并不是分别应用在每一层之上，而是只有到整个layer树画完之后，再统一加上alpha，最后和底下其他layer的像素进行组合。显然也无法通过一次遍历就得到最终结果。将一对蓝色和红色layer叠在一起，然后在父layer上设置opacity=0.5，并复制一份在旁边作对比。左边关闭group opacity，右边保持默认（从iOS7开始，如果没有显式指定，group opacity会默认打开），然后打开offscreen rendering的调试，我们会发现右边的那一组确实是离屏渲染了。</p>
-<h6 id="4、mask"><a href="#4、mask" class="headerlink" title="4、mask"></a>4、mask</h6><p>我们知道mask是应用在layer和其所有子layer的组合之上的，而且可能带有透明度，那么其实和group opacity的原理类似，不得不在离屏渲染中完成。</p>
-<h6 id="5、UIBlurEffect"><a href="#5、UIBlurEffect" class="headerlink" title="5、UIBlurEffect"></a>5、UIBlurEffect</h6><p>同样无法通过一次遍历完成，其原理在WWDC中提到。</p>
-<h6 id="6、shouldRasterize。一旦被设置为true"><a href="#6、shouldRasterize。一旦被设置为true" class="headerlink" title="6、shouldRasterize。一旦被设置为true"></a>6、shouldRasterize。一旦被设置为true</h6><p>Render Server就会强制把layer的渲染结果（包括其子layer，以及圆角、阴影、group opacity等等）保存在一块内存中，这样一来在下一帧仍然可以被复用，而不会再次触发离屏渲染。</p>
-<p>注意：</p>
-<ol>
-<li>shouldRasterize的主旨在于降低性能损失，但总是至少会触发一次离屏渲染。</li>
-<li>离屏渲染缓存有空间上限，最多不超过屏幕总像素的2.5倍大小</li>
-<li>一旦缓存超过100ms没有被使用，会自动被丢弃</li>
-<li>layer的内容（包括子layer）必须是静态的，因为一旦发生变化（如resize，动画），之前辛苦处理得到的缓存就失效了。</li>
-<li>其实除了解决多次离屏渲染的开销，shouldRasterize在另一个场景中也可以使用：如果layer的子结构非常复杂，渲染一次所需时间较长，同样可以打开这个开关，把layer绘制到一块缓存，然后在接下来复用这个结果，这样就不需要每次都重新绘制整个layer树了</li>
-</ol>
-<h6 id="7、其他"><a href="#7、其他" class="headerlink" title="7、其他"></a>7、其他</h6><p>类似allowsEdgeAntialiasing等等也可能会触发离屏渲染，</p>
-<p>原理也都是类似：如果你无法仅仅使用frame buffer来画出最终结果，那就只能另开一块内存空间来储存中间结果。这些原理并不神秘。</p>
-<h3 id="什么时候需要CPU渲染"><a href="#什么时候需要CPU渲染" class="headerlink" title="什么时候需要CPU渲染"></a>什么时候需要CPU渲染</h3><p>渲染性能的调优，其实始终是在做一件事：平衡CPU和GPU的负载，让他们尽量做各自最擅长的工作。</p>
-<p>绝大多数情况下，得益于GPU针对图形处理的优化，我们都会倾向于让GPU来完成渲染任务，而给CPU留出足够时间处理各种各样复杂的App逻辑。</p>
-<p>为此Core Animation做了大量的工作，尽量把渲染工作转换成适合GPU处理的形式（也就是所谓的硬件加速，如layer composition，设置backgroundColor等等）。</p>
-<p>但是对于一些情况，如文字（CoreText使用CoreGraphics渲染）和图片（ImageIO）渲染，由于GPU并不擅长做这些工作，不得不先由CPU来处理好以后，再把结果作为texture传给GPU。</p>
-<p>一个典型的例子是，我们经常会使用CoreGraphics给图片加上圆角（将图片中圆角以外的部分渲染成透明）。整个过程全部是由CPU完成的。这样一来既然我们已经得到了想要的效果，就不需要再另外给图片容器设置cornerRadius。另一个好处是，我们可以灵活地控制裁剪和缓存的时机，巧妙避开CPU和GPU最繁忙的时段，达到平滑性能波动的目的。</p>
-<h3 id="学习"><a href="#学习" class="headerlink" title="学习"></a>学习</h3><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzA5NzMwODI0MA==&mid=2647764329&idx=1&sn=7e13a167b7d4df4d071928248d9531b7&chksm=8887d656bff05f40a41e614493103e4ddaecbd7caaf81b6db4019684ffffefd8bdbe1d068179&mpshare=1&scene=23&srcid=1211WQgUISoJ055okBhVGJaJ&sharer_sharetime=1576054080266&sharer_shareid=fc8016a1ffcf846e48e1c7a21f07026a%23rd">iOS离屏渲染研究</a></p>
-
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2019/10/20/iOS%E7%A6%BB%E5%B1%8F%E6%B8%B2%E6%9F%93%E7%A0%94%E7%A9%B6/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-iOS 高效切圆角方法总结" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2019/10/20/iOS%20%E9%AB%98%E6%95%88%E5%88%87%E5%9C%86%E8%A7%92%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/" target="_blank">iOS 高效切圆角方法总结</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2019/10/20/iOS%20%E9%AB%98%E6%95%88%E5%88%87%E5%9C%86%E8%A7%92%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/" class="archive-article-date">
-        <time datetime="2019-10-20T02:46:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-20</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>[TOC]</p>
-<h3 id="UIView设置圆角"><a href="#UIView设置圆角" class="headerlink" title="UIView设置圆角"></a>UIView设置圆角</h3><h5 id="四个圆角"><a href="#四个圆角" class="headerlink" title="四个圆角"></a>四个圆角</h5><p>对于 contents 无内容或者内容的背景透明(无涉及到圆角以外的区域)的layer，直接设置layer的 backgroundColor 和 cornerRadius 属性来绘制圆角:</p>
-<ol>
-<li>UIView的contents无内容可以直接通过设置cornerRadius达到效果。</li>
-<li>UILable的contents也一样，所以也可通过<br>设置cornerRadius达到效果。不过label不能直接设置backgroundColor，因为这样设置的是contents的backgroundColor，需要设置layer. backgroundColor。 </li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">UIView *view &#x3D; [[UIView alloc] init];</span><br><span class="line">view.backgroundColor &#x3D; [UIColor blackColor];</span><br><span class="line">view.layer.cornerRadius &#x3D; 3.f;</span><br><span class="line">&#x2F;&#x2F; 以下两行，任写一行</span><br><span class="line">view.layer.masksToBounds &#x3D; NO;</span><br><span class="line">view.clipToBounds &#x3D; NO;</span><br><span class="line">&#x2F;&#x2F; 以下两行，千万不要加！</span><br><span class="line">view.layer.masksToBounds &#x3D; YES;</span><br><span class="line">view.clipToBounds &#x3D; YES;</span><br></pre></td></tr></table></figure>
-
-<p>注意点：UIView 只要设置图层的 cornerRadius 属性即可（不明白的话，可以看看官方文档里对 cornerRadius 的描述），如果设置 layer.masksToBounds = YES，会造成不必要的离屏渲染。 </p>
-<h5 id="单独某个方向的圆角-特殊情况需要设置layer-masksToBounds，就不要通过cornerRadius方式了"><a href="#单独某个方向的圆角-特殊情况需要设置layer-masksToBounds，就不要通过cornerRadius方式了" class="headerlink" title="单独某个方向的圆角/特殊情况需要设置layer.masksToBounds，就不要通过cornerRadius方式了"></a>单独某个方向的圆角/特殊情况需要设置layer.masksToBounds，就不要通过cornerRadius方式了</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">@implementation UIView (RounderCorner)</span><br><span class="line"></span><br><span class="line">- (void)hh_addRounderCornerWithRadius:(CGFloat)radius size:(CGSize)size corners:(UIRectCorner)corner</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;绘制一个圆角图片</span><br><span class="line">    UIImage *image &#x3D; [UIImage hh_corver:.....];</span><br><span class="line">    </span><br><span class="line">    UIImageView *imageView &#x3D; [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];</span><br><span class="line">    [imageView setImage:image];</span><br><span class="line">    [self insertSubview:imageView atIndex:0];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="文本类视图"><a href="#文本类视图" class="headerlink" title="文本类视图"></a>文本类视图</h3><h5 id="UITextField"><a href="#UITextField" class="headerlink" title="UITextField"></a>UITextField</h5><p>UITextField有两种实现方法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 天然支持设置圆角边框</span><br><span class="line">UITextField *textField &#x3D; [[UITextField alloc] init];</span><br><span class="line">textField.borderStyle &#x3D; UITextBorderStyleRoundedRect;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 与 UIView 类似</span><br><span class="line">UITextField *textField &#x3D; [[UITextField alloc] init];</span><br><span class="line">textField.layer.cornerRadius &#x3D; cornerRadius;</span><br></pre></td></tr></table></figure>
-
-<h5 id="UITextView"><a href="#UITextView" class="headerlink" title="UITextView"></a>UITextView</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 与 UIView 类似</span><br><span class="line">UITextView *textView &#x3D; [[UITextView alloc] init];</span><br><span class="line">textView.layer.cornerRadius &#x3D; cornerRadius;</span><br></pre></td></tr></table></figure>
-
-<h5 id="UILabel"><a href="#UILabel" class="headerlink" title="UILabel"></a>UILabel</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">UILabel *label &#x3D; [[UILabel alloc] init];</span><br><span class="line">&#x2F;&#x2F; 重点在此！！设置视图的图层背景色，千万不要直接设置 label.backgroundColor</span><br><span class="line">label.layer.backgroundColor &#x3D; [UIColor grayColor].CGColor;</span><br><span class="line">label.layer.cornerRadius &#x3D; cornerRadius;</span><br></pre></td></tr></table></figure>
-
-<h3 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h3><h5 id="UIButton"><a href="#UIButton" class="headerlink" title="UIButton"></a>UIButton</h5><p>说明：UIButton 的背景图片，如果是复杂的图片，可以依靠 UI 切图来实现。如果是简单的纯色背景图片，可以利用代码绘制带圆角的图片。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">UIButton *button &#x3D; [UIButton buttonWithType:UIButtonTypeCustom];</span><br><span class="line">&#x2F;&#x2F; 设置 UIButton 的背景图片。</span><br><span class="line">[button setBackgroundImage:image forState:UIControlStateNormal];</span><br></pre></td></tr></table></figure>
-
-<p>背景图片绘制方法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">+ (UIImage *)pureColorImageWithSize:(CGSize)size color:(UIColor *)color cornRadius:(CGFloat)cornRadius &#123;</span><br><span class="line">  UIView *view &#x3D; [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, size.width, size.height)];</span><br><span class="line">  view.backgroundColor &#x3D; color;</span><br><span class="line">  view.layer.cornerRadius &#x3D; cornerRadius;</span><br><span class="line">  &#x2F;&#x2F; 下面方法，第一个参数表示区域大小。第二个参数表示是否是非透明的。如果需要显示半透明效果，需要传NO，否则传YES。第三个参数是屏幕密度</span><br><span class="line">  UIGraphicsBeginImageContextWithOptions(view.bounds.size, NO, [UIScreen mainScreen].scale);</span><br><span class="line">  [view.layer renderInContext:UIGraphicsGetCurrentContext()];</span><br><span class="line">  UIImage *image &#x3D; UIGraphicsGetImageFromCurrentImageContext();</span><br><span class="line">  UIGraphicsEndImageContext();</span><br><span class="line"></span><br><span class="line">  return image;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h5 id="UIImageView"><a href="#UIImageView" class="headerlink" title="UIImageView"></a>UIImageView</h5><p>UIImageView 有四种方式实现圆角：</p>
-<p>1、截取图片方式（性能较好，基本不掉帧）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">+ (UIImage *)dx_imageByRoundCornerRadius:(CGFloat)radius</span><br><span class="line">                                 corners:(UIRectCorner)corners</span><br><span class="line">                                    size:(CGSize)size</span><br><span class="line">                               fillColor:(UIColor *)fillColor</span><br><span class="line">&#123;</span><br><span class="line">    if (corners !&#x3D; UIRectCornerAllCorners) &#123;</span><br><span class="line">        UIRectCorner tmp &#x3D; 0;</span><br><span class="line">        if (corners &amp; UIRectCornerTopLeft) tmp |&#x3D; UIRectCornerBottomLeft;</span><br><span class="line">        if (corners &amp; UIRectCornerTopRight) tmp |&#x3D; UIRectCornerBottomRight;</span><br><span class="line">        if (corners &amp; UIRectCornerBottomLeft) tmp |&#x3D; UIRectCornerTopLeft;</span><br><span class="line">        if (corners &amp; UIRectCornerBottomRight) tmp |&#x3D; UIRectCornerTopRight;</span><br><span class="line">        corners &#x3D; tmp;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    UIGraphicsBeginImageContextWithOptions(size, NO, [UIScreen mainScreen].scale);</span><br><span class="line">    CGContextRef context &#x3D; UIGraphicsGetCurrentContext();</span><br><span class="line">    CGRect rect &#x3D; CGRectMake(0, 0, size.width, size.height);</span><br><span class="line">    CGContextScaleCTM(context, 1, -1);</span><br><span class="line">    CGContextTranslateCTM(context, 0, -rect.size.height);</span><br><span class="line">  </span><br><span class="line">    UIBezierPath *path &#x3D; [UIBezierPath bezierPathWithRoundedRect:rect byRoundingCorners:corners cornerRadii:CGSizeMake(radius, radius)];</span><br><span class="line">    [fillColor set];</span><br><span class="line">    [path fill]; </span><br><span class="line">    </span><br><span class="line">    [path addClip];</span><br><span class="line">    CGContextDrawPath(context, kCGPathFill);</span><br><span class="line">    </span><br><span class="line">    UIImage *image &#x3D; UIGraphicsGetImageFromCurrentImageContext();</span><br><span class="line">    UIGraphicsEndImageContext();</span><br><span class="line">    return image;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- (void)tx_addCornerWithRadius:(CGFloat)radius corner:(UIRectCorner)corner &#123;</span><br><span class="line">    self.image &#x3D; [self.image dx_imageAddCornerWithRadius:radius andSize:self.bounds.size];</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>实际开发中，网络图片最好截图之后存入缓存，下次直接使用，不用再裁减。YYWebImageView的设计方案即如此。<br><a href="https://github.com/ibireme/YYWebImage">YYWebImage</a><br><a href="https://github.com/walkdianzi/DSImageViewRound/tree/master">fork SDWebImage库修改实现</a></p>
-<p>2、贝塞尔曲线切割圆角（不推荐，掉帧严重）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">- (UIImageView *)roundedRectImageViewWithCornerRadius:(CGFloat)cornerRadius &#123;</span><br><span class="line">    UIBezierPath *bezierPath &#x3D; [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:cornerRadius];</span><br><span class="line">    CAShapeLayer *layer &#x3D; [CAShapeLayer layer];</span><br><span class="line">    layer.path &#x3D; bezierPath.CGPath;</span><br><span class="line">    self.layer.mask &#x3D; layer;</span><br><span class="line"></span><br><span class="line">    return self;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>3、绘制四个角的遮罩（使用场景受限）</p>
-<p>在 UIImageView 上添加一个四个角有内容，其它部分是透明的视图，只对 UIImageView 圆角部分进行遮挡。但要保证被遮挡的部分背景色要与周围背景相同，避免穿帮。所以当 UIImageView 处于一个复杂的背景时，是不适合使用这个方法的。</p>
-<p>4、最不推荐做法（当一个页面只有少量圆角图片时才推荐使用）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">UIImageView *imageView &#x3D; [[UIImageView alloc] init];</span><br><span class="line">imageView.layer.cornerRadius &#x3D; 5.f;</span><br><span class="line">imageView.layer.masksToBounds &#x3D; YES;</span><br></pre></td></tr></table></figure>
-
-<h3 id="扩展：其他会导致离屏渲染的解决方案"><a href="#扩展：其他会导致离屏渲染的解决方案" class="headerlink" title="扩展：其他会导致离屏渲染的解决方案"></a>扩展：其他会导致离屏渲染的解决方案</h3><p>以下离屏渲染操作，按对性能影响等级从高到低进行排序:</p>
-<h5 id="1-shadows（阴影）"><a href="#1-shadows（阴影）" class="headerlink" title="1. shadows（阴影）"></a>1. shadows（阴影）</h5><p>方案：在设置完layer的shadow属性之后，设置layer.shadowPath = [UIBezierPath pathWithCGRect:view.bounds].CGPath;</p>
-<h5 id="2-圆角（前边已解决过）"><a href="#2-圆角（前边已解决过）" class="headerlink" title="2.圆角（前边已解决过）"></a>2.圆角（前边已解决过）</h5><h5 id="3-mask遮罩"><a href="#3-mask遮罩" class="headerlink" title="3.mask遮罩"></a>3.mask遮罩</h5><p>方案：不用mask</p>
-<h5 id="4-allowsGroupOpacity（组不透明）"><a href="#4-allowsGroupOpacity（组不透明）" class="headerlink" title="4. allowsGroupOpacity（组不透明）"></a>4. allowsGroupOpacity（组不透明）</h5><p>开启CALayer的 allowsGroupOpacity 属性后，子 layer 在视觉上的透明度的上限是其父 layer 的 opacity (对应UIView的 alpha )，并且从 iOS 7 以后默认全局开启了这个功能，这样做是为了让子视图与其容器视图保持同样的透明度。<br>方案：关闭 allowsGroupOpacity 属性，按产品需求自己控制layer透明度。 </p>
-<h5 id="5-edge-antialiasing（抗锯齿）"><a href="#5-edge-antialiasing（抗锯齿）" class="headerlink" title="5. edge antialiasing（抗锯齿）"></a>5. edge antialiasing（抗锯齿）</h5><p>方案：不设置 allowsEdgeAntialiasing 属性为YES(默认为NO)</p>
-<h5 id="6-shouldRasterize-光栅化"><a href="#6-shouldRasterize-光栅化" class="headerlink" title="6. shouldRasterize(光栅化)"></a>6. shouldRasterize(光栅化)</h5><p>当视图内容是静态不变时，设置 shouldRasterize(光栅化)为YES，此方案最为实用方便。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">view.layer.shouldRasterize &#x3D; true;</span><br><span class="line">view.layer.rasterizationScale &#x3D; view.layer.contentsScale;</span><br></pre></td></tr></table></figure>
-
-<p>但当视图内容是动态变化(如后台下载图片完毕后切换到主线程设置)时，使用此方案反而为增加系统负荷。</p>
-<h5 id="7-Core-Graphics-API-核心绘图"><a href="#7-Core-Graphics-API-核心绘图" class="headerlink" title="7.Core Graphics API(核心绘图)"></a>7.Core Graphics API(核心绘图)</h5><p>Core Graphics API(核心绘图)的绘制操作会导致CPU的离屏渲染。<br>方案：放到后台线程中进行。</p>
-<h3 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a>Demo</h3><p><a href="https://github.com/Baichenghui/Study/tree/master/CornerDemo">demo</a></p>
-<h3 id="学习"><a href="#学习" class="headerlink" title="学习"></a>学习</h3><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/f8a3400836b5">https://www.jianshu.com/p/f8a3400836b5</a><br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/e879aeff93f3">https://www.jianshu.com/p/e879aeff93f3</a><br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/b9bef82eace1">https://www.jianshu.com/p/b9bef82eace1</a><br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/3141c1177d35">https://www.jianshu.com/p/3141c1177d35</a></p>
-
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2019/10/20/iOS%20%E9%AB%98%E6%95%88%E5%88%87%E5%9C%86%E8%A7%92%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-YYWeakProxy-NSProxy" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2019/10/20/YYWeakProxy-NSProxy/" target="_blank">YYWeakProxy|NSProxy</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2019/10/20/YYWeakProxy-NSProxy/" class="archive-article-date">
-        <time datetime="2019-10-20T02:26:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-20</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h5 id="YYWeakProxy解决NSTimer循环引用问题："><a href="#YYWeakProxy解决NSTimer循环引用问题：" class="headerlink" title="YYWeakProxy解决NSTimer循环引用问题："></a>YYWeakProxy解决NSTimer循环引用问题：</h5><pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">YYWeakProxy *weakProxy &#x3D; [YYWeakProxy proxyWithTarget:self];</span><br><span class="line">   self.timer &#x3D; [NSTimer scheduledTimerWithTimeInterval:1.0 target:weakProxy selector:@selector(weakProxyTimer) userInfo:nil repeats:YES];</span><br></pre></td></tr></table></figure></code></pre>
-<h6 id="原理："><a href="#原理：" class="headerlink" title="原理："></a>原理：</h6><pre><code>生成一个临时对象，让 displayLink 强引用这个临时对象，在这个临时对象中弱引用 self</code></pre>
-<p>self-强-&gt;displayLink-强-&gt;YYWeakProxy-弱-&gt;self，没有形成循环引用</p>
-<h6 id="YYWeakProxy-核心代码："><a href="#YYWeakProxy-核心代码：" class="headerlink" title="YYWeakProxy 核心代码："></a>YYWeakProxy 核心代码：</h6><pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">@property (nonatomic, weak, readonly) id target;</span><br><span class="line">+ (instancetype)proxyWithTarget:(id)target &#123;</span><br><span class="line">     return [[YYWeakProxy alloc] initWithTarget:target];</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;将消息接收对象改为 target</span><br><span class="line">- (id)forwardingTargetForSelector:(SEL)selector &#123;</span><br><span class="line">     return _target;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;self 对 target 是弱引用，一旦 target 被释放将调用下面两个方法，如果不实现的话会 crash</span><br><span class="line">- (void)forwardInvocation:(NSInvocation *)invocation &#123;</span><br><span class="line">     void *null &#x3D; NULL;</span><br><span class="line">     [invocation setReturnValue:&amp;null];</span><br><span class="line">&#125;</span><br><span class="line">- (NSMethodSignature *)methodSignatureForSelector:(SEL)selector &#123;</span><br><span class="line">     return [NSObject instanceMethodSignatureForSelector:@selector(init)];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></code></pre>
-<h6 id="小结："><a href="#小结：" class="headerlink" title="小结："></a>小结：</h6><pre><code>YYWeakProxy 继承自 NSProxy，是 Foundation 框架两大基类之一，实现了 NSObject 协议。</code></pre>
-<p>NSProxy 做为消息转发的抽象代理类，自身能够处理的方法极少(仅 <NSObject> 接口中定义的部分方法，没有 init 方法，子类必须实现 initWithXXX: forwardInvocation: 和 methodSignatureForSelector: 方法), 所以其它方法都能够按照设计的预期被转发到被代理的对象中。</p>
-<h5 id="NSProxy："><a href="#NSProxy：" class="headerlink" title="NSProxy："></a>NSProxy：</h5><pre><code>NSProxy是一个虚类，你可以通过继承它，并重写这两个方法以实现消息转发到另一个实例。
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- (void)forwardInvocation:(NSInvocation *)anInvocation;</span><br><span class="line">- (NSMethodSignature *)methodSignatureForSelector:(SEL)sel; </span><br></pre></td></tr></table></figure>
-
-负责将消息转发到真正的target的代理类。
-举个例子，你想要卖一件二手物品，但是你并不想直接跟卖家接触（直接向target发消息），这时你去找了一个第三方，你告诉这个第三方你要买什么、出多少钱买、什么时候要等（向代理发消息），第三方再去跟卖家接触并把这些信息转告卖家（转发消息给真实的target），最后通过第三方去完成这个交易。</code></pre>
-
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2019/10/20/YYWeakProxy-NSProxy/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-  
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
-    </nav>
-  
 
 
           </div>
@@ -958,8 +861,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
