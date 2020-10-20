@@ -1,0 +1,451 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>iOS 长连接 socket 股票方向研究 - b9i60000</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate" />
+
+  
+  
+  <meta name="description" content="[TOC]
+网络中进程通信在了解socket之前，先了..."> 
+  
+  <meta name="author" content="b9i60000"> 
+
+  
+    <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
+  
+  
+    <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
+  
+  
+    <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+  
+  
+    <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
+  
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/favicon-144x144.png">
+    <meta rel="msapplication-TileColor" content="#000000">
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1445822_h1619vhl1nr.css">
+
+  
+
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  
+
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css">
+
+  
+
+  <script>
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      lazyload: {
+        enable: true,
+        loadingImage: '',
+      },
+      donate: {
+        enable: true,
+        alipay: 'https://pic.izhaoo.com/alipay.jpg',
+        wechat: 'https://pic.izhaoo.com/wechat.jpg'
+      },
+      motto: {
+        api: '',
+        default: '我在开了灯的床头下，想问问自己的心啊。'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        alwaysShow: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: true
+      }
+    }
+  </script>
+
+  
+
+  
+<meta name="generator" content="Hexo 5.2.0"></head>
+<body class="lock-screen">
+  <div class="loading"></div>
+  
+
+
+<nav class="navbar">
+  <div class="left"></div>
+  <div class="center">iOS 长连接 socket 股票方向研究</div>
+  <div class="right">
+    <i class="iconfont iconmenu j-navbar-menu"></i>
+  </div>
+</nav>
+
+  <nav class="menu">
+  <div class="menu-wrap">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <ul class="menu-content">
+      
+      
+      
+      
+      <li class="menu-item"><a href="/ " class="underline"> 首页</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/galleries " class="underline"> 摄影</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/archives " class="underline"> 归档</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/tags " class="underline"> 标签</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/categories " class="underline"> 分类</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/about " class="underline"> 关于</a></li>
+      
+    </ul>
+    <div class="menu-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+  </div>
+</nav>
+  <main id="main">
+  <div class="container" id="container">
+    <article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="/images/theme/post-image.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">iOS 长连接 socket 股票方向研究</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>十月 20, 2020</span
+        class="post-info-item">
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>4817</span>
+    </div>
+  </div>
+</section>
+    <section class="main">
+      <section class="content">
+        <p>[TOC]</p>
+<h3 id="网络中进程通信"><a href="#网络中进程通信" class="headerlink" title="网络中进程通信"></a>网络中进程通信</h3><p>在了解socket之前，先了解下网络进程之间如何通信。</p>
+<h5 id="本地进程间通信"><a href="#本地进程间通信" class="headerlink" title="本地进程间通信"></a>本地进程间通信</h5><ol>
+<li>消息传递（管道、消息队列、FIFO）</li>
+<li>同步（互斥量、条件变量、读写锁、文件和写记录锁、信号量）</li>
+<li>共享内存（匿名的和具名的，eg:channel）</li>
+<li>远程过程调用(RPC)</li>
+</ol>
+<h5 id="网络中进程如何通信"><a href="#网络中进程如何通信" class="headerlink" title="网络中进程如何通信"></a>网络中进程如何通信</h5><p>我们要理解网络中进程如何通信，得解决两个问题：<br>　　ａ、我们要如何标识一台主机，即怎样确定我们将要通信的进程是在那一台主机上运行。<br>　　ｂ、我们要如何标识唯一进程，本地通过pid标识，网络中应该怎样标识？</p>
+<p>解决办法：<br>　　ａ、TCP/IP协议族已经帮我们解决了这个问题，网络层的“ip地址”可以唯一标识网络中的主机<br>　　ｂ、传输层的“协议+端口”可以唯一标识主机中的应用程序（进程），因此，我们利用三元组（ip地址，协议，端口）就可以标识网络的进程了，网络中的进程通信就可以利用这个标志与其它进程进行交互。</p>
+<h3 id="socket"><a href="#socket" class="headerlink" title="socket"></a>socket</h3><h5 id="socket是什么"><a href="#socket是什么" class="headerlink" title="socket是什么"></a>socket是什么</h5><p>socket是对TCP/IP协议的封装，它的出现只是使得程序员更方便地使用TCP/IP协议栈而已。socket本身并不是协议，它是应用层与TCP/IP协议族通信的中间软件抽象层，是一组调用接口（TCP/IP网络的API函数）</p>
+<p><img   class="lazyload" data-original="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2395" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="dbe646028538d1b1f3890fa8e88b07b9.jpeg"></p>
+<h5 id="解决了什么问题"><a href="#解决了什么问题" class="headerlink" title="解决了什么问题"></a>解决了什么问题</h5><p>Socket主要是用来解决网络通信的，那么我们就来理解网络中进程是如何通信的。</p>
+<p>Socket编程进行的是端到端的通信，基于网络层和传输层的实现。在网络层，Socket 函数需要指定到底是 IPv4 还是IPv6。传输层需要指定是tcp还是udp。 </p>
+<h5 id="Socket怎么通信"><a href="#Socket怎么通信" class="headerlink" title="Socket怎么通信"></a>Socket怎么通信</h5><p>socket 这个中间件是利用三元组（ip地址，协议，端口）解决网络通信的。</p>
+<h6 id="通信过程"><a href="#通信过程" class="headerlink" title="通信过程"></a>通信过程</h6><p>通信过程图解：</p>
+<p><img   class="lazyload" data-original="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2396" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="7c9b474bf0101675c98b957b6296d83a.jpeg"></p>
+<p>图解说明：</p>
+<p>服务器端先初始化Socket，然后与端口绑定(bind)，对端口进行监听(listen)，调用accept阻塞，等待客户端连接。</p>
+<p>这时如果有个客户端初始化一个Socket，然后连接服务器(connect)，如果连接成功，这时客户端与服务器端的连接就建立了。客户端发送数据请求，服务器端接收请求并处理请求，然后把回应数据发送给客户端，客户端读取数据，最后关闭连接，一次交互结束。</p>
+<h6 id="socket中TCP的三次握手建立连接详解"><a href="#socket中TCP的三次握手建立连接详解" class="headerlink" title="socket中TCP的三次握手建立连接详解"></a>socket中TCP的三次握手建立连接详解</h6><p>我们知道tcp建立连接要进行“三次握手”，即交换三个分组。大致流程如下：</p>
+<p>客户端向服务器发送一个SYN J<br>服务器向客户端响应一个SYN K，并对SYN J进行确认ACK J+1<br>客户端再想服务器发一个确认ACK K+1<br>只有就完了三次握手，但是这个三次握手发生在socket的那几个函数中呢？</p>
+<p>三次握手建立连接图解：</p>
+<p><img   class="lazyload" data-original="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2401" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="97a37d22000293ba24e53d981d8f3e3e.png"></p>
+<p><img   class="lazyload" data-original="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2399" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="8aa123878e3754db1357220a12cb393c.png"></p>
+<p>三次握手建立连接图解说明：</p>
+<p>当客户端调用connect时，触发了连接请求，向服务器发送了SYN J包，这时connect进入阻塞状态；<br>服务器监听到连接请求，即收到SYN J包，调用accept函数接收请求向客户端发送SYN K ，ACK J+1，这时accept进入阻塞状态；<br>客户端收到服务器的SYN K ，ACK J+1之后，这时connect返回，并对SYN K进行确认；<br>服务器收到ACK K+1时，accept返回，至此三次握手完毕，连接建立。</p>
+<p>形象比喻：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[Shake 1] 套接字A：“你好，套接字B，我这里有数据要传送给你，建立连接吧。”</span><br><span class="line">[Shake 2] 套接字B：“好的，我这边已准备就绪。”</span><br><span class="line">[Shake 3] 套接字A：“谢谢你受理我的请求。</span><br></pre></td></tr></table></figure>
+
+<p>总结：客户端的connect在三次握手的第二次返回，而服务器端的accept在三次握手的第三次返回。</p>
+<h6 id="socket中TCP的四次握手释放连接详解"><a href="#socket中TCP的四次握手释放连接详解" class="headerlink" title="socket中TCP的四次握手释放连接详解"></a>socket中TCP的四次握手释放连接详解</h6><p>socket中的四次握手释放连接的过程</p>
+<p>四次握手释放连接图解：</p>
+<p><img   class="lazyload" data-original="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2400" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="214f0d393c12d1ad5061cc76ac1211f2.png"></p>
+<p>四次握手释放连接图解说明：</p>
+<p>某个应用进程首先调用close主动关闭连接，这时TCP发送一个FIN M；<br>另一端接收到FIN M之后，执行被动关闭，对这个FIN进行确认。它的接收也作为文件结束符传递给应用进程，因为FIN的接收意味着应用进程在相应的连接上再也接收不到额外数据；<br>一段时间之后，接收到文件结束符的应用进程调用close关闭它的socket。这导致它的TCP也发送一个FIN N；<br>接收到这个FIN的源发送端TCP对它进行确认。<br>这样每个方向上都有一个FIN和ACK。</p>
+<p>形象比喻：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[Shake 1] 套接字A：“任务处理完毕，我希望断开连接。”</span><br><span class="line">[Shake 2] 套接字B：“哦，是吗？请稍等，我准备一下。”</span><br><span class="line">等待片刻后……</span><br><span class="line">[Shake 3] 套接字B：“我准备好了，可以断开连接了。”</span><br><span class="line">[Shake 4] 套接字A：“好的，谢谢合作。”</span><br></pre></td></tr></table></figure>
+
+<h3 id="GCDAsyncSocket"><a href="#GCDAsyncSocket" class="headerlink" title="GCDAsyncSocket"></a>GCDAsyncSocket</h3><h5 id="解决了什么问题-1"><a href="#解决了什么问题-1" class="headerlink" title="解决了什么问题"></a>解决了什么问题</h5><p>CocoaAsyncSocket是谷歌的开发者，基于BSD-Socket写的一个IM框架，它给Mac和iOS提供了易于使用的、强大的异步套接字库，向上封装出简单易用OC接口。省去了我们面向Socket以及数据流Stream等繁琐复杂的编程。 </p>
+<h5 id="二次封装"><a href="#二次封装" class="headerlink" title="二次封装"></a>二次封装</h5><h6 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h6><p>股票类：</p>
+<p>数据量大：5000多支股票，每支股票有分时，分笔数据，画一条k线，可能要500条分时数据，甚至更多。</p>
+<p>实时性：股价每分每秒都在变化，一分钟产生很多条数据，用户要看到最新的信息，真的是一秒钟上下几十万啊。</p>
+<p>服务器主动推：股票预警等等一些重要消息，需要服务器实时推送，保证客户端100%收到，收不到可能造成客户资金损失。</p>
+<p>股票的数据不能通过HTTP协议来传输了，只能走TCP协议了，当然一些个人信息什么的还是走HTTP的。</p>
+<h6 id="技术点"><a href="#技术点" class="headerlink" title="技术点"></a>技术点</h6><p>1、数据量比较大：</p>
+<p>一次请求可能返回几百条数据到移动端，对数据要进行压缩，这里采用了 google 的 Protocol Buffer 数据传输格式，因为它对象序列化速度快，压缩率高 (ps: http 一般用 json, xml)。</p>
+<p>2、实时性与主动推：</p>
+<p>服务器与客户端之间维护一条 tcp 长连接，避免每次3次握手，4次挥手，和产生一堆 time_wait 状态的 socket 占用资源。</p>
+<p>走tcp协议需要自己维护一些状态掉线重连，移动端网络情况复杂，有3G，4G，wifi，socket 经常断开，它断了要自动连上，并且还要对应用层透明！不能让应用层感知到！连上后数据接着之前断开的地方发送，不能有影响。</p>
+<p>自动登录，这个是掉线重连后要做的一个操作，不登录拿不到股票数据。登录后接着做一个消息同步，看看有没有新消息。 </p>
+<p>3、客户端100%收到（可靠性）：</p>
+<p>除了 tcp 超时重传和3次ack回应保证了可靠传输之外，我们在app里也实现了一套应用层的ack机制，服务器保存了一组消息，每个消息有个seq号，一个消息推给客户端后，客户端拿到消息的seq，要发ack请求回应服务器这个消息，然后下次服务器才不会推给你，不然的话，下次服务器还是会推给你的。掉线重连，重登录后会同步一次你订阅过的消息，把上次没收到的，或者丢包的消息再同步过来。</p>
+<p>4、客户端的负载均衡（这块demo中没处理）：</p>
+<p>这个一般在服务器做，但后台为防止ip封锁，还有某些服务器不能在全国访问到，所以把负载均衡放在客户端做了，app启动拉取服务器列表，然后多线程并发发送测速包，得到每个服务器延迟和负载，然后选个最优的服务器连上即可，延迟可以理解为路有多长，负载可以理解为路上拥堵情况，显然最短的路不一定是最快的，它可能很堵。</p>
+<p>5、多线程安全问题：</p>
+<p>当多个命令发来的处理，为避免线程安全，将命令包装成task加入队列。<br>我们处理线程一共用了3个串行队列，分别对应任务数组操作队列，任务请求操作队列，数据接收操作队列。队列可以设置标识。</p>
+<p>6、耗电性能等：</p>
+<p>可以在进入后台时断开连接，停止心跳，停止相关操作。进入前台再自动连接开启心跳。</p>
+<h6 id="设计思路"><a href="#设计思路" class="headerlink" title="设计思路"></a>设计思路</h6><p>1、大致流程 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">graph TD</span><br><span class="line">A[开始] --&gt; B(连接)</span><br><span class="line">B --&gt; C&#123;是否连接成功&#125;</span><br><span class="line">C --&gt;|成功| D[发送心跳命令然后]</span><br><span class="line">C --&gt;|失败| E&#123;检查是否可以重连&#125;</span><br><span class="line">E --&gt;|成功| B[连接]</span><br><span class="line">E --&gt;|失败| G[结束]</span><br><span class="line">D --&gt; F[登录]</span><br><span class="line">F --&gt; H&#123;是否登录成功&#125;</span><br><span class="line">H --&gt;|成功| I[等待发送命令或接受数据]</span><br><span class="line">H --&gt;|失败| J[结束] </span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">@class HHSocketManager;</span><br><span class="line">@protocol HHSocketDelegate &lt;NSObject&gt;</span><br><span class="line"> </span><br><span class="line">&#x2F;&#x2F;&#x2F; socket 收到了响应，errorCode &#x3D;&#x3D; resp.code</span><br><span class="line">- (void)socket:(GCDAsyncSocket *)socket didReceiveResponse:(HHSocketResponse *)resp;</span><br><span class="line">&#x2F;&#x2F;&#x2F; 链接</span><br><span class="line">- (void)socket:(GCDAsyncSocket *)socket didConnectToHost:(NSString *)host port:(uint16_t)port;</span><br><span class="line">&#x2F;&#x2F;&#x2F; 断开链接</span><br><span class="line">- (void)socketDidDisconnect:(GCDAsyncSocket *)socket withError:(NSError *)err;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"> </span><br><span class="line">@interface HHSocketManager : NSObject</span><br><span class="line"></span><br><span class="line">@property (nonatomic, weak) id &lt;HHSocketDelegate&gt; delegate;</span><br><span class="line"></span><br><span class="line">@property (nonatomic, strong, readonly) HHSocketConfiguration *configuration;</span><br><span class="line"></span><br><span class="line">@property (nonatomic, assign, readonly) HHSocketStatus socketStatus; </span><br><span class="line"></span><br><span class="line">- (instancetype)initWithConfiguration:(nonnull HHSocketConfiguration *) configuration;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;! 是否可以收发数据</span><br><span class="line">- (BOOL)avaliable;</span><br><span class="line"> </span><br><span class="line">&#x2F;&#x2F;! 断开 socket 连接</span><br><span class="line">- (void)disconnect;</span><br><span class="line">&#x2F;&#x2F;! 开始连接</span><br><span class="line">- (void)connect;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;! 发送业务请求（通过command 和 params 包装成request在发送）</span><br><span class="line">- (HHSocketRequest *)sendCommand:(UInt16)command params:(nullable NSDictionary *)params;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;! 发送请求</span><br><span class="line">- (void)sendRequest:(HHSocketRequest*)request;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;! 取消所有请求，已发生的将无法取消</span><br><span class="line">- (void)cancelRequest:(HHSocketRequest*)request;</span><br><span class="line"> </span><br><span class="line">@end</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h5 id="demo"><a href="#demo" class="headerlink" title="demo"></a>demo</h5><p><a href="https://github.com/Baichenghui/Study/tree/master/GCDAsyncSocketManager">GCDAsyncSocketManager</a></p>
+<h3 id="学习"><a href="#学习" class="headerlink" title="学习"></a>学习</h3><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/2dbb360886a8">iOS即时通讯，从入门到“放弃”？（这是一个系列）</a>   </p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/edb50afa250e">通俗讲解股票类app - TCP网络通信层设计</a></p>
+<p><a href="https://github.com/hehe520/AsyncSocket">AsyncSocket</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/6b870f503905">iOS websocket（SocketRocket）</a></p>
+
+      </section>
+      <section class="extra">
+        
+        <ul class="copyright">
+  
+  <li><strong>本文作者：</strong>b9i60000</li>
+  <li><strong>本文链接：</strong><a href="https://github.com/Baichenghui/2020/10/20/iOS-%E9%95%BF%E8%BF%9E%E6%8E%A5-socket-%E8%82%A1%E7%A5%A8%E6%96%B9%E5%90%91%E7%A0%94%E7%A9%B6/index.html">https://github.com/Baichenghui/2020/10/20/iOS-%E9%95%BF%E8%BF%9E%E6%8E%A5-socket-%E8%82%A1%E7%A5%A8%E6%96%B9%E5%90%91%E7%A0%94%E7%A9%B6/index.html</a></li>
+  <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
+      rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
+  
+</ul>
+        
+        
+        <section class="donate">
+  <div class="qrcode">
+    <img   class="lazyload" data-original="https://pic.izhaoo.com/alipay.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+  </div>
+  <div class="icon">
+    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
+    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
+  </div>
+</section>
+        
+        
+        
+<nav class="nav">
+  
+    <a href="/2020/10/20/Universal-Links-%E9%80%9A%E7%94%A8%E9%93%BE%E6%8E%A5/"><i class="iconfont iconleft"></i>Universal Links 通用链接</a>
+  
+  
+    <a href="/2020/10/20/GCD%E7%A0%94%E7%A9%B6/">GCD研究<i class="iconfont iconright"></i></a>
+  
+</nav>
+
+      </section>
+      
+      <section class="comments">
+  
+  <div class="btn" id="comments-btn">查看评论</div>
+  
+  
+</section>
+      
+    </section>
+  </div>
+</article>
+  </div>
+</main>
+  <footer class="footer">
+  <div class="footer-social">
+    
+    
+    
+    
+    
+    <a href="tencent://message/?Menu=yes&uin=894519210 " target="_blank" onMouseOver="this.style.color= '#12B7F5'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconQQ "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="javascript:; " target="_blank" onMouseOver="this.style.color= '#09BB07'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconwechat-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://www.instagram.com/izhaoo/ " target="_blank" onMouseOver="this.style.color= '#DA2E76'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconinstagram "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://github.com/izhaoo " target="_blank" onMouseOver="this.style.color= '#24292E'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  icongithub-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="mailto:izhaoo@163.com " target="_blank" onMouseOver="this.style.color='#FFBE5B'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconmail"></i>
+    </a>
+    
+  </div>
+  <div class="footer-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+</footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
+  </div>
+  
+  <div class="fab fab-daovoice">
+    <i class="iconfont iconcomment"></i>
+  </div>
+  
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
+  
+</body>
+
+
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+
+
+
+
+
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+
+
+
+
+
+<script src="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/modules.js"></script>
+<script src="/js/zui.js"></script>
+<script src="/js/script.js"></script>
+
+
+
+
+
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i["DaoVoiceObject"] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    a.charset = "utf-8";
+    m.parentNode.insertBefore(a, m)
+  })(window, document, "script", ('https:' == document.location.protocol ? 'https:' : 'http:') +
+    "//widget.daovoice.io/widget/0f81ff2f.js", "daovoice")
+  daovoice('init', {
+    app_id: "abcdefg"
+  }, {
+    launcher: {
+      disableLauncherIcon: true,
+    },
+  });
+  daovoice('update');
+</script>
+
+
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+<script>
+  var _hmt = _hmt || [];
+  (function () {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?4c204d8bc027a0455b5fc642ac334ca8";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+
+
+
+
+
+</html>

@@ -1,0 +1,433 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>iOS 高效切圆角方法总结 - b9i60000</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate" />
+
+  
+  
+  <meta name="description" content="[TOC]
+UIView设置圆角四个圆角对于 cont..."> 
+  
+  <meta name="author" content="b9i60000"> 
+
+  
+    <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
+  
+  
+    <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
+  
+  
+    <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+  
+  
+    <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
+  
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/favicon-144x144.png">
+    <meta rel="msapplication-TileColor" content="#000000">
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1445822_h1619vhl1nr.css">
+
+  
+
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  
+
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css">
+
+  
+
+  <script>
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      lazyload: {
+        enable: true,
+        loadingImage: '',
+      },
+      donate: {
+        enable: true,
+        alipay: 'https://pic.izhaoo.com/alipay.jpg',
+        wechat: 'https://pic.izhaoo.com/wechat.jpg'
+      },
+      motto: {
+        api: '',
+        default: '我在开了灯的床头下，想问问自己的心啊。'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        alwaysShow: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: true
+      }
+    }
+  </script>
+
+  
+
+  
+<meta name="generator" content="Hexo 5.2.0"></head>
+<body class="lock-screen">
+  <div class="loading"></div>
+  
+
+
+<nav class="navbar">
+  <div class="left"></div>
+  <div class="center">iOS 高效切圆角方法总结</div>
+  <div class="right">
+    <i class="iconfont iconmenu j-navbar-menu"></i>
+  </div>
+</nav>
+
+  <nav class="menu">
+  <div class="menu-wrap">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <ul class="menu-content">
+      
+      
+      
+      
+      <li class="menu-item"><a href="/ " class="underline"> 首页</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/galleries " class="underline"> 摄影</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/archives " class="underline"> 归档</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/tags " class="underline"> 标签</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/categories " class="underline"> 分类</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/about " class="underline"> 关于</a></li>
+      
+    </ul>
+    <div class="menu-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+  </div>
+</nav>
+  <main id="main">
+  <div class="container" id="container">
+    <article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="/images/theme/post-image.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">iOS 高效切圆角方法总结</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>十月 20, 2020</span
+        class="post-info-item">
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>6217</span>
+    </div>
+  </div>
+</section>
+    <section class="main">
+      <section class="content">
+        <p>[TOC]</p>
+<h3 id="UIView设置圆角"><a href="#UIView设置圆角" class="headerlink" title="UIView设置圆角"></a>UIView设置圆角</h3><h5 id="四个圆角"><a href="#四个圆角" class="headerlink" title="四个圆角"></a>四个圆角</h5><p>对于 contents 无内容或者内容的背景透明(无涉及到圆角以外的区域)的layer，直接设置layer的 backgroundColor 和 cornerRadius 属性来绘制圆角:</p>
+<ol>
+<li>UIView的contents无内容可以直接通过设置cornerRadius达到效果。</li>
+<li>UILable的contents也一样，所以也可通过<br>设置cornerRadius达到效果。不过label不能直接设置backgroundColor，因为这样设置的是contents的backgroundColor，需要设置layer. backgroundColor。 </li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">UIView *view &#x3D; [[UIView alloc] init];</span><br><span class="line">view.backgroundColor &#x3D; [UIColor blackColor];</span><br><span class="line">view.layer.cornerRadius &#x3D; 3.f;</span><br><span class="line">&#x2F;&#x2F; 以下两行，任写一行</span><br><span class="line">view.layer.masksToBounds &#x3D; NO;</span><br><span class="line">view.clipToBounds &#x3D; NO;</span><br><span class="line">&#x2F;&#x2F; 以下两行，千万不要加！</span><br><span class="line">view.layer.masksToBounds &#x3D; YES;</span><br><span class="line">view.clipToBounds &#x3D; YES;</span><br></pre></td></tr></table></figure>
+
+<p>注意点：UIView 只要设置图层的 cornerRadius 属性即可（不明白的话，可以看看官方文档里对 cornerRadius 的描述），如果设置 layer.masksToBounds = YES，会造成不必要的离屏渲染。 </p>
+<h5 id="单独某个方向的圆角-特殊情况需要设置layer-masksToBounds，就不要通过cornerRadius方式了"><a href="#单独某个方向的圆角-特殊情况需要设置layer-masksToBounds，就不要通过cornerRadius方式了" class="headerlink" title="单独某个方向的圆角/特殊情况需要设置layer.masksToBounds，就不要通过cornerRadius方式了"></a>单独某个方向的圆角/特殊情况需要设置layer.masksToBounds，就不要通过cornerRadius方式了</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">@implementation UIView (RounderCorner)</span><br><span class="line"></span><br><span class="line">- (void)hh_addRounderCornerWithRadius:(CGFloat)radius size:(CGSize)size corners:(UIRectCorner)corner</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;绘制一个圆角图片</span><br><span class="line">    UIImage *image &#x3D; [UIImage hh_corver:.....];</span><br><span class="line">    </span><br><span class="line">    UIImageView *imageView &#x3D; [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];</span><br><span class="line">    [imageView setImage:image];</span><br><span class="line">    [self insertSubview:imageView atIndex:0];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="文本类视图"><a href="#文本类视图" class="headerlink" title="文本类视图"></a>文本类视图</h3><h5 id="UITextField"><a href="#UITextField" class="headerlink" title="UITextField"></a>UITextField</h5><p>UITextField有两种实现方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 天然支持设置圆角边框</span><br><span class="line">UITextField *textField &#x3D; [[UITextField alloc] init];</span><br><span class="line">textField.borderStyle &#x3D; UITextBorderStyleRoundedRect;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 与 UIView 类似</span><br><span class="line">UITextField *textField &#x3D; [[UITextField alloc] init];</span><br><span class="line">textField.layer.cornerRadius &#x3D; cornerRadius;</span><br></pre></td></tr></table></figure>
+
+<h5 id="UITextView"><a href="#UITextView" class="headerlink" title="UITextView"></a>UITextView</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 与 UIView 类似</span><br><span class="line">UITextView *textView &#x3D; [[UITextView alloc] init];</span><br><span class="line">textView.layer.cornerRadius &#x3D; cornerRadius;</span><br></pre></td></tr></table></figure>
+
+<h5 id="UILabel"><a href="#UILabel" class="headerlink" title="UILabel"></a>UILabel</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">UILabel *label &#x3D; [[UILabel alloc] init];</span><br><span class="line">&#x2F;&#x2F; 重点在此！！设置视图的图层背景色，千万不要直接设置 label.backgroundColor</span><br><span class="line">label.layer.backgroundColor &#x3D; [UIColor grayColor].CGColor;</span><br><span class="line">label.layer.cornerRadius &#x3D; cornerRadius;</span><br></pre></td></tr></table></figure>
+
+<h3 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h3><h5 id="UIButton"><a href="#UIButton" class="headerlink" title="UIButton"></a>UIButton</h5><p>说明：UIButton 的背景图片，如果是复杂的图片，可以依靠 UI 切图来实现。如果是简单的纯色背景图片，可以利用代码绘制带圆角的图片。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">UIButton *button &#x3D; [UIButton buttonWithType:UIButtonTypeCustom];</span><br><span class="line">&#x2F;&#x2F; 设置 UIButton 的背景图片。</span><br><span class="line">[button setBackgroundImage:image forState:UIControlStateNormal];</span><br></pre></td></tr></table></figure>
+
+<p>背景图片绘制方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">+ (UIImage *)pureColorImageWithSize:(CGSize)size color:(UIColor *)color cornRadius:(CGFloat)cornRadius &#123;</span><br><span class="line">  UIView *view &#x3D; [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, size.width, size.height)];</span><br><span class="line">  view.backgroundColor &#x3D; color;</span><br><span class="line">  view.layer.cornerRadius &#x3D; cornerRadius;</span><br><span class="line">  &#x2F;&#x2F; 下面方法，第一个参数表示区域大小。第二个参数表示是否是非透明的。如果需要显示半透明效果，需要传NO，否则传YES。第三个参数是屏幕密度</span><br><span class="line">  UIGraphicsBeginImageContextWithOptions(view.bounds.size, NO, [UIScreen mainScreen].scale);</span><br><span class="line">  [view.layer renderInContext:UIGraphicsGetCurrentContext()];</span><br><span class="line">  UIImage *image &#x3D; UIGraphicsGetImageFromCurrentImageContext();</span><br><span class="line">  UIGraphicsEndImageContext();</span><br><span class="line"></span><br><span class="line">  return image;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="UIImageView"><a href="#UIImageView" class="headerlink" title="UIImageView"></a>UIImageView</h5><p>UIImageView 有四种方式实现圆角：</p>
+<p>1、截取图片方式（性能较好，基本不掉帧）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">+ (UIImage *)dx_imageByRoundCornerRadius:(CGFloat)radius</span><br><span class="line">                                 corners:(UIRectCorner)corners</span><br><span class="line">                                    size:(CGSize)size</span><br><span class="line">                               fillColor:(UIColor *)fillColor</span><br><span class="line">&#123;</span><br><span class="line">    if (corners !&#x3D; UIRectCornerAllCorners) &#123;</span><br><span class="line">        UIRectCorner tmp &#x3D; 0;</span><br><span class="line">        if (corners &amp; UIRectCornerTopLeft) tmp |&#x3D; UIRectCornerBottomLeft;</span><br><span class="line">        if (corners &amp; UIRectCornerTopRight) tmp |&#x3D; UIRectCornerBottomRight;</span><br><span class="line">        if (corners &amp; UIRectCornerBottomLeft) tmp |&#x3D; UIRectCornerTopLeft;</span><br><span class="line">        if (corners &amp; UIRectCornerBottomRight) tmp |&#x3D; UIRectCornerTopRight;</span><br><span class="line">        corners &#x3D; tmp;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    UIGraphicsBeginImageContextWithOptions(size, NO, [UIScreen mainScreen].scale);</span><br><span class="line">    CGContextRef context &#x3D; UIGraphicsGetCurrentContext();</span><br><span class="line">    CGRect rect &#x3D; CGRectMake(0, 0, size.width, size.height);</span><br><span class="line">    CGContextScaleCTM(context, 1, -1);</span><br><span class="line">    CGContextTranslateCTM(context, 0, -rect.size.height);</span><br><span class="line">  </span><br><span class="line">    UIBezierPath *path &#x3D; [UIBezierPath bezierPathWithRoundedRect:rect byRoundingCorners:corners cornerRadii:CGSizeMake(radius, radius)];</span><br><span class="line">    [fillColor set];</span><br><span class="line">    [path fill]; </span><br><span class="line">    </span><br><span class="line">    [path addClip];</span><br><span class="line">    CGContextDrawPath(context, kCGPathFill);</span><br><span class="line">    </span><br><span class="line">    UIImage *image &#x3D; UIGraphicsGetImageFromCurrentImageContext();</span><br><span class="line">    UIGraphicsEndImageContext();</span><br><span class="line">    return image;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- (void)tx_addCornerWithRadius:(CGFloat)radius corner:(UIRectCorner)corner &#123;</span><br><span class="line">    self.image &#x3D; [self.image dx_imageAddCornerWithRadius:radius andSize:self.bounds.size];</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>实际开发中，网络图片最好截图之后存入缓存，下次直接使用，不用再裁减。YYWebImageView的设计方案即如此。<br><a href="https://github.com/ibireme/YYWebImage">YYWebImage</a><br><a href="https://github.com/walkdianzi/DSImageViewRound/tree/master">fork SDWebImage库修改实现</a></p>
+<p>2、贝塞尔曲线切割圆角（不推荐，掉帧严重）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">- (UIImageView *)roundedRectImageViewWithCornerRadius:(CGFloat)cornerRadius &#123;</span><br><span class="line">    UIBezierPath *bezierPath &#x3D; [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:cornerRadius];</span><br><span class="line">    CAShapeLayer *layer &#x3D; [CAShapeLayer layer];</span><br><span class="line">    layer.path &#x3D; bezierPath.CGPath;</span><br><span class="line">    self.layer.mask &#x3D; layer;</span><br><span class="line"></span><br><span class="line">    return self;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>3、绘制四个角的遮罩（使用场景受限）</p>
+<p>在 UIImageView 上添加一个四个角有内容，其它部分是透明的视图，只对 UIImageView 圆角部分进行遮挡。但要保证被遮挡的部分背景色要与周围背景相同，避免穿帮。所以当 UIImageView 处于一个复杂的背景时，是不适合使用这个方法的。</p>
+<p>4、最不推荐做法（当一个页面只有少量圆角图片时才推荐使用）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">UIImageView *imageView &#x3D; [[UIImageView alloc] init];</span><br><span class="line">imageView.layer.cornerRadius &#x3D; 5.f;</span><br><span class="line">imageView.layer.masksToBounds &#x3D; YES;</span><br></pre></td></tr></table></figure>
+
+<h3 id="扩展：其他会导致离屏渲染的解决方案"><a href="#扩展：其他会导致离屏渲染的解决方案" class="headerlink" title="扩展：其他会导致离屏渲染的解决方案"></a>扩展：其他会导致离屏渲染的解决方案</h3><p>以下离屏渲染操作，按对性能影响等级从高到低进行排序:</p>
+<h5 id="1-shadows（阴影）"><a href="#1-shadows（阴影）" class="headerlink" title="1. shadows（阴影）"></a>1. shadows（阴影）</h5><p>方案：在设置完layer的shadow属性之后，设置layer.shadowPath = [UIBezierPath pathWithCGRect:view.bounds].CGPath;</p>
+<h5 id="2-圆角（前边已解决过）"><a href="#2-圆角（前边已解决过）" class="headerlink" title="2.圆角（前边已解决过）"></a>2.圆角（前边已解决过）</h5><h5 id="3-mask遮罩"><a href="#3-mask遮罩" class="headerlink" title="3.mask遮罩"></a>3.mask遮罩</h5><p>方案：不用mask</p>
+<h5 id="4-allowsGroupOpacity（组不透明）"><a href="#4-allowsGroupOpacity（组不透明）" class="headerlink" title="4. allowsGroupOpacity（组不透明）"></a>4. allowsGroupOpacity（组不透明）</h5><p>开启CALayer的 allowsGroupOpacity 属性后，子 layer 在视觉上的透明度的上限是其父 layer 的 opacity (对应UIView的 alpha )，并且从 iOS 7 以后默认全局开启了这个功能，这样做是为了让子视图与其容器视图保持同样的透明度。<br>方案：关闭 allowsGroupOpacity 属性，按产品需求自己控制layer透明度。 </p>
+<h5 id="5-edge-antialiasing（抗锯齿）"><a href="#5-edge-antialiasing（抗锯齿）" class="headerlink" title="5. edge antialiasing（抗锯齿）"></a>5. edge antialiasing（抗锯齿）</h5><p>方案：不设置 allowsEdgeAntialiasing 属性为YES(默认为NO)</p>
+<h5 id="6-shouldRasterize-光栅化"><a href="#6-shouldRasterize-光栅化" class="headerlink" title="6. shouldRasterize(光栅化)"></a>6. shouldRasterize(光栅化)</h5><p>当视图内容是静态不变时，设置 shouldRasterize(光栅化)为YES，此方案最为实用方便。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">view.layer.shouldRasterize &#x3D; true;</span><br><span class="line">view.layer.rasterizationScale &#x3D; view.layer.contentsScale;</span><br></pre></td></tr></table></figure>
+
+<p>但当视图内容是动态变化(如后台下载图片完毕后切换到主线程设置)时，使用此方案反而为增加系统负荷。</p>
+<h5 id="7-Core-Graphics-API-核心绘图"><a href="#7-Core-Graphics-API-核心绘图" class="headerlink" title="7.Core Graphics API(核心绘图)"></a>7.Core Graphics API(核心绘图)</h5><p>Core Graphics API(核心绘图)的绘制操作会导致CPU的离屏渲染。<br>方案：放到后台线程中进行。</p>
+<h3 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a>Demo</h3><p><a href="https://github.com/Baichenghui/Study/tree/master/CornerDemo">demo</a></p>
+<h3 id="学习"><a href="#学习" class="headerlink" title="学习"></a>学习</h3><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/f8a3400836b5">https://www.jianshu.com/p/f8a3400836b5</a><br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/e879aeff93f3">https://www.jianshu.com/p/e879aeff93f3</a><br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/b9bef82eace1">https://www.jianshu.com/p/b9bef82eace1</a><br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/3141c1177d35">https://www.jianshu.com/p/3141c1177d35</a></p>
+
+      </section>
+      <section class="extra">
+        
+        <ul class="copyright">
+  
+  <li><strong>本文作者：</strong>b9i60000</li>
+  <li><strong>本文链接：</strong><a href="https://github.com/Baichenghui/2020/10/20/iOS%20%E9%AB%98%E6%95%88%E5%88%87%E5%9C%86%E8%A7%92%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/index.html">https://github.com/Baichenghui/2020/10/20/iOS%20%E9%AB%98%E6%95%88%E5%88%87%E5%9C%86%E8%A7%92%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/index.html</a></li>
+  <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
+      rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
+  
+</ul>
+        
+        
+        <section class="donate">
+  <div class="qrcode">
+    <img   class="lazyload" data-original="https://pic.izhaoo.com/alipay.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+  </div>
+  <div class="icon">
+    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
+    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
+  </div>
+</section>
+        
+        
+        
+<nav class="nav">
+  
+    <a href="/2020/10/20/iOS%E7%A6%BB%E5%B1%8F%E6%B8%B2%E6%9F%93%E7%A0%94%E7%A9%B6/"><i class="iconfont iconleft"></i>iOS离屏渲染研究</a>
+  
+  
+    <a href="/2020/10/20/YYWeakProxy-NSProxy/">YYWeakProxy|NSProxy<i class="iconfont iconright"></i></a>
+  
+</nav>
+
+      </section>
+      
+      <section class="comments">
+  
+  <div class="btn" id="comments-btn">查看评论</div>
+  
+  
+</section>
+      
+    </section>
+  </div>
+</article>
+  </div>
+</main>
+  <footer class="footer">
+  <div class="footer-social">
+    
+    
+    
+    
+    
+    <a href="tencent://message/?Menu=yes&uin=894519210 " target="_blank" onMouseOver="this.style.color= '#12B7F5'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconQQ "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="javascript:; " target="_blank" onMouseOver="this.style.color= '#09BB07'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconwechat-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://www.instagram.com/izhaoo/ " target="_blank" onMouseOver="this.style.color= '#DA2E76'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconinstagram "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://github.com/izhaoo " target="_blank" onMouseOver="this.style.color= '#24292E'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  icongithub-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="mailto:izhaoo@163.com " target="_blank" onMouseOver="this.style.color='#FFBE5B'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconmail"></i>
+    </a>
+    
+  </div>
+  <div class="footer-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+</footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
+  </div>
+  
+  <div class="fab fab-daovoice">
+    <i class="iconfont iconcomment"></i>
+  </div>
+  
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
+  
+</body>
+
+
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+
+
+
+
+
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+
+
+
+
+
+<script src="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/modules.js"></script>
+<script src="/js/zui.js"></script>
+<script src="/js/script.js"></script>
+
+
+
+
+
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i["DaoVoiceObject"] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    a.charset = "utf-8";
+    m.parentNode.insertBefore(a, m)
+  })(window, document, "script", ('https:' == document.location.protocol ? 'https:' : 'http:') +
+    "//widget.daovoice.io/widget/0f81ff2f.js", "daovoice")
+  daovoice('init', {
+    app_id: "abcdefg"
+  }, {
+    launcher: {
+      disableLauncherIcon: true,
+    },
+  });
+  daovoice('update');
+</script>
+
+
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+<script>
+  var _hmt = _hmt || [];
+  (function () {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?4c204d8bc027a0455b5fc642ac334ca8";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+
+
+
+
+
+</html>

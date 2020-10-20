@@ -1,0 +1,485 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>YYAsyncLayer 研究 - b9i60000</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate" />
+
+  
+  
+  <meta name="description" content="[TOC]
+引言异步绘制是界面流畅度提升的思路，YYA..."> 
+  
+  <meta name="author" content="b9i60000"> 
+
+  
+    <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
+  
+  
+    <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
+  
+  
+    <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+  
+  
+    <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
+  
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/favicon-144x144.png">
+    <meta rel="msapplication-TileColor" content="#000000">
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1445822_h1619vhl1nr.css">
+
+  
+
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  
+
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css">
+
+  
+
+  <script>
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      lazyload: {
+        enable: true,
+        loadingImage: '',
+      },
+      donate: {
+        enable: true,
+        alipay: 'https://pic.izhaoo.com/alipay.jpg',
+        wechat: 'https://pic.izhaoo.com/wechat.jpg'
+      },
+      motto: {
+        api: '',
+        default: '我在开了灯的床头下，想问问自己的心啊。'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        alwaysShow: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: true
+      }
+    }
+  </script>
+
+  
+
+  
+<meta name="generator" content="Hexo 5.2.0"></head>
+<body class="lock-screen">
+  <div class="loading"></div>
+  
+
+
+<nav class="navbar">
+  <div class="left"></div>
+  <div class="center">YYAsyncLayer 研究</div>
+  <div class="right">
+    <i class="iconfont iconmenu j-navbar-menu"></i>
+  </div>
+</nav>
+
+  <nav class="menu">
+  <div class="menu-wrap">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <ul class="menu-content">
+      
+      
+      
+      
+      <li class="menu-item"><a href="/ " class="underline"> 首页</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/galleries " class="underline"> 摄影</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/archives " class="underline"> 归档</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/tags " class="underline"> 标签</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/categories " class="underline"> 分类</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/about " class="underline"> 关于</a></li>
+      
+    </ul>
+    <div class="menu-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+  </div>
+</nav>
+  <main id="main">
+  <div class="container" id="container">
+    <article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="/images/theme/post-image.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">YYAsyncLayer 研究</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>十月 20, 2020</span
+        class="post-info-item">
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>11628</span>
+    </div>
+  </div>
+</section>
+    <section class="main">
+      <section class="content">
+        <p>[TOC]</p>
+<h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>异步绘制是界面流畅度提升的思路，YYAsyncLayer 是 ibireme 写的一个异步绘制的轮子。质量比较高，涉及到很多优化思维，值得学习。多学技术，学好技术。</p>
+<h3 id="为什么要异步绘制"><a href="#为什么要异步绘制" class="headerlink" title="为什么要异步绘制"></a>为什么要异步绘制</h3><h5 id="屏幕显示图像的原理"><a href="#屏幕显示图像的原理" class="headerlink" title="屏幕显示图像的原理"></a>屏幕显示图像的原理</h5><p><img   class="lazyload" data-original="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2376" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="9d500c2270433ab8e444083d5cf650f2.png"></p>
+<p>CPU 计算好显示内容提交到 GPU，GPU 渲染完成后将渲染结果放入帧缓冲区，随后视频控制器会按照 VSync 信号逐行读取帧缓冲区的数据，经过可能的数模转换传递给显示器显示。</p>
+<p><img   class="lazyload" data-original="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2375" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="eb92699d5650217ec7357a49d5789ca2.png"></p>
+<p>过去的CRT 的电子枪按照上面方式，从上到下一行行扫描，扫描完成后显示器就呈现一帧画面，随后电子枪回到初始位置继续下一次扫描。为了把显示器的显示过程和系统的视频控制器进行同步，显示器（或者其他硬件）会用硬件时钟产生一系列的定时信号。当电子枪换到新的一行，准备进行扫描时，显示器会发出一个水平同步信号（horizonal synchronization），简称 HSync；而当一帧画面绘制完成后，电子枪回复到原位，准备画下一帧前，显示器会发出一个垂直同步信号（vertical synchronization），简称 VSync。显示器通常以固定频率进行刷新，这个刷新率就是 VSync 信号产生的频率。</p>
+<h5 id="双缓冲机制"><a href="#双缓冲机制" class="headerlink" title="双缓冲机制"></a>双缓冲机制</h5><p>显示系统通常会引入两个缓冲区，即双缓冲机制。在这种情况下，GPU 会预先渲染好一帧放入一个缓冲区内，让视频控制器读取，当下一帧渲染好后，GPU 会直接把视频控制器的指针指向第二个缓冲器。如此一来效率会有很大的提升。</p>
+<p>双缓冲虽然能解决效率问题，但会引入一个新的问题。当视频控制器还未读取完成时，即屏幕内容刚显示一半时，GPU 将新的一帧内容提交到帧缓冲区并把两个缓冲区进行交换后，视频控制器就会把新的一帧数据的下半段显示到屏幕上，造成画面撕裂现象。</p>
+<p>为了解决这个问题，GPU 通常有一个机制叫做垂直同步（简写也是 V-Sync），当开启垂直同步后，GPU 会等待显示器的 VSync 信号发出后，才进行新的一帧渲染和缓冲区更新。这样能解决画面撕裂现象，也增加了画面流畅度，但需要消费更多的计算资源，也会带来部分延迟。</p>
+<h5 id="界面卡顿的实质"><a href="#界面卡顿的实质" class="headerlink" title="界面卡顿的实质"></a>界面卡顿的实质</h5><p><img   class="lazyload" data-original="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2374" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="5f16df9fe174ef3a6879c2bb1f066d27.png"> </p>
+<p>在 VSync 信号到来后，系统图形服务会通过 CADisplayLink 等机制通知 App，App 主线程开始在 CPU 中计算显示内容，比如视图的创建、布局计算、图片解码、文本绘制等。随后 CPU 会将计算好的内容提交到 GPU 去，由 GPU 进行变换、合成、渲染。随后 GPU 会把渲染结果提交到帧缓冲区去，等待下一次 VSync 信号到来时显示到屏幕上。由于垂直同步的机制，如果在一个 VSync 时间内，CPU 或者 GPU 没有完成内容提交，则那一帧就会被丢弃，等待下一次机会再显示，而这时显示屏会保留之前的内容不变。这就是界面卡顿的原因。</p>
+<h5 id="UIKit-性能瓶颈"><a href="#UIKit-性能瓶颈" class="headerlink" title="UIKit 性能瓶颈"></a>UIKit 性能瓶颈</h5><p>大部分 UIKit 组件的绘制是在主线程进行，需要 CPU 来进行绘制，当同一时刻过多组件需要绘制或者组件元素过于复杂时，必然会给 CPU 带来压力，这个时候就很容易掉帧（主要是文本控件，大量文本内容的计算和绘制过程都相当繁琐）。</p>
+<h5 id="UIKit-替代方案：CoreAnimation-或-CoreGraphics"><a href="#UIKit-替代方案：CoreAnimation-或-CoreGraphics" class="headerlink" title="UIKit 替代方案：CoreAnimation 或 CoreGraphics"></a>UIKit 替代方案：CoreAnimation 或 CoreGraphics</h5><h6 id="CoreAnimation"><a href="#CoreAnimation" class="headerlink" title="CoreAnimation"></a>CoreAnimation</h6><p>首选优化方案是 CoreAnimation 框架。CALayer 的大部分属性都是由 GPU 绘制的 (硬件层面)，不需要 CPU (软件层面) 做任何绘制。CA 框架下的 CAShapeLayer (多边形绘制)、CATextLayer(文本绘制)、CAGradientLayer (渐变绘制) 等都有较高的效率，非常实用。</p>
+<h6 id="CoreGraphics"><a href="#CoreGraphics" class="headerlink" title="CoreGraphics"></a>CoreGraphics</h6><p>其次在适当的地方可以考虑 CoreGraphics 框架。CoreGraphics 依托于 CPU 的软件绘制。在实现 CALayerDelegate 协议的 -drawLayer:inContext: 方法时（等同于UIView 二次封装的 -drawRect:方法），需要分配一个内存占用较高的上下文 context，与此同时，CALayer 或者其子类需要创建一个等大的寄宿图 contents。当基于 CPU 的软件绘制完成，还需要通过 IPC (进程间通信) 传递给设备显示系统。值得注意的是：当重绘时需要抹除这个上下文重新分配内存。</p>
+<p>不管是创建上下文、重绘带来的内存重新分配、IPC 都会带来性能上的较大开销。所以 CoreGraphics 的性能比较差，日常开发中要尽量避免直接在主线程使用。通常情况下，直接给 CALayer 的 contents 赋值 CGImage 图片或者使用 CALayer 的衍生类就能实现大部分需求，还能充分利用硬件支持，图像处理交给 GPU 当然更加放心。</p>
+<h5 id="多核设备带来的可能性"><a href="#多核设备带来的可能性" class="headerlink" title="多核设备带来的可能性"></a>多核设备带来的可能性</h5><p>通过以上说明，可以了解 CoreGraphics 较为糟糕的性能。然而可喜的是，市面上的设备都已经不是单核了，这就意味着可以通过后台线程处理耗时任务，主线程只需要负责调度显示。</p>
+<p>CoreGraphics 框架可以通过图片上下文将绘制内容制作为一张位图，并且这个操作可以在非主线程执行。那么，当有 n 个绘制任务时，可以开辟多个线程在后台异步绘制，绘制成功拿到位图回到主线程赋值给 CALayer 的寄宿图属性。</p>
+<p>这就是 YYAsyncLayer 框架的核心思想。</p>
+<p>虽然多个线程异步绘制会消耗大量的内存，但是对于性能敏感界面来说，只要工程师控制好内存峰值，可以极大的提高交互流畅度。优化很多时候就是空间换时间，所谓鱼和熊掌不可兼得。这也说明了一个问题，实际开发中要做有针对性的优化，不可盲目跟风。</p>
+<h3 id="框架概述"><a href="#框架概述" class="headerlink" title="框架概述"></a>框架概述</h3><p>类文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">YYSentinel.h (.m)</span><br><span class="line">YYTransaction.h (.m)</span><br><span class="line">YYAsyncLayer.h (.m)</span><br></pre></td></tr></table></figure>
+
+
+<h5 id="YYSentinel"><a href="#YYSentinel" class="headerlink" title="YYSentinel"></a>YYSentinel</h5><p>计数的类，自增int32_t类型变量value，是为了记录最新的布局请求标识，便于及时的放弃多余的绘制逻辑以减少开销。</p>
+<p>在框架中的应用是，异步绘制操作之前取出value作为局部变量保存</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int32_t value &#x3D; sentinel.value;</span><br></pre></td></tr></table></figure>
+
+<p>然后定义isCancelled block判断是否取消绘制操作了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">BOOL (^isCancelled)() &#x3D; ^BOOL() &#123;</span><br><span class="line">    &#x2F;&#x2F;value产生变化说明取消绘制操作</span><br><span class="line">    return value !&#x3D; sentinel.value;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>取消绘制操作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- (void)_cancelAsyncDisplay &#123;</span><br><span class="line">    &#x2F;&#x2F;对 value 进行自增，这样value就产生了变化</span><br><span class="line">    [_sentinel increase];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="YYTransaction"><a href="#YYTransaction" class="headerlink" title="YYTransaction"></a>YYTransaction</h5><p>事务类，捕获主线程 runloop 的某个时机回调，用于处理异步绘制事件。</p>
+<h5 id="YYAsyncLayer"><a href="#YYAsyncLayer" class="headerlink" title="YYAsyncLayer"></a>YYAsyncLayer</h5><p>继承自 CALayer ，封装了异步绘制的逻辑便于使用。</p>
+<h3 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h3><h5 id="YYSentinel-1"><a href="#YYSentinel-1" class="headerlink" title="YYSentinel"></a>YYSentinel</h5><p>.h</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@interface YYSentinel : NSObject </span><br><span class="line">@property (readonly) int32_t value; </span><br><span class="line">- (int32_t)increase; </span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>.m</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;YYSentinel.h&quot;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 若需要保证整形数值变量的线程安全，可以使用 OSAtomic 框架下的方法，它往往性能比使用各种“锁”更为优越，并且代码优雅。</span><br><span class="line">#import &lt;libkern&#x2F;OSAtomic.h&gt;</span><br><span class="line"></span><br><span class="line">@implementation YYSentinel &#123;</span><br><span class="line">    int32_t _value;</span><br><span class="line">&#125;</span><br><span class="line">- (int32_t)value &#123;</span><br><span class="line">    return _value;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 使用 OSAtomicIncrement32() 方法来对 value 执行自增。</span><br><span class="line">&#x2F;&#x2F; OSAtomicIncrement32() 是原子自增方法，线程安全。</span><br><span class="line">- (int32_t)increase &#123;</span><br><span class="line">    return OSAtomicIncrement32(&amp;_value);</span><br><span class="line">&#125;</span><br><span class="line">@end </span><br></pre></td></tr></table></figure>
+
+<h5 id="YYTransaction-1"><a href="#YYTransaction-1" class="headerlink" title="YYTransaction"></a>YYTransaction</h5><p>YYTransaction 使用集合来管理任务。</p>
+<p>YYTransaction 做的事情就是记录一系列事件，并且在合适的时机调用这些事件。</p>
+<h6 id="提交任务"><a href="#提交任务" class="headerlink" title="提交任务"></a>提交任务</h6><p>YYTransaction 有两个属性：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@interface YYTransaction()</span><br><span class="line">@property (nonatomic, strong) id target;</span><br><span class="line">@property (nonatomic, assign) SEL selector;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">static NSMutableSet *transactionSet &#x3D; nil;</span><br></pre></td></tr></table></figure>
+
+<p>方法接收者 (target) 和方法 (selector)。<br>一个 YYTransaction就是一个任务，全局区的 transactionSet 集合就是用来存储这些任务。提交方法-commit 不过是初始配置并且将任务装入集合。</p>
+<h6 id="合适的回调时机"><a href="#合适的回调时机" class="headerlink" title="合适的回调时机"></a>合适的回调时机</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">static void YYTransactionSetup() &#123;</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        transactionSet &#x3D; [NSMutableSet new];</span><br><span class="line">        CFRunLoopRef runloop &#x3D; CFRunLoopGetMain();</span><br><span class="line">        CFRunLoopObserverRef observer;</span><br><span class="line">        </span><br><span class="line">        observer &#x3D; CFRunLoopObserverCreate(CFAllocatorGetDefault(),</span><br><span class="line">                                           kCFRunLoopBeforeWaiting | kCFRunLoopExit,</span><br><span class="line">                                           true,      &#x2F;&#x2F; repeat</span><br><span class="line">                                           0xFFFFFF,  &#x2F;&#x2F; after CATransaction(2000000)</span><br><span class="line">                                           YYRunLoopObserverCallBack, NULL);</span><br><span class="line">        CFRunLoopAddObserver(runloop, observer, kCFRunLoopCommonModes);</span><br><span class="line">        CFRelease(observer);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>在主线程的 RunLoop 中添加了一个 observer 监听，回调的时机是 kCFRunLoopBeforeWaiting 和 kCFRunLoopExit ，即是主线程 RunLoop 循环即将进入休眠或者即将退出的时候。</p>
+<p>observer 的优先级是 0xFFFFFF，优先级在 CATransaction 的后面.</p>
+<p>回调里面做的事情：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">static void YYRunLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActivity activity, void *info) &#123;</span><br><span class="line">    if (transactionSet.count &#x3D;&#x3D; 0) return;</span><br><span class="line">    NSSet *currentSet &#x3D; transactionSet;</span><br><span class="line">    transactionSet &#x3D; [NSMutableSet new];</span><br><span class="line">    [currentSet enumerateObjectsUsingBlock:^(YYTransaction *transaction, BOOL *stop) &#123;</span><br><span class="line">#pragma clang diagnostic push</span><br><span class="line">#pragma clang diagnostic ignored &quot;-Warc-performSelector-leaks&quot;</span><br><span class="line">        [transaction.target performSelector:transaction.selector];</span><br><span class="line">#pragma clang diagnostic pop</span><br><span class="line">    &#125;];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>只是将集合中的任务遍历执行。</p>
+<h6 id="方法重写"><a href="#方法重写" class="headerlink" title="方法重写"></a>方法重写</h6><p>重写 <code>isEqual:</code> 方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- (BOOL)isEqual:(id)object &#123;</span><br><span class="line">    if (self &#x3D;&#x3D; object) return YES;</span><br><span class="line">    if (![object isMemberOfClass:self.class]) return NO;</span><br><span class="line">    YYTransaction *other &#x3D; object;</span><br><span class="line">    return other.selector &#x3D;&#x3D; _selector &amp;&amp; other.target &#x3D;&#x3D; _target;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>重写 hash 算法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- (NSUInteger)hash &#123;</span><br><span class="line">    long v1 &#x3D; (long)((void *)_selector);</span><br><span class="line">    long v2 &#x3D; (long)_target;</span><br><span class="line">    return v1 ^ v2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>NSObject 类默认的 hash 值为 10 进制的内存地址，这里作者将 _selector和 _target 的内存地址进行一个位异或处理，意味着只要 _selector 和 _target 地址都相同时，hash 值就相同。</p>
+<p>上面定义了<code>static NSMutableSet *transactionSet = nil;</code>，transactionSet是一个集合。</p>
+<p>这么做的意义，是因为这里和其他编程语言一样 NSSet 是基于 hash 的集合，它是不能有重复元素的，而判断是否重复毫无疑问是使用 hash。作者通过重写hash算法来重新定义重复元素。</p>
+<p>将 YYTransaction 的 hash值依托于 _selector 和 _target 的内存地址，那就意味着两点：<br>    1、同一个 YYTransaction 实例，_selector 和 _target 只要有一个内存地址不同，就会在集合中体现为两个值。<br>    2、不同的 YYTransaction 实例，_selector 和 _target 的内存地址都相同，在集合中的体现为一个值。</p>
+<p>在这可以避免重复的方法调用。加入 transactionSet 中的事件会在 Runloop 即将进入休眠或者即将退出时遍历执行，相同的方法接收者 (_target) 和相同的方法 (_selector)，可以视为重复调用（这里的主要场景是避免重复绘制影响性能）。</p>
+<p>举一个实际的例子：</p>
+<p>当使用绘制来制作一个文本时，Font、Text等属性的改变都意味着要重绘，使用 YYTransaction 延迟了绘制的调用时机，并且它们在同一个 RunLoop 循环中，装入 NSSet 将直接合并为一个绘制任务，避免了重复的绘制。</p>
+<h5 id="YYAsyncLayer-1"><a href="#YYAsyncLayer-1" class="headerlink" title="YYAsyncLayer"></a>YYAsyncLayer</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@interface YYAsyncLayer : CALayer </span><br><span class="line">@property BOOL displaysAsynchronously;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>YYAsyncLayer 继承自 CALayer，对外暴露了一个方法可开闭是否异步绘制。</p>
+<h6 id="初始化配置"><a href="#初始化配置" class="headerlink" title="初始化配置"></a>初始化配置</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">- (instancetype)init &#123;</span><br><span class="line">    self &#x3D; [super init];</span><br><span class="line">    static CGFloat scale; &#x2F;&#x2F;global</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        scale &#x3D; [UIScreen mainScreen].scale;</span><br><span class="line">    &#125;);</span><br><span class="line">    self.contentsScale &#x3D; scale;</span><br><span class="line">    _sentinel &#x3D; [YYSentinel new];</span><br><span class="line">    _displaysAsynchronously &#x3D; YES;</span><br><span class="line">    return self;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>YYAsyncLayer 的 contentsScale 为屏幕的 scale，该属性是 物理像素 / 逻辑像素，这样可以充分利用不同设备的显示器分辨率，绘制更清晰的图像。但是若 contentsGravity 设置了可拉伸的类型，CoreAnimation 将会优先满足，而忽略掉 contentsScale。UIView 和 UIImageView 默认处理了它们内部 CALayer 的 contentsScale，所以除非是直接使用 CALayer 及其衍生类，都不用显式的配置 contentsScale。</p>
+<p>同时还创建了一个 YYSentinel 实例。</p>
+<p>默认开启异步绘制。</p>
+<h6 id="重写绘制方法："><a href="#重写绘制方法：" class="headerlink" title="重写绘制方法："></a>重写绘制方法：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">- (void)setNeedsDisplay &#123;</span><br><span class="line">    [self _cancelAsyncDisplay];</span><br><span class="line">    [super setNeedsDisplay];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)display &#123;</span><br><span class="line">    super.contents &#x3D; super.contents;</span><br><span class="line">    [self _displayAsync:_displaysAsynchronously];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>标记需要绘制时，会先取消目前的异步绘制。待下一轮runloop到来绘制时，通过 <code>_displayAsync:</code> 方法来进行异步绘制操作。<code>_displayAsync:</code> 方法后面分析。</p>
+<h6 id="YYAsyncLayerDisplayTask"><a href="#YYAsyncLayerDisplayTask" class="headerlink" title="YYAsyncLayerDisplayTask"></a>YYAsyncLayerDisplayTask</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@interface YYAsyncLayerDisplayTask : NSObject</span><br><span class="line">@property (nullable, nonatomic, copy) void (^willDisplay)(CALayer *layer); </span><br><span class="line">@property (nullable, nonatomic, copy) void (^display)(CGContextRef context, CGSize size, BOOL(^isCancelled)(void)); </span><br><span class="line">@property (nullable, nonatomic, copy) void (^didDisplay)(CALayer *layer, BOOL finished); </span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+
+<p><code>YYAsyncLayerDisplayTask</code> 是一个异步绘制任务。</p>
+<p>通过 <code>willDisplay</code> 和 <code>didDisplay</code> 回调将要绘制和结束绘制时机，通过实现<code>display</code> 在代码块里面写业务绘制逻辑。</p>
+<h6 id="YYAsyncLayerDelegate"><a href="#YYAsyncLayerDelegate" class="headerlink" title="YYAsyncLayerDelegate"></a>YYAsyncLayerDelegate</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@protocol YYAsyncLayerDelegate &lt;NSObject&gt;</span><br><span class="line">@required </span><br><span class="line">- (YYAsyncLayerDisplayTask *)newAsyncDisplayTask;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+
+<p>通过协议提供数据源的方式，获取异步绘制的任务。</p>
+<h5 id="异步绘制的核心逻辑"><a href="#异步绘制的核心逻辑" class="headerlink" title="异步绘制的核心逻辑"></a>异步绘制的核心逻辑</h5><p>去掉一些优化代码，主要做的事情如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">dispatch_async(YYAsyncLayerGetDisplayQueue(), ^&#123;</span><br><span class="line">            UIGraphicsBeginImageContextWithOptions(size, opaque, scale);</span><br><span class="line">            CGContextRef context &#x3D; UIGraphicsGetCurrentContext(); </span><br><span class="line">            UIImage *image &#x3D; UIGraphicsGetImageFromCurrentImageContext();</span><br><span class="line">            UIGraphicsEndImageContext();</span><br><span class="line">            dispatch_async(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">                self.contents &#x3D; (__bridge id)(image.CGImage); </span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
+
+<p>其实就是通过 <code>CoreGraphics</code> 在子线程中生成一个位图，然后进入主队列给 YYAsyncLayer 的 contents 赋值 CGImage 由 GPU 渲染过后提交到显示系统。</p>
+<h5 id="及时的结束无用的绘制"><a href="#及时的结束无用的绘制" class="headerlink" title="及时的结束无用的绘制"></a>及时的结束无用的绘制</h5><p>前面提到的 <code>YYSentinel</code> 的作用已经说明。</p>
+<p>在适当的地方进行自增value，然后在绘制过程中对比value是否发生变化来判断是否取消绘制操作。</p>
+<p>很巧妙的实现。</p>
+<h5 id="异步线程的管理"><a href="#异步线程的管理" class="headerlink" title="异步线程的管理"></a>异步线程的管理</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">static dispatch_queue_t YYAsyncLayerGetDisplayQueue() &#123;</span><br><span class="line">#ifdef YYDispatchQueuePool_h</span><br><span class="line">    return YYDispatchQueueGetForQOS(NSQualityOfServiceUserInitiated);</span><br><span class="line">#else</span><br><span class="line">#define MAX_QUEUE_COUNT 16</span><br><span class="line">    static int queueCount;</span><br><span class="line">    static dispatch_queue_t queues[MAX_QUEUE_COUNT];</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    static int32_t counter &#x3D; 0;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        queueCount &#x3D; (int)[NSProcessInfo processInfo].activeProcessorCount;</span><br><span class="line">        queueCount &#x3D; queueCount &lt; 1 ? 1 : queueCount &gt; MAX_QUEUE_COUNT ? MAX_QUEUE_COUNT : queueCount;</span><br><span class="line">        if ([UIDevice currentDevice].systemVersion.floatValue &gt;&#x3D; 8.0) &#123;</span><br><span class="line">            for (NSUInteger i &#x3D; 0; i &lt; queueCount; i++) &#123;</span><br><span class="line">                dispatch_queue_attr_t attr &#x3D; dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_USER_INITIATED, 0);</span><br><span class="line">                queues[i] &#x3D; dispatch_queue_create(&quot;com.ibireme.yykit.render&quot;, attr);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            for (NSUInteger i &#x3D; 0; i &lt; queueCount; i++) &#123;</span><br><span class="line">                queues[i] &#x3D; dispatch_queue_create(&quot;com.ibireme.yykit.render&quot;, DISPATCH_QUEUE_SERIAL);</span><br><span class="line">                dispatch_set_target_queue(queues[i], dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    int32_t cur &#x3D; OSAtomicIncrement32(&amp;counter);</span><br><span class="line">    if (cur &lt; 0) cur &#x3D; -cur;</span><br><span class="line">    return queues[(cur) % queueCount];</span><br><span class="line">#undef MAX_QUEUE_COUNT</span><br><span class="line">#endif</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h6 id="要点-1-：串行队列数量和处理器数量相同"><a href="#要点-1-：串行队列数量和处理器数量相同" class="headerlink" title="要点 1 ：串行队列数量和处理器数量相同"></a>要点 1 ：串行队列数量和处理器数量相同</h6><p>一个 n 核设备同一时刻最多能 并行 执行 n 个任务，也就是最多有 n 个线程是相互不竞争 CPU 资源的。</p>
+<p>开辟的线程过多，超过了处理数量，实际上某些并行的线程之间就可能竞争同一个处理器的资源，频繁的切换上下文也会消耗处理器资源。</p>
+<p>而串行队列中只有一个线程，该框架中，作者使用和处理器相同数量的串行队列来轮询处理异步任务，有效的减少了线程调度操作。</p>
+<h6 id="要点-2-：创建串行队列，设置优先级"><a href="#要点-2-：创建串行队列，设置优先级" class="headerlink" title="要点 2 ：创建串行队列，设置优先级"></a>要点 2 ：创建串行队列，设置优先级</h6><p>在 8.0 以上的系统，队列的优先级为 QOS_CLASS_USER_INITIATED，低于用户交互相关的 QOS_CLASS_USER_INTERACTIVE。</p>
+<p>在 8.0 以下的系统，通过 dispatch_set_target_queue() 函数设置优先级为 DISPATCH_QUEUE_PRIORITY_DEFAULT (第二个参数如果使用串行队列会强行将我们创建的所有线程串行执行任务)。</p>
+<p>可以猜测主队列的优先级是大于或等于 QOS_CLASS_USER_INTERACTIVE的，让这些串行队列的优先级低于主队列，避免框架创建的线程和主线程竞争资源。</p>
+<h6 id="要点-3-：轮询返回队列"><a href="#要点-3-：轮询返回队列" class="headerlink" title="要点 3 ：轮询返回队列"></a>要点 3 ：轮询返回队列</h6><p>使用原子自增函数 OSAtomicIncrement32() 对局部静态变量 counter进行自增，然后通过取模运算轮询返回队列。</p>
+<p>注意这里使用了一个判断：if (cur &lt; 0) cur = -cur;，当 cur 自增越界时就会变为负数最大值（在二进制层面，是用正整数的反码加一来表示其负数的）。</p>
+<h6 id="为什么要使用-n-个串行队列实现并发"><a href="#为什么要使用-n-个串行队列实现并发" class="headerlink" title="为什么要使用 n 个串行队列实现并发"></a>为什么要使用 n 个串行队列实现并发</h6><p>为什么这里需要使用 n 个串行队列来调度，而不用一个并行队列。</p>
+<p>主要是因为并行队列无法精确的控制线程数量，很有可能创建过多的线程，导致 CPU 线程调度过于频繁，影响交互性能。</p>
+<p>可能会想到用信号量 (dispatch_semaphore_t) 来控制并发，然而这样只能控制并发的任务数量，而不能控制线程数量，并且使用起来不是很优雅。而使用串行队列就很简单了，我们可以很明确的知道自己创建的线程数量，一切皆在掌控之中。</p>
+<h3 id="学习"><a href="#学习" class="headerlink" title="学习"></a>学习</h3><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/154451e4bd42">YYAsyncLayer 源码剖析：异步绘制</a></p>
+
+      </section>
+      <section class="extra">
+        
+        <ul class="copyright">
+  
+  <li><strong>本文作者：</strong>b9i60000</li>
+  <li><strong>本文链接：</strong><a href="https://github.com/Baichenghui/2020/10/20/YYAsyncLayer-%E7%A0%94%E7%A9%B6/index.html">https://github.com/Baichenghui/2020/10/20/YYAsyncLayer-%E7%A0%94%E7%A9%B6/index.html</a></li>
+  <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
+      rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
+  
+</ul>
+        
+        
+        <section class="donate">
+  <div class="qrcode">
+    <img   class="lazyload" data-original="https://pic.izhaoo.com/alipay.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+  </div>
+  <div class="icon">
+    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
+    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
+  </div>
+</section>
+        
+        
+        
+<nav class="nav">
+  
+    <a href="/2020/10/20/YBTaskScheduler-%E7%A0%94%E7%A9%B6/"><i class="iconfont iconleft"></i>YBTaskScheduler 研究</a>
+  
+  
+    <a href="/2020/10/20/%E5%9B%BE%E5%83%8F%E5%92%8C%E5%9B%BE%E5%BD%A2%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%EF%BC%88WWDC-2018-session-219%EF%BC%89/">图像和图形的最佳实践（WWDC 2018 session 219）<i class="iconfont iconright"></i></a>
+  
+</nav>
+
+      </section>
+      
+      <section class="comments">
+  
+  <div class="btn" id="comments-btn">查看评论</div>
+  
+  
+</section>
+      
+    </section>
+  </div>
+</article>
+  </div>
+</main>
+  <footer class="footer">
+  <div class="footer-social">
+    
+    
+    
+    
+    
+    <a href="tencent://message/?Menu=yes&uin=894519210 " target="_blank" onMouseOver="this.style.color= '#12B7F5'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconQQ "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="javascript:; " target="_blank" onMouseOver="this.style.color= '#09BB07'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconwechat-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://www.instagram.com/izhaoo/ " target="_blank" onMouseOver="this.style.color= '#DA2E76'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconinstagram "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://github.com/izhaoo " target="_blank" onMouseOver="this.style.color= '#24292E'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  icongithub-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="mailto:izhaoo@163.com " target="_blank" onMouseOver="this.style.color='#FFBE5B'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconmail"></i>
+    </a>
+    
+  </div>
+  <div class="footer-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+</footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
+  </div>
+  
+  <div class="fab fab-daovoice">
+    <i class="iconfont iconcomment"></i>
+  </div>
+  
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
+  
+</body>
+
+
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+
+
+
+
+
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+
+
+
+
+
+<script src="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/modules.js"></script>
+<script src="/js/zui.js"></script>
+<script src="/js/script.js"></script>
+
+
+
+
+
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i["DaoVoiceObject"] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    a.charset = "utf-8";
+    m.parentNode.insertBefore(a, m)
+  })(window, document, "script", ('https:' == document.location.protocol ? 'https:' : 'http:') +
+    "//widget.daovoice.io/widget/0f81ff2f.js", "daovoice")
+  daovoice('init', {
+    app_id: "abcdefg"
+  }, {
+    launcher: {
+      disableLauncherIcon: true,
+    },
+  });
+  daovoice('update');
+</script>
+
+
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+<script>
+  var _hmt = _hmt || [];
+  (function () {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?4c204d8bc027a0455b5fc642ac334ca8";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+
+
+
+
+
+</html>

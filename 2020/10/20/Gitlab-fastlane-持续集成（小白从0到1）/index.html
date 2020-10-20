@@ -7,14 +7,17 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>YYWeakProxy|NSProxy - b9i60000</title>
+  <title>Gitlab+fastlane 持续集成（小白从0到1） - b9i60000</title>
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="google" content="notranslate" />
 
   
   
-  <meta name="description" content="YYWeakProxy解决NSTimer循环引用问题：..."> 
+  <meta name="description" content="[TOC]
+实现步骤
+在gitlab新建项目
+配置并启..."> 
   
   <meta name="author" content="b9i60000"> 
 
@@ -106,7 +109,7 @@
 
 <nav class="navbar">
   <div class="left"></div>
-  <div class="center">YYWeakProxy|NSProxy</div>
+  <div class="center">Gitlab+fastlane 持续集成（小白从0到1）</div>
   <div class="right">
     <i class="iconfont iconmenu j-navbar-menu"></i>
   </div>
@@ -160,29 +163,47 @@
     <section class="head">
   <img   class="lazyload" data-original="/images/theme/post-image.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
   <div class="head-mask">
-    <h1 class="head-title">YYWeakProxy|NSProxy</h1>
+    <h1 class="head-title">Gitlab+fastlane 持续集成（小白从0到1）</h1>
     <div class="head-info">
       <span class="post-info-item"><i class="iconfont iconcalendar"></i>十月 20, 2020</span
         class="post-info-item">
       
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>1581</span>
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>877</span>
     </div>
   </div>
 </section>
     <section class="main">
       <section class="content">
-        <h5 id="YYWeakProxy解决NSTimer循环引用问题："><a href="#YYWeakProxy解决NSTimer循环引用问题：" class="headerlink" title="YYWeakProxy解决NSTimer循环引用问题："></a>YYWeakProxy解决NSTimer循环引用问题：</h5><pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">YYWeakProxy *weakProxy &#x3D; [YYWeakProxy proxyWithTarget:self];</span><br><span class="line">   self.timer &#x3D; [NSTimer scheduledTimerWithTimeInterval:1.0 target:weakProxy selector:@selector(weakProxyTimer) userInfo:nil repeats:YES];</span><br></pre></td></tr></table></figure></code></pre>
-<h6 id="原理："><a href="#原理：" class="headerlink" title="原理："></a>原理：</h6><pre><code>生成一个临时对象，让 displayLink 强引用这个临时对象，在这个临时对象中弱引用 self</code></pre>
-<p>self-强-&gt;displayLink-强-&gt;YYWeakProxy-弱-&gt;self，没有形成循环引用</p>
-<h6 id="YYWeakProxy-核心代码："><a href="#YYWeakProxy-核心代码：" class="headerlink" title="YYWeakProxy 核心代码："></a>YYWeakProxy 核心代码：</h6><pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">@property (nonatomic, weak, readonly) id target;</span><br><span class="line">+ (instancetype)proxyWithTarget:(id)target &#123;</span><br><span class="line">     return [[YYWeakProxy alloc] initWithTarget:target];</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;将消息接收对象改为 target</span><br><span class="line">- (id)forwardingTargetForSelector:(SEL)selector &#123;</span><br><span class="line">     return _target;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;self 对 target 是弱引用，一旦 target 被释放将调用下面两个方法，如果不实现的话会 crash</span><br><span class="line">- (void)forwardInvocation:(NSInvocation *)invocation &#123;</span><br><span class="line">     void *null &#x3D; NULL;</span><br><span class="line">     [invocation setReturnValue:&amp;null];</span><br><span class="line">&#125;</span><br><span class="line">- (NSMethodSignature *)methodSignatureForSelector:(SEL)selector &#123;</span><br><span class="line">     return [NSObject instanceMethodSignatureForSelector:@selector(init)];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></code></pre>
-<h6 id="小结："><a href="#小结：" class="headerlink" title="小结："></a>小结：</h6><pre><code>YYWeakProxy 继承自 NSProxy，是 Foundation 框架两大基类之一，实现了 NSObject 协议。</code></pre>
-<p>NSProxy 做为消息转发的抽象代理类，自身能够处理的方法极少(仅 <NSObject> 接口中定义的部分方法，没有 init 方法，子类必须实现 initWithXXX: forwardInvocation: 和 methodSignatureForSelector: 方法), 所以其它方法都能够按照设计的预期被转发到被代理的对象中。</p>
-<h5 id="NSProxy："><a href="#NSProxy：" class="headerlink" title="NSProxy："></a>NSProxy：</h5><pre><code>NSProxy是一个虚类，你可以通过继承它，并重写这两个方法以实现消息转发到另一个实例。
+        <p>[TOC]</p>
+<h5 id="实现步骤"><a href="#实现步骤" class="headerlink" title="实现步骤"></a>实现步骤</h5><ol>
+<li>在gitlab新建项目</li>
+<li>配置并启动gitlab-runner</li>
+<li>安装并配置fastlane</li>
+<li>配置.gitlab-ci.yml文件</li>
+</ol>
+<h5 id="1、在gitlab新建项目"><a href="#1、在gitlab新建项目" class="headerlink" title="1、在gitlab新建项目"></a>1、在gitlab新建项目</h5><p>做开发的都会</p>
+<h5 id="2、配置gitlab-runner"><a href="#2、配置gitlab-runner" class="headerlink" title="2、配置gitlab-runner"></a>2、配置gitlab-runner</h5><p><a target="_blank" rel="noopener" href="https://docs.gitlab.com/runner/register/index.html">gitlab-runner文档</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/c7995ad64f48">gitlab-runner的配置——for Mac</a></p>
+<h5 id="3、安装并配置fastlane"><a href="#3、安装并配置fastlane" class="headerlink" title="3、安装并配置fastlane"></a>3、安装并配置fastlane</h5><h6 id="安装fastlane"><a href="#安装fastlane" class="headerlink" title="安装fastlane"></a>安装fastlane</h6><p><a target="_blank" rel="noopener" href="https://s0docs0fastlane0tools.icopy.site/">fastlane中文文档</a></p>
+<p>注意：任何的安装可能都需要你配置下环境变量</p>
+<h6 id="安装firim插件"><a href="#安装firim插件" class="headerlink" title="安装firim插件"></a>安装firim插件</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fastlane add_plugin firim</span><br></pre></td></tr></table></figure>
+<p>注意：这个要在工程fastlane文件夹所在目录执行</p>
+<h6 id="Appfile"><a href="#Appfile" class="headerlink" title="Appfile"></a>Appfile</h6><p>用于存放 app_identifier（bundle id）、 apple_id(appl开发中账号邮箱地址)、team_id、itc_team_id</p>
+<h6 id="Deliverfile"><a href="#Deliverfile" class="headerlink" title="Deliverfile"></a>Deliverfile</h6><p>deliver工具的配置文件</p>
+<h6 id="Fastfile"><a href="#Fastfile" class="headerlink" title="Fastfile"></a>Fastfile</h6><p>用于管理你所创建的 lane，lane 则会调用 action。</p>
+<h6 id="Gymfile"><a href="#Gymfile" class="headerlink" title="Gymfile"></a>Gymfile</h6><p><a target="_blank" rel="noopener" href="http://docs.fastlane.tools/actions/gym/">官方文档</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/f62c8a980c35">Fastlane - gym</a></p>
+<p><img   class="lazyload" data-original="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p3931" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="18aa7066fa1a32b15eca900e3670743f.png"></p>
+<h6 id="Snapfile"><a href="#Snapfile" class="headerlink" title="Snapfile"></a>Snapfile</h6><p>用于指定需要进行屏幕截图的设备类型和语种。</p>
+<h6 id="Matchfile"><a href="#Matchfile" class="headerlink" title="Matchfile"></a>Matchfile</h6><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/5962940522a2">使用Match来管理代码签名</a></p>
+<h6 id="Pluginfile"><a href="#Pluginfile" class="headerlink" title="Pluginfile"></a>Pluginfile</h6><p>安装的插件会在这里面显示，如前面提到的插件firim安装之后,Pluginfile中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gem &#39;fastlane-plugin-firim&#39;</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- (void)forwardInvocation:(NSInvocation *)anInvocation;</span><br><span class="line">- (NSMethodSignature *)methodSignatureForSelector:(SEL)sel; </span><br></pre></td></tr></table></figure>
-
-负责将消息转发到真正的target的代理类。
-举个例子，你想要卖一件二手物品，但是你并不想直接跟卖家接触（直接向target发消息），这时你去找了一个第三方，你告诉这个第三方你要买什么、出多少钱买、什么时候要等（向代理发消息），第三方再去跟卖家接触并把这些信息转告卖家（转发消息给真实的target），最后通过第三方去完成这个交易。</code></pre>
+<h5 id="4、配置-gitlab-ci-yml文件"><a href="#4、配置-gitlab-ci-yml文件" class="headerlink" title="4、配置.gitlab-ci.yml文件"></a>4、配置.gitlab-ci.yml文件</h5><p>注意：<br>variables:<br>  LC_ALL: “en_US.UTF-8”<br>  LANG: “en_US.UTF-8”<br>  GIT_STRATEGY: fetch #开发阶段这要设置一下，默认每次都会clone代码，耗时较长。上线版本设置为clone获取最新代码</p>
+<p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000019540360">持续集成之.gitlab-ci.yml篇（详细讲解了各命令的作用）</a></p>
+<p><a target="_blank" rel="noopener" href="https://s0docs0gitlab0com.icopy.site/ce/ci/yaml/README.html">（官方文档）</a> </p>
+<h5 id="原理理解"><a href="#原理理解" class="headerlink" title="原理理解"></a>原理理解</h5><p>在配置.gitlab-ci.yml文件中配置需要执行的脚本，这里配置执行fastlane脚本。</p>
+<h5 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h5><p>个人建议，直接看官方文档，除非英文太差，那就找中文资料吧。</p>
 
       </section>
       <section class="extra">
@@ -190,7 +211,7 @@
         <ul class="copyright">
   
   <li><strong>本文作者：</strong>b9i60000</li>
-  <li><strong>本文链接：</strong><a href="https://github.com/Baichenghui/2020/10/20/YYWeakProxy-NSProxy/index.html">https://github.com/Baichenghui/2020/10/20/YYWeakProxy-NSProxy/index.html</a></li>
+  <li><strong>本文链接：</strong><a href="https://github.com/Baichenghui/2020/10/20/Gitlab-fastlane-%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%EF%BC%88%E5%B0%8F%E7%99%BD%E4%BB%8E0%E5%88%B01%EF%BC%89/index.html">https://github.com/Baichenghui/2020/10/20/Gitlab-fastlane-%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%EF%BC%88%E5%B0%8F%E7%99%BD%E4%BB%8E0%E5%88%B01%EF%BC%89/index.html</a></li>
   <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
       rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
   
@@ -211,8 +232,10 @@
         
 <nav class="nav">
   
-    <a href="/2020/10/20/iOS%20%E9%AB%98%E6%95%88%E5%88%87%E5%9C%86%E8%A7%92%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/"><i class="iconfont iconleft"></i>iOS 高效切圆角方法总结</a>
+    <a href="/2020/10/20/macbook-%E7%94%B5%E6%B1%A0%E5%81%A5%E5%BA%B7%E7%A8%8B%E5%BA%A6%E6%A3%80%E6%B5%8B%E7%BB%88%E7%AB%AF%E5%91%BD%E4%BB%A4/"><i class="iconfont iconleft"></i>macbook 电池健康程度检测终端命令</a>
   
+  
+    <a href="/2020/10/20/sizeToFit-%E5%92%8C-sizeThatFits/">sizeToFit 和 sizeThatFits<i class="iconfont iconright"></i></a>
   
 </nav>
 

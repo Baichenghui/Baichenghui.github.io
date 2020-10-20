@@ -7,14 +7,14 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>YYWeakProxy|NSProxy - b9i60000</title>
+  <title>macbook 电池健康程度检测终端命令 - b9i60000</title>
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="google" content="notranslate" />
 
   
   
-  <meta name="description" content="YYWeakProxy解决NSTimer循环引用问题：..."> 
+  <meta name="description" content="ioreg -rn AppleSmartBattery..."> 
   
   <meta name="author" content="b9i60000"> 
 
@@ -106,7 +106,7 @@
 
 <nav class="navbar">
   <div class="left"></div>
-  <div class="center">YYWeakProxy|NSProxy</div>
+  <div class="center">macbook 电池健康程度检测终端命令</div>
   <div class="right">
     <i class="iconfont iconmenu j-navbar-menu"></i>
   </div>
@@ -160,29 +160,18 @@
     <section class="head">
   <img   class="lazyload" data-original="/images/theme/post-image.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
   <div class="head-mask">
-    <h1 class="head-title">YYWeakProxy|NSProxy</h1>
+    <h1 class="head-title">macbook 电池健康程度检测终端命令</h1>
     <div class="head-info">
       <span class="post-info-item"><i class="iconfont iconcalendar"></i>十月 20, 2020</span
         class="post-info-item">
       
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>1581</span>
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>47</span>
     </div>
   </div>
 </section>
     <section class="main">
       <section class="content">
-        <h5 id="YYWeakProxy解决NSTimer循环引用问题："><a href="#YYWeakProxy解决NSTimer循环引用问题：" class="headerlink" title="YYWeakProxy解决NSTimer循环引用问题："></a>YYWeakProxy解决NSTimer循环引用问题：</h5><pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">YYWeakProxy *weakProxy &#x3D; [YYWeakProxy proxyWithTarget:self];</span><br><span class="line">   self.timer &#x3D; [NSTimer scheduledTimerWithTimeInterval:1.0 target:weakProxy selector:@selector(weakProxyTimer) userInfo:nil repeats:YES];</span><br></pre></td></tr></table></figure></code></pre>
-<h6 id="原理："><a href="#原理：" class="headerlink" title="原理："></a>原理：</h6><pre><code>生成一个临时对象，让 displayLink 强引用这个临时对象，在这个临时对象中弱引用 self</code></pre>
-<p>self-强-&gt;displayLink-强-&gt;YYWeakProxy-弱-&gt;self，没有形成循环引用</p>
-<h6 id="YYWeakProxy-核心代码："><a href="#YYWeakProxy-核心代码：" class="headerlink" title="YYWeakProxy 核心代码："></a>YYWeakProxy 核心代码：</h6><pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">@property (nonatomic, weak, readonly) id target;</span><br><span class="line">+ (instancetype)proxyWithTarget:(id)target &#123;</span><br><span class="line">     return [[YYWeakProxy alloc] initWithTarget:target];</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;将消息接收对象改为 target</span><br><span class="line">- (id)forwardingTargetForSelector:(SEL)selector &#123;</span><br><span class="line">     return _target;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;self 对 target 是弱引用，一旦 target 被释放将调用下面两个方法，如果不实现的话会 crash</span><br><span class="line">- (void)forwardInvocation:(NSInvocation *)invocation &#123;</span><br><span class="line">     void *null &#x3D; NULL;</span><br><span class="line">     [invocation setReturnValue:&amp;null];</span><br><span class="line">&#125;</span><br><span class="line">- (NSMethodSignature *)methodSignatureForSelector:(SEL)selector &#123;</span><br><span class="line">     return [NSObject instanceMethodSignatureForSelector:@selector(init)];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></code></pre>
-<h6 id="小结："><a href="#小结：" class="headerlink" title="小结："></a>小结：</h6><pre><code>YYWeakProxy 继承自 NSProxy，是 Foundation 框架两大基类之一，实现了 NSObject 协议。</code></pre>
-<p>NSProxy 做为消息转发的抽象代理类，自身能够处理的方法极少(仅 <NSObject> 接口中定义的部分方法，没有 init 方法，子类必须实现 initWithXXX: forwardInvocation: 和 methodSignatureForSelector: 方法), 所以其它方法都能够按照设计的预期被转发到被代理的对象中。</p>
-<h5 id="NSProxy："><a href="#NSProxy：" class="headerlink" title="NSProxy："></a>NSProxy：</h5><pre><code>NSProxy是一个虚类，你可以通过继承它，并重写这两个方法以实现消息转发到另一个实例。
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- (void)forwardInvocation:(NSInvocation *)anInvocation;</span><br><span class="line">- (NSMethodSignature *)methodSignatureForSelector:(SEL)sel; </span><br></pre></td></tr></table></figure>
-
-负责将消息转发到真正的target的代理类。
-举个例子，你想要卖一件二手物品，但是你并不想直接跟卖家接触（直接向target发消息），这时你去找了一个第三方，你告诉这个第三方你要买什么、出多少钱买、什么时候要等（向代理发消息），第三方再去跟卖家接触并把这些信息转告卖家（转发消息给真实的target），最后通过第三方去完成这个交易。</code></pre>
+        <p>ioreg -rn AppleSmartBattery | grep -i capacity</p>
 
       </section>
       <section class="extra">
@@ -190,7 +179,7 @@
         <ul class="copyright">
   
   <li><strong>本文作者：</strong>b9i60000</li>
-  <li><strong>本文链接：</strong><a href="https://github.com/Baichenghui/2020/10/20/YYWeakProxy-NSProxy/index.html">https://github.com/Baichenghui/2020/10/20/YYWeakProxy-NSProxy/index.html</a></li>
+  <li><strong>本文链接：</strong><a href="https://github.com/Baichenghui/2020/10/20/macbook-%E7%94%B5%E6%B1%A0%E5%81%A5%E5%BA%B7%E7%A8%8B%E5%BA%A6%E6%A3%80%E6%B5%8B%E7%BB%88%E7%AB%AF%E5%91%BD%E4%BB%A4/index.html">https://github.com/Baichenghui/2020/10/20/macbook-%E7%94%B5%E6%B1%A0%E5%81%A5%E5%BA%B7%E7%A8%8B%E5%BA%A6%E6%A3%80%E6%B5%8B%E7%BB%88%E7%AB%AF%E5%91%BD%E4%BB%A4/index.html</a></li>
   <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
       rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
   
@@ -211,8 +200,10 @@
         
 <nav class="nav">
   
-    <a href="/2020/10/20/iOS%20%E9%AB%98%E6%95%88%E5%88%87%E5%9C%86%E8%A7%92%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/"><i class="iconfont iconleft"></i>iOS 高效切圆角方法总结</a>
+    <a href="/2020/10/20/mac-%E7%BB%88%E7%AB%AF%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8D%E4%BD%BF%E7%94%A8%E7%9A%84%E4%BB%80%E4%B9%88%E8%84%9A%E6%9C%AC%EF%BC%8C%E4%BB%A5%E5%8F%8A%E5%88%87%E6%8D%A2/"><i class="iconfont iconleft"></i>mac 终端查看当前使用的什么脚本，以及切换</a>
   
+  
+    <a href="/2020/10/20/Gitlab-fastlane-%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%EF%BC%88%E5%B0%8F%E7%99%BD%E4%BB%8E0%E5%88%B01%EF%BC%89/">Gitlab+fastlane 持续集成（小白从0到1）<i class="iconfont iconright"></i></a>
   
 </nav>
 
