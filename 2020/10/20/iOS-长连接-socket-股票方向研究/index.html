@@ -1,220 +1,388 @@
 <!DOCTYPE html>
-
 <html lang="zh-CN">
-
 <head>
-  
-  <title>iOS 长连接 socket 股票方向研究 - b9i60000</title>
-  <meta charset="UTF-8">
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
-  
-  
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="Keep Team">
+    
+    <title>
+        
+            iOS 长连接 socket 股票方向研究 |
+        
+        Keep Theme
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
 
-  <link rel="shortcut icon" href="/favicon.ico" type="image/png" />
-  <meta name="description" content="[TOC] 网络中进程通信在了解socket之前，先了解下网络进程之间如何通信。 本地进程间通信 消息传递（管道、消息队列、FIFO） 同步（互斥量、条件变量、读写锁、文件和写记录锁、信号量） 共享内存（匿名的和具名的，eg:channel） 远程过程调用(RPC)  网络中进程如何通信我们要理解网络中进程如何通信，得解决两个问题：　　ａ、我们要如何标识一台主机，即怎样确定我们将要通信的进程是在那">
-<meta property="og:type" content="article">
-<meta property="og:title" content="iOS 长连接 socket 股票方向研究">
-<meta property="og:url" content="https://github.com/Baichenghui/2020/10/20/iOS-%E9%95%BF%E8%BF%9E%E6%8E%A5-socket-%E8%82%A1%E7%A5%A8%E6%96%B9%E5%90%91%E7%A0%94%E7%A9%B6/index.html">
-<meta property="og:site_name" content="b9i60000">
-<meta property="og:description" content="[TOC] 网络中进程通信在了解socket之前，先了解下网络进程之间如何通信。 本地进程间通信 消息传递（管道、消息队列、FIFO） 同步（互斥量、条件变量、读写锁、文件和写记录锁、信号量） 共享内存（匿名的和具名的，eg:channel） 远程过程调用(RPC)  网络中进程如何通信我们要理解网络中进程如何通信，得解决两个问题：　　ａ、我们要如何标识一台主机，即怎样确定我们将要通信的进程是在那">
-<meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2395">
-<meta property="og:image" content="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2396">
-<meta property="og:image" content="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2401">
-<meta property="og:image" content="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2399">
-<meta property="og:image" content="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2400">
-<meta property="article:published_time" content="2020-10-20T02:53:03.603Z">
-<meta property="article:modified_time" content="2021-04-06T03:13:56.593Z">
-<meta property="article:author" content="b9i60000">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2395">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/highlight.js@9.15.8/styles/atom-one-dark.css,gh/theme-nexmoe/hexo-theme-nexmoe@latest/source/lib/mdui_043tiny/css/mdui.css,gh/theme-nexmoe/hexo-theme-nexmoe@latest/source/lib/iconfont/iconfont.css,gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css?v=233" crossorigin>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css">
-  
-  <link rel="stylesheet" href="/css/style.css?v=1617679076870">
+    <link rel="shortcut icon" href="/images/logo.svg">
+    
+<link rel="stylesheet" href="/css/font-awesome.min.css">
+
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"github.com","root":"/","language":"zh-CN"};
+    KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"/images/avatar.svg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":false,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":false}}},"local_search":{"enable":false,"preload":false},"code_copy":{"enable":false,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.2"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"};
+  </script>
 <meta name="generator" content="Hexo 5.2.0"></head>
 
-<body class="mdui-drawer-body-left">
-  
-  <div id="nexmoe-background">
-    <div class="nexmoe-bg" style="background-image: url(https://cdn.jsdelivr.net/gh/nexmoe/nexmoe.github.io@latest/images/cover/5c3aec85a4343.jpg)"></div>
-    <div class="mdui-appbar mdui-shadow-0">
-      <div class="mdui-toolbar">
-        <a mdui-drawer="{target: '#drawer', swipe: true}" title="menu" class="mdui-btn mdui-btn-icon mdui-ripple"><i class="mdui-icon nexmoefont icon-menu"></i></a>
-        <div class="mdui-toolbar-spacer"></div>
-        <!--<a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></a>-->
-        <a href="/" title="b9i60000" class="mdui-btn mdui-btn-icon"><img src="https://cdn.jsdelivr.net/gh/nexmoe/nexmoe.github.io@latest/images/avatar.png" alt="b9i60000"></a>
-       </div>
-    </div>
-  </div>
-  <div id="nexmoe-header">
-      <div class="nexmoe-drawer mdui-drawer" id="drawer">
-    <div class="nexmoe-avatar mdui-ripple">
-        <a href="/" title="b9i60000">
-            <img src="https://cdn.jsdelivr.net/gh/nexmoe/nexmoe.github.io@latest/images/avatar.png" alt="b9i60000" alt="b9i60000">
-        </a>
-    </div>
-    <div class="nexmoe-count">
-        <div><span>文章</span>17</div>
-        <div><span>标签</span>0</div>
-        <div><span>分类</span>0</div>
-    </div>
-    <div class="nexmoe-list mdui-list" mdui-collapse="{accordion: true}">
-        
-        <a class="nexmoe-list-item mdui-list-item mdui-ripple" href="/" title="回到首页">
-            <i class="mdui-list-item-icon nexmoefont icon-home"></i>
-            <div class="mdui-list-item-content">
-                回到首页
-            </div>
-        </a>
-        
-        <a class="nexmoe-list-item mdui-list-item mdui-ripple" href="/about.html" title="关于博客">
-            <i class="mdui-list-item-icon nexmoefont icon-info-circle"></i>
-            <div class="mdui-list-item-content">
-                关于博客
-            </div>
-        </a>
-        
-        <a class="nexmoe-list-item mdui-list-item mdui-ripple" href="/PY.html" title="我的朋友">
-            <i class="mdui-list-item-icon nexmoefont icon-unorderedlist"></i>
-            <div class="mdui-list-item-content">
-                我的朋友
-            </div>
-        </a>
-        
-    </div>
-    <aside id="nexmoe-sidebar">
-  
-  <div class="nexmoe-widget-wrap">
-    <div class="nexmoe-widget nexmoe-search">
-        <form id="search_form" action_e="https://cn.bing.com/search?q=site:nexmoe.com" onsubmit="return search();">
-            <label><input id="search_value" name="q" type="search" placeholder="搜索"></label>
-        </form>
-    </div>
-</div>
-  
-  <div class="nexmoe-widget-wrap">
-    <div class="nexmoe-widget nexmoe-social">
-        <a class="mdui-ripple" href="https://jq.qq.com/?_wv=1027&k=5CfKHun" target="_blank" mdui-tooltip="{content: 'QQ群'}" style="color: rgb(249, 174, 8);background-color: rgba(249, 174, 8, .1);">
-            <i class="nexmoefont icon-QQ"></i>
-        </a><a class="mdui-ripple" href="https://space.bilibili.com/20238211" target="_blank" mdui-tooltip="{content: '哔哩哔哩'}" style="color: rgb(231, 106, 141);background-color: rgba(231, 106, 141, .15);">
-            <i class="nexmoefont icon-bilibili"></i>
-        </a><a class="mdui-ripple" href="https://github.com/nexmoe/" target="_blank" mdui-tooltip="{content: 'GitHub'}" style="color: rgb(25, 23, 23);background-color: rgba(25, 23, 23, .15);">
-            <i class="nexmoefont icon-github"></i>
-        </a>
-    </div>
-</div>
-  
-  
 
-  
-  
-  
-</aside>
-    <div class="nexmoe-copyright">
-        &copy; 2021 b9i60000
-        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-        & <a href="https://github.com/theme-nexmoe/hexo-theme-nexmoe" target="_blank">Nexmoe</a>
-        
-    </div>
-</div><!-- .nexmoe-drawer -->
-  </div>
-  <div id="nexmoe-content">
-    <div class="nexmoe-primary">
-        <section class="nexmoe-archives">
+<body>
+<div class="progress-bar-container">
     
-    <div class="tagcloud nexmoe-rainbow">
-        
-    </div>
 
-    <div class="categories nexmoe-rainbow">
-        
-    </div>
     
-    <article>
-        
-        
+</div>
 
-        
-            <h2>2020</h2>
-            <ul>
-            
-                <li><span>12-22</span><a href="/2020/12/22/%E6%8A%80%E6%9C%AF%E6%94%AF%E6%8C%81/" >技术支持</a></li>
-            
-                <li><span>12-15</span><a href="/2020/12/15/%E6%97%A5%E7%A8%8B%E6%97%A5%E5%8E%86%E9%9A%90%E7%A7%81%E6%94%BF%E7%AD%96/" >隐私政策</a></li>
-            
-                <li><span>10-20</span><a href="/2020/10/20/mac-%E7%BB%88%E7%AB%AF%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8D%E4%BD%BF%E7%94%A8%E7%9A%84%E4%BB%80%E4%B9%88%E8%84%9A%E6%9C%AC%EF%BC%8C%E4%BB%A5%E5%8F%8A%E5%88%87%E6%8D%A2/" >mac 终端查看当前使用的什么脚本，以及切换</a></li>
-            
-                <li><span>10-20</span><a href="/2020/10/20/macbook-%E7%94%B5%E6%B1%A0%E5%81%A5%E5%BA%B7%E7%A8%8B%E5%BA%A6%E6%A3%80%E6%B5%8B%E7%BB%88%E7%AB%AF%E5%91%BD%E4%BB%A4/" >macbook 电池健康程度检测终端命令</a></li>
-            
-                <li><span>10-20</span><a href="/2020/10/20/Gitlab-fastlane-%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%EF%BC%88%E5%B0%8F%E7%99%BD%E4%BB%8E0%E5%88%B01%EF%BC%89/" >Gitlab+fastlane 持续集成（小白从0到1）</a></li>
-            
-                <li><span>10-20</span><a href="/2020/10/20/sizeToFit-%E5%92%8C-sizeThatFits/" >sizeToFit 和 sizeThatFits</a></li>
-            
-                <li><span>10-20</span><a href="/2020/10/20/%E5%88%A8%E6%A0%B9%E9%97%AE%E5%BA%95%E4%B9%8B-translatesAutoresizingMaskIntoConstraints/" >刨根问底之 translatesAutoresizingMaskIntoConstraints</a></li>
-            
-                <li><span>10-20</span><a href="/2020/10/20/UICollectionView%E9%97%B4%E9%9A%99%E9%97%AE%E9%A2%98/" >UICollectionView间隙问题</a></li>
-            
-                <li><span>10-20</span><a href="/2020/10/20/Universal-Links-%E9%80%9A%E7%94%A8%E9%93%BE%E6%8E%A5/" >Universal Links 通用链接</a></li>
-            
-                <li><span>10-20</span><a href="/2020/10/20/iOS-%E9%95%BF%E8%BF%9E%E6%8E%A5-socket-%E8%82%A1%E7%A5%A8%E6%96%B9%E5%90%91%E7%A0%94%E7%A9%B6/" >iOS 长连接 socket 股票方向研究</a></li>
-            
-                <li><span>10-20</span><a href="/2020/10/20/GCD%E7%A0%94%E7%A9%B6/" >GCD研究</a></li>
-            
-                <li><span>10-20</span><a href="/2020/10/20/YBTaskScheduler-%E7%A0%94%E7%A9%B6/" >YBTaskScheduler 研究</a></li>
-            
-                <li><span>10-20</span><a href="/2020/10/20/YYAsyncLayer-%E7%A0%94%E7%A9%B6/" >YYAsyncLayer 研究</a></li>
-            
-                <li><span>10-20</span><a href="/2020/10/20/%E5%9B%BE%E5%83%8F%E5%92%8C%E5%9B%BE%E5%BD%A2%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%EF%BC%88WWDC-2018-session-219%EF%BC%89/" >图像和图形的最佳实践（WWDC 2018 session 219）</a></li>
-            
-                <li><span>10-20</span><a href="/2020/10/20/iOS%E7%A6%BB%E5%B1%8F%E6%B8%B2%E6%9F%93%E7%A0%94%E7%A9%B6/" >iOS离屏渲染研究</a></li>
-            
-                <li><span>10-20</span><a href="/2020/10/20/iOS%20%E9%AB%98%E6%95%88%E5%88%87%E5%9C%86%E8%A7%92%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/" >iOS 高效切圆角方法总结</a></li>
-            
-                <li><span>10-20</span><a href="/2020/10/20/YYWeakProxy-NSProxy/" >YYWeakProxy|NSProxy</a></li>
-            
-            </ul>
-        
-    </article>
-</section>
-        <div class="nexmoe-post-right">
-          <div class="nexmoe-fixed">
-            <div class="nexmoe-tool">
-              <a href="#nexmoe-content" class="toc-link" aria-label="回到顶部" title="top"><button class="mdui-fab mdui-ripple"><i class="nexmoefont icon-caret-top"></i></button></a>
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            <a class="logo-title" href="/">
+                Keep Theme
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                    
+                </ul>
             </div>
-          </div>
+            <div class="mobile">
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
         </div>
     </div>
-  </div>
-  <script src="https://cdn.jsdelivr.net/combine/npm/lazysizes@5.1.0/lazysizes.min.js,gh/highlightjs/cdn-release@9.15.8/build/highlight.min.js,npm/mdui@0.4.3/dist/js/mdui.min.js?v=1"></script>
-<script>
-	hljs.initHighlightingOnLoad();
-</script>
 
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+        </ul>
+    </div>
 
+    <div class="window-mask"></div>
 
-<script src="https://cdn.jsdelivr.net/gh/xtaodada/xtaodada.github.io@0.0.2/copy.js"></script>
- 
-
-<script src="/js/app.js?v=1617679076871"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js"></script>
-<script>
-	$(".justified-gallery").justifiedGallery({
-		rowHeight: 160,
-		margins: 10,
-	});
-</script>
-
-  
+</header>
 
 
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">iOS 长连接 socket 股票方向研究</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.svg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Keep Team</span>
+                        
+                            <span class="author-label">Lv3</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2020-10-20 10:53:03
+    </span>
+    
+    
+
+    
+    
+    
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <p>[TOC]</p>
+<h3 id="网络中进程通信"><a href="#网络中进程通信" class="headerlink" title="网络中进程通信"></a>网络中进程通信</h3><p>在了解socket之前，先了解下网络进程之间如何通信。</p>
+<h5 id="本地进程间通信"><a href="#本地进程间通信" class="headerlink" title="本地进程间通信"></a>本地进程间通信</h5><ol>
+<li>消息传递（管道、消息队列、FIFO）</li>
+<li>同步（互斥量、条件变量、读写锁、文件和写记录锁、信号量）</li>
+<li>共享内存（匿名的和具名的，eg:channel）</li>
+<li>远程过程调用(RPC)</li>
+</ol>
+<h5 id="网络中进程如何通信"><a href="#网络中进程如何通信" class="headerlink" title="网络中进程如何通信"></a>网络中进程如何通信</h5><p>我们要理解网络中进程如何通信，得解决两个问题：<br>　　ａ、我们要如何标识一台主机，即怎样确定我们将要通信的进程是在那一台主机上运行。<br>　　ｂ、我们要如何标识唯一进程，本地通过pid标识，网络中应该怎样标识？</p>
+<p>解决办法：<br>　　ａ、TCP/IP协议族已经帮我们解决了这个问题，网络层的“ip地址”可以唯一标识网络中的主机<br>　　ｂ、传输层的“协议+端口”可以唯一标识主机中的应用程序（进程），因此，我们利用三元组（ip地址，协议，端口）就可以标识网络的进程了，网络中的进程通信就可以利用这个标志与其它进程进行交互。</p>
+<h3 id="socket"><a href="#socket" class="headerlink" title="socket"></a>socket</h3><h5 id="socket是什么"><a href="#socket是什么" class="headerlink" title="socket是什么"></a>socket是什么</h5><p>socket是对TCP/IP协议的封装，它的出现只是使得程序员更方便地使用TCP/IP协议栈而已。socket本身并不是协议，它是应用层与TCP/IP协议族通信的中间软件抽象层，是一组调用接口（TCP/IP网络的API函数）</p>
+<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2395" alt="dbe646028538d1b1f3890fa8e88b07b9.jpeg"></p>
+<h5 id="解决了什么问题"><a href="#解决了什么问题" class="headerlink" title="解决了什么问题"></a>解决了什么问题</h5><p>Socket主要是用来解决网络通信的，那么我们就来理解网络中进程是如何通信的。</p>
+<p>Socket编程进行的是端到端的通信，基于网络层和传输层的实现。在网络层，Socket 函数需要指定到底是 IPv4 还是IPv6。传输层需要指定是tcp还是udp。 </p>
+<h5 id="Socket怎么通信"><a href="#Socket怎么通信" class="headerlink" title="Socket怎么通信"></a>Socket怎么通信</h5><p>socket 这个中间件是利用三元组（ip地址，协议，端口）解决网络通信的。</p>
+<h6 id="通信过程"><a href="#通信过程" class="headerlink" title="通信过程"></a>通信过程</h6><p>通信过程图解：</p>
+<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2396" alt="7c9b474bf0101675c98b957b6296d83a.jpeg"></p>
+<p>图解说明：</p>
+<p>服务器端先初始化Socket，然后与端口绑定(bind)，对端口进行监听(listen)，调用accept阻塞，等待客户端连接。</p>
+<p>这时如果有个客户端初始化一个Socket，然后连接服务器(connect)，如果连接成功，这时客户端与服务器端的连接就建立了。客户端发送数据请求，服务器端接收请求并处理请求，然后把回应数据发送给客户端，客户端读取数据，最后关闭连接，一次交互结束。</p>
+<h6 id="socket中TCP的三次握手建立连接详解"><a href="#socket中TCP的三次握手建立连接详解" class="headerlink" title="socket中TCP的三次握手建立连接详解"></a>socket中TCP的三次握手建立连接详解</h6><p>我们知道tcp建立连接要进行“三次握手”，即交换三个分组。大致流程如下：</p>
+<p>客户端向服务器发送一个SYN J<br>服务器向客户端响应一个SYN K，并对SYN J进行确认ACK J+1<br>客户端再想服务器发一个确认ACK K+1<br>只有就完了三次握手，但是这个三次握手发生在socket的那几个函数中呢？</p>
+<p>三次握手建立连接图解：</p>
+<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2401" alt="97a37d22000293ba24e53d981d8f3e3e.png"></p>
+<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2399" alt="8aa123878e3754db1357220a12cb393c.png"></p>
+<p>三次握手建立连接图解说明：</p>
+<p>当客户端调用connect时，触发了连接请求，向服务器发送了SYN J包，这时connect进入阻塞状态；<br>服务器监听到连接请求，即收到SYN J包，调用accept函数接收请求向客户端发送SYN K ，ACK J+1，这时accept进入阻塞状态；<br>客户端收到服务器的SYN K ，ACK J+1之后，这时connect返回，并对SYN K进行确认；<br>服务器收到ACK K+1时，accept返回，至此三次握手完毕，连接建立。</p>
+<p>形象比喻：<br><figure class="highlight mipsasm"><table><tr><td class="code"><pre><code class="hljs mipsasm">[<span class="hljs-keyword">Shake </span><span class="hljs-number">1</span>] 套接字A：“你好，套接字<span class="hljs-keyword">B，我这里有数据要传送给你，建立连接吧。”</span><br><span class="hljs-keyword">[Shake </span><span class="hljs-number">2</span>] 套接字<span class="hljs-keyword">B：“好的，我这边已准备就绪。”</span><br><span class="hljs-keyword">[Shake </span><span class="hljs-number">3</span>] 套接字A：“谢谢你受理我的请求。<br></code></pre></td></tr></table></figure></p>
+<p>总结：客户端的connect在三次握手的第二次返回，而服务器端的accept在三次握手的第三次返回。</p>
+<h6 id="socket中TCP的四次握手释放连接详解"><a href="#socket中TCP的四次握手释放连接详解" class="headerlink" title="socket中TCP的四次握手释放连接详解"></a>socket中TCP的四次握手释放连接详解</h6><p>socket中的四次握手释放连接的过程</p>
+<p>四次握手释放连接图解：</p>
+<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2400" alt="214f0d393c12d1ad5061cc76ac1211f2.png"></p>
+<p>四次握手释放连接图解说明：</p>
+<p>某个应用进程首先调用close主动关闭连接，这时TCP发送一个FIN M；<br>另一端接收到FIN M之后，执行被动关闭，对这个FIN进行确认。它的接收也作为文件结束符传递给应用进程，因为FIN的接收意味着应用进程在相应的连接上再也接收不到额外数据；<br>一段时间之后，接收到文件结束符的应用进程调用close关闭它的socket。这导致它的TCP也发送一个FIN N；<br>接收到这个FIN的源发送端TCP对它进行确认。<br>这样每个方向上都有一个FIN和ACK。</p>
+<p>形象比喻：</p>
+<figure class="highlight mipsasm"><table><tr><td class="code"><pre><code class="hljs mipsasm">[<span class="hljs-keyword">Shake </span><span class="hljs-number">1</span>] 套接字A：“任务处理完毕，我希望断开连接。”<br>[<span class="hljs-keyword">Shake </span><span class="hljs-number">2</span>] 套接字<span class="hljs-keyword">B：“哦，是吗？请稍等，我准备一下。”</span><br><span class="hljs-keyword">等待片刻后……</span><br><span class="hljs-keyword">[Shake </span><span class="hljs-number">3</span>] 套接字<span class="hljs-keyword">B：“我准备好了，可以断开连接了。”</span><br><span class="hljs-keyword">[Shake </span><span class="hljs-number">4</span>] 套接字A：“好的，谢谢合作。”<br></code></pre></td></tr></table></figure>
+<h3 id="GCDAsyncSocket"><a href="#GCDAsyncSocket" class="headerlink" title="GCDAsyncSocket"></a>GCDAsyncSocket</h3><h5 id="解决了什么问题-1"><a href="#解决了什么问题-1" class="headerlink" title="解决了什么问题"></a>解决了什么问题</h5><p>CocoaAsyncSocket是谷歌的开发者，基于BSD-Socket写的一个IM框架，它给Mac和iOS提供了易于使用的、强大的异步套接字库，向上封装出简单易用OC接口。省去了我们面向Socket以及数据流Stream等繁琐复杂的编程。 </p>
+<h5 id="二次封装"><a href="#二次封装" class="headerlink" title="二次封装"></a>二次封装</h5><h6 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h6><p>股票类：</p>
+<p>数据量大：5000多支股票，每支股票有分时，分笔数据，画一条k线，可能要500条分时数据，甚至更多。</p>
+<p>实时性：股价每分每秒都在变化，一分钟产生很多条数据，用户要看到最新的信息，真的是一秒钟上下几十万啊。</p>
+<p>服务器主动推：股票预警等等一些重要消息，需要服务器实时推送，保证客户端100%收到，收不到可能造成客户资金损失。</p>
+<p>股票的数据不能通过HTTP协议来传输了，只能走TCP协议了，当然一些个人信息什么的还是走HTTP的。</p>
+<h6 id="技术点"><a href="#技术点" class="headerlink" title="技术点"></a>技术点</h6><p>1、数据量比较大：</p>
+<p>一次请求可能返回几百条数据到移动端，对数据要进行压缩，这里采用了 google 的 Protocol Buffer 数据传输格式，因为它对象序列化速度快，压缩率高 (ps: http 一般用 json, xml)。</p>
+<p>2、实时性与主动推：</p>
+<p>服务器与客户端之间维护一条 tcp 长连接，避免每次3次握手，4次挥手，和产生一堆 time_wait 状态的 socket 占用资源。</p>
+<p>走tcp协议需要自己维护一些状态掉线重连，移动端网络情况复杂，有3G，4G，wifi，socket 经常断开，它断了要自动连上，并且还要对应用层透明！不能让应用层感知到！连上后数据接着之前断开的地方发送，不能有影响。</p>
+<p>自动登录，这个是掉线重连后要做的一个操作，不登录拿不到股票数据。登录后接着做一个消息同步，看看有没有新消息。 </p>
+<p>3、客户端100%收到（可靠性）：</p>
+<p>除了 tcp 超时重传和3次ack回应保证了可靠传输之外，我们在app里也实现了一套应用层的ack机制，服务器保存了一组消息，每个消息有个seq号，一个消息推给客户端后，客户端拿到消息的seq，要发ack请求回应服务器这个消息，然后下次服务器才不会推给你，不然的话，下次服务器还是会推给你的。掉线重连，重登录后会同步一次你订阅过的消息，把上次没收到的，或者丢包的消息再同步过来。</p>
+<p>4、客户端的负载均衡（这块demo中没处理）：</p>
+<p>这个一般在服务器做，但后台为防止ip封锁，还有某些服务器不能在全国访问到，所以把负载均衡放在客户端做了，app启动拉取服务器列表，然后多线程并发发送测速包，得到每个服务器延迟和负载，然后选个最优的服务器连上即可，延迟可以理解为路有多长，负载可以理解为路上拥堵情况，显然最短的路不一定是最快的，它可能很堵。</p>
+<p>5、多线程安全问题：</p>
+<p>当多个命令发来的处理，为避免线程安全，将命令包装成task加入队列。<br>我们处理线程一共用了3个串行队列，分别对应任务数组操作队列，任务请求操作队列，数据接收操作队列。队列可以设置标识。</p>
+<p>6、耗电性能等：</p>
+<p>可以在进入后台时断开连接，停止心跳，停止相关操作。进入前台再自动连接开启心跳。</p>
+<h6 id="设计思路"><a href="#设计思路" class="headerlink" title="设计思路"></a>设计思路</h6><p>1、大致流程 </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs mermaid">graph TD<br>A[开始] --&gt; B(连接)<br>B --&gt; C&#123;是否连接成功&#125;<br>C --&gt;|成功| D[发送心跳命令然后]<br>C --&gt;|失败| E&#123;检查是否可以重连&#125;<br>E --&gt;|成功| B[连接]<br>E --&gt;|失败| G[结束]<br>D --&gt; F[登录]<br>F --&gt; H&#123;是否登录成功&#125;<br>H --&gt;|成功| I[等待发送命令或接受数据]<br>H --&gt;|失败| J[结束] <br></code></pre></td></tr></table></figure>
+<h6 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h6><figure class="highlight objectivec"><table><tr><td class="code"><pre><code class="hljs objectivec"><span class="hljs-class"><span class="hljs-keyword">@class</span> <span class="hljs-title">HHSocketManager</span>;</span><br><span class="hljs-class"><span class="hljs-keyword">@protocol</span> <span class="hljs-title">HHSocketDelegate</span> &lt;<span class="hljs-title">NSObject</span>&gt;</span><br> <br><span class="hljs-comment">/// socket 收到了响应，errorCode == resp.code</span><br>- (<span class="hljs-keyword">void</span>)socket:(GCDAsyncSocket *)socket didReceiveResponse:(HHSocketResponse *)resp;<br><span class="hljs-comment">/// 链接</span><br>- (<span class="hljs-keyword">void</span>)socket:(GCDAsyncSocket *)socket didConnectToHost:(<span class="hljs-built_in">NSString</span> *)host port:(uint16_t)port;<br><span class="hljs-comment">/// 断开链接</span><br>- (<span class="hljs-keyword">void</span>)socketDidDisconnect:(GCDAsyncSocket *)socket withError:(<span class="hljs-built_in">NSError</span> *)err;<br><br><span class="hljs-keyword">@end</span><br> <br><span class="hljs-class"><span class="hljs-keyword">@interface</span> <span class="hljs-title">HHSocketManager</span> : <span class="hljs-title">NSObject</span></span><br><br><span class="hljs-keyword">@property</span> (<span class="hljs-keyword">nonatomic</span>, <span class="hljs-keyword">weak</span>) <span class="hljs-keyword">id</span> &lt;HHSocketDelegate&gt; delegate;<br><br><span class="hljs-keyword">@property</span> (<span class="hljs-keyword">nonatomic</span>, <span class="hljs-keyword">strong</span>, <span class="hljs-keyword">readonly</span>) HHSocketConfiguration *configuration;<br><br><span class="hljs-keyword">@property</span> (<span class="hljs-keyword">nonatomic</span>, <span class="hljs-keyword">assign</span>, <span class="hljs-keyword">readonly</span>) HHSocketStatus socketStatus; <br><br>- (<span class="hljs-keyword">instancetype</span>)initWithConfiguration:(<span class="hljs-keyword">nonnull</span> HHSocketConfiguration *) configuration;<br><br><span class="hljs-comment">//! 是否可以收发数据</span><br>- (<span class="hljs-built_in">BOOL</span>)avaliable;<br> <br><span class="hljs-comment">//! 断开 socket 连接</span><br>- (<span class="hljs-keyword">void</span>)disconnect;<br><span class="hljs-comment">//! 开始连接</span><br>- (<span class="hljs-keyword">void</span>)connect;<br><br><span class="hljs-comment">//! 发送业务请求（通过command 和 params 包装成request在发送）</span><br>- (HHSocketRequest *)sendCommand:(<span class="hljs-built_in">UInt16</span>)command params:(<span class="hljs-keyword">nullable</span> <span class="hljs-built_in">NSDictionary</span> *)params;<br><br><span class="hljs-comment">//! 发送请求</span><br>- (<span class="hljs-keyword">void</span>)sendRequest:(HHSocketRequest*)request;<br><br><span class="hljs-comment">//! 取消所有请求，已发生的将无法取消</span><br>- (<span class="hljs-keyword">void</span>)cancelRequest:(HHSocketRequest*)request;<br> <br><span class="hljs-keyword">@end</span><br><br></code></pre></td></tr></table></figure>
+<h5 id="demo"><a href="#demo" class="headerlink" title="demo"></a>demo</h5><p><a href="https://github.com/Baichenghui/Study/tree/master/GCDAsyncSocketManager">GCDAsyncSocketManager</a></p>
+<h3 id="学习"><a href="#学习" class="headerlink" title="学习"></a>学习</h3><p><a class="link"   target="_blank" rel="noopener" href="https://www.jianshu.com/p/2dbb360886a8" >iOS即时通讯，从入门到“放弃”？（这是一个系列）<i class="fas fa-external-link-alt"></i></a>   </p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://www.jianshu.com/p/edb50afa250e" >通俗讲解股票类app - TCP网络通信层设计<i class="fas fa-external-link-alt"></i></a></p>
+<p><a href="https://github.com/hehe520/AsyncSocket">AsyncSocket</a></p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://www.jianshu.com/p/6b870f503905" >iOS websocket（SocketRocket）<i class="fas fa-external-link-alt"></i></a></p>
+
+        </div>
+
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2020/10/20/Universal-Links-%E9%80%9A%E7%94%A8%E9%93%BE%E6%8E%A5/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Universal Links 通用链接</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2020/10/20/GCD%E7%A0%94%E7%A9%B6/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">GCD研究</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span>&nbsp;-&nbsp;
+            
+            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Keep Team</a>
+        </div>
+        
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动&nbsp;|&nbsp;主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.2</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="fas fa-arrow-up"></i>
+            </li>
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/header-shrink.js"></script>
+
+<script src="/js/back2top.js"></script>
+
+<script src="/js/dark-light-toggle.js"></script>
+
+
+
+
+
+
+
+
+<div class="post-scripts">
+    
+</div>
 
 
 
 </body>
-
 </html>

@@ -1,220 +1,382 @@
 <!DOCTYPE html>
-
 <html lang="zh-CN">
-
 <head>
-  
-  <title>Universal Links 通用链接 - b9i60000</title>
-  <meta charset="UTF-8">
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
-  
-  
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="Keep Team">
+    
+    <title>
+        
+            Universal Links 通用链接 |
+        
+        Keep Theme
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
 
-  <link rel="shortcut icon" href="/favicon.ico" type="image/png" />
-  <meta name="description" content="[TOC] 简介iOS9 之后，才可以支持通用链接。当您支持通用链接时，iOS用户可以点击指向您网站的链接，然后无缝链接到已安装的应用程序，而无需通过Safari。如果未安装您的应用程序，请点击指向您网站的链接以在Safari中打开您的网站。 通用链接对比自定义URL方案的关键优势。 独特:与自定义URL方案不同，其他应用无法声明通用链接，因为它们使用的是标准的HTTP 或 HTTPS 链接到你的">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Universal Links 通用链接">
-<meta property="og:url" content="https://github.com/Baichenghui/2020/10/20/Universal-Links-%E9%80%9A%E7%94%A8%E9%93%BE%E6%8E%A5/index.html">
-<meta property="og:site_name" content="b9i60000">
-<meta property="og:description" content="[TOC] 简介iOS9 之后，才可以支持通用链接。当您支持通用链接时，iOS用户可以点击指向您网站的链接，然后无缝链接到已安装的应用程序，而无需通过Safari。如果未安装您的应用程序，请点击指向您网站的链接以在Safari中打开您的网站。 通用链接对比自定义URL方案的关键优势。 独特:与自定义URL方案不同，其他应用无法声明通用链接，因为它们使用的是标准的HTTP 或 HTTPS 链接到你的">
-<meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2356">
-<meta property="og:image" content="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2357">
-<meta property="og:image" content="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2358">
-<meta property="og:image" content="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2359">
-<meta property="og:image" content="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2360">
-<meta property="article:published_time" content="2020-10-20T02:53:23.322Z">
-<meta property="article:modified_time" content="2021-04-06T03:14:30.887Z">
-<meta property="article:author" content="b9i60000">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2356">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/highlight.js@9.15.8/styles/atom-one-dark.css,gh/theme-nexmoe/hexo-theme-nexmoe@latest/source/lib/mdui_043tiny/css/mdui.css,gh/theme-nexmoe/hexo-theme-nexmoe@latest/source/lib/iconfont/iconfont.css,gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css?v=233" crossorigin>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css">
-  
-  <link rel="stylesheet" href="/css/style.css?v=1617679076867">
+    <link rel="shortcut icon" href="/images/logo.svg">
+    
+<link rel="stylesheet" href="/css/font-awesome.min.css">
+
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"github.com","root":"/","language":"zh-CN"};
+    KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"/images/avatar.svg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":false,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":false}}},"local_search":{"enable":false,"preload":false},"code_copy":{"enable":false,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.2"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"};
+  </script>
 <meta name="generator" content="Hexo 5.2.0"></head>
 
-<body class="mdui-drawer-body-left">
-  
-  <div id="nexmoe-background">
-    <div class="nexmoe-bg" style="background-image: url(https://cdn.jsdelivr.net/gh/nexmoe/nexmoe.github.io@latest/images/cover/5c3aec85a4343.jpg)"></div>
-    <div class="mdui-appbar mdui-shadow-0">
-      <div class="mdui-toolbar">
-        <a mdui-drawer="{target: '#drawer', swipe: true}" title="menu" class="mdui-btn mdui-btn-icon mdui-ripple"><i class="mdui-icon nexmoefont icon-menu"></i></a>
-        <div class="mdui-toolbar-spacer"></div>
-        <!--<a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></a>-->
-        <a href="/" title="b9i60000" class="mdui-btn mdui-btn-icon"><img src="https://cdn.jsdelivr.net/gh/nexmoe/nexmoe.github.io@latest/images/avatar.png" alt="b9i60000"></a>
-       </div>
-    </div>
-  </div>
-  <div id="nexmoe-header">
-      <div class="nexmoe-drawer mdui-drawer" id="drawer">
-    <div class="nexmoe-avatar mdui-ripple">
-        <a href="/" title="b9i60000">
-            <img src="https://cdn.jsdelivr.net/gh/nexmoe/nexmoe.github.io@latest/images/avatar.png" alt="b9i60000" alt="b9i60000">
-        </a>
-    </div>
-    <div class="nexmoe-count">
-        <div><span>文章</span>17</div>
-        <div><span>标签</span>0</div>
-        <div><span>分类</span>0</div>
-    </div>
-    <div class="nexmoe-list mdui-list" mdui-collapse="{accordion: true}">
-        
-        <a class="nexmoe-list-item mdui-list-item mdui-ripple" href="/" title="回到首页">
-            <i class="mdui-list-item-icon nexmoefont icon-home"></i>
-            <div class="mdui-list-item-content">
-                回到首页
-            </div>
-        </a>
-        
-        <a class="nexmoe-list-item mdui-list-item mdui-ripple" href="/about.html" title="关于博客">
-            <i class="mdui-list-item-icon nexmoefont icon-info-circle"></i>
-            <div class="mdui-list-item-content">
-                关于博客
-            </div>
-        </a>
-        
-        <a class="nexmoe-list-item mdui-list-item mdui-ripple" href="/PY.html" title="我的朋友">
-            <i class="mdui-list-item-icon nexmoefont icon-unorderedlist"></i>
-            <div class="mdui-list-item-content">
-                我的朋友
-            </div>
-        </a>
-        
-    </div>
-    <aside id="nexmoe-sidebar">
-  
-  <div class="nexmoe-widget-wrap">
-    <div class="nexmoe-widget nexmoe-search">
-        <form id="search_form" action_e="https://cn.bing.com/search?q=site:nexmoe.com" onsubmit="return search();">
-            <label><input id="search_value" name="q" type="search" placeholder="搜索"></label>
-        </form>
-    </div>
-</div>
-  
-  <div class="nexmoe-widget-wrap">
-    <div class="nexmoe-widget nexmoe-social">
-        <a class="mdui-ripple" href="https://jq.qq.com/?_wv=1027&k=5CfKHun" target="_blank" mdui-tooltip="{content: 'QQ群'}" style="color: rgb(249, 174, 8);background-color: rgba(249, 174, 8, .1);">
-            <i class="nexmoefont icon-QQ"></i>
-        </a><a class="mdui-ripple" href="https://space.bilibili.com/20238211" target="_blank" mdui-tooltip="{content: '哔哩哔哩'}" style="color: rgb(231, 106, 141);background-color: rgba(231, 106, 141, .15);">
-            <i class="nexmoefont icon-bilibili"></i>
-        </a><a class="mdui-ripple" href="https://github.com/nexmoe/" target="_blank" mdui-tooltip="{content: 'GitHub'}" style="color: rgb(25, 23, 23);background-color: rgba(25, 23, 23, .15);">
-            <i class="nexmoefont icon-github"></i>
-        </a>
-    </div>
-</div>
-  
-  
 
-  
-  
-  
-</aside>
-    <div class="nexmoe-copyright">
-        &copy; 2021 b9i60000
-        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-        & <a href="https://github.com/theme-nexmoe/hexo-theme-nexmoe" target="_blank">Nexmoe</a>
-        
-    </div>
-</div><!-- .nexmoe-drawer -->
-  </div>
-  <div id="nexmoe-content">
-    <div class="nexmoe-primary">
-        <section class="nexmoe-archives">
+<body>
+<div class="progress-bar-container">
     
-    <div class="tagcloud nexmoe-rainbow">
-        
-    </div>
 
-    <div class="categories nexmoe-rainbow">
-        
-    </div>
     
-    <article>
-        
-        
+</div>
 
-        
-            <h2>2020</h2>
-            <ul>
-            
-                <li><span>12-22</span><a href="/2020/12/22/%E6%8A%80%E6%9C%AF%E6%94%AF%E6%8C%81/" >技术支持</a></li>
-            
-                <li><span>12-15</span><a href="/2020/12/15/%E6%97%A5%E7%A8%8B%E6%97%A5%E5%8E%86%E9%9A%90%E7%A7%81%E6%94%BF%E7%AD%96/" >隐私政策</a></li>
-            
-                <li><span>10-20</span><a href="/2020/10/20/mac-%E7%BB%88%E7%AB%AF%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8D%E4%BD%BF%E7%94%A8%E7%9A%84%E4%BB%80%E4%B9%88%E8%84%9A%E6%9C%AC%EF%BC%8C%E4%BB%A5%E5%8F%8A%E5%88%87%E6%8D%A2/" >mac 终端查看当前使用的什么脚本，以及切换</a></li>
-            
-                <li><span>10-20</span><a href="/2020/10/20/macbook-%E7%94%B5%E6%B1%A0%E5%81%A5%E5%BA%B7%E7%A8%8B%E5%BA%A6%E6%A3%80%E6%B5%8B%E7%BB%88%E7%AB%AF%E5%91%BD%E4%BB%A4/" >macbook 电池健康程度检测终端命令</a></li>
-            
-                <li><span>10-20</span><a href="/2020/10/20/Gitlab-fastlane-%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%EF%BC%88%E5%B0%8F%E7%99%BD%E4%BB%8E0%E5%88%B01%EF%BC%89/" >Gitlab+fastlane 持续集成（小白从0到1）</a></li>
-            
-                <li><span>10-20</span><a href="/2020/10/20/sizeToFit-%E5%92%8C-sizeThatFits/" >sizeToFit 和 sizeThatFits</a></li>
-            
-                <li><span>10-20</span><a href="/2020/10/20/%E5%88%A8%E6%A0%B9%E9%97%AE%E5%BA%95%E4%B9%8B-translatesAutoresizingMaskIntoConstraints/" >刨根问底之 translatesAutoresizingMaskIntoConstraints</a></li>
-            
-                <li><span>10-20</span><a href="/2020/10/20/UICollectionView%E9%97%B4%E9%9A%99%E9%97%AE%E9%A2%98/" >UICollectionView间隙问题</a></li>
-            
-                <li><span>10-20</span><a href="/2020/10/20/Universal-Links-%E9%80%9A%E7%94%A8%E9%93%BE%E6%8E%A5/" >Universal Links 通用链接</a></li>
-            
-                <li><span>10-20</span><a href="/2020/10/20/iOS-%E9%95%BF%E8%BF%9E%E6%8E%A5-socket-%E8%82%A1%E7%A5%A8%E6%96%B9%E5%90%91%E7%A0%94%E7%A9%B6/" >iOS 长连接 socket 股票方向研究</a></li>
-            
-                <li><span>10-20</span><a href="/2020/10/20/GCD%E7%A0%94%E7%A9%B6/" >GCD研究</a></li>
-            
-                <li><span>10-20</span><a href="/2020/10/20/YBTaskScheduler-%E7%A0%94%E7%A9%B6/" >YBTaskScheduler 研究</a></li>
-            
-                <li><span>10-20</span><a href="/2020/10/20/YYAsyncLayer-%E7%A0%94%E7%A9%B6/" >YYAsyncLayer 研究</a></li>
-            
-                <li><span>10-20</span><a href="/2020/10/20/%E5%9B%BE%E5%83%8F%E5%92%8C%E5%9B%BE%E5%BD%A2%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%EF%BC%88WWDC-2018-session-219%EF%BC%89/" >图像和图形的最佳实践（WWDC 2018 session 219）</a></li>
-            
-                <li><span>10-20</span><a href="/2020/10/20/iOS%E7%A6%BB%E5%B1%8F%E6%B8%B2%E6%9F%93%E7%A0%94%E7%A9%B6/" >iOS离屏渲染研究</a></li>
-            
-                <li><span>10-20</span><a href="/2020/10/20/iOS%20%E9%AB%98%E6%95%88%E5%88%87%E5%9C%86%E8%A7%92%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/" >iOS 高效切圆角方法总结</a></li>
-            
-                <li><span>10-20</span><a href="/2020/10/20/YYWeakProxy-NSProxy/" >YYWeakProxy|NSProxy</a></li>
-            
-            </ul>
-        
-    </article>
-</section>
-        <div class="nexmoe-post-right">
-          <div class="nexmoe-fixed">
-            <div class="nexmoe-tool">
-              <a href="#nexmoe-content" class="toc-link" aria-label="回到顶部" title="top"><button class="mdui-fab mdui-ripple"><i class="nexmoefont icon-caret-top"></i></button></a>
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            <a class="logo-title" href="/">
+                Keep Theme
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                    
+                </ul>
             </div>
-          </div>
+            <div class="mobile">
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
         </div>
     </div>
-  </div>
-  <script src="https://cdn.jsdelivr.net/combine/npm/lazysizes@5.1.0/lazysizes.min.js,gh/highlightjs/cdn-release@9.15.8/build/highlight.min.js,npm/mdui@0.4.3/dist/js/mdui.min.js?v=1"></script>
-<script>
-	hljs.initHighlightingOnLoad();
-</script>
 
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+        </ul>
+    </div>
 
+    <div class="window-mask"></div>
 
-<script src="https://cdn.jsdelivr.net/gh/xtaodada/xtaodada.github.io@0.0.2/copy.js"></script>
- 
-
-<script src="/js/app.js?v=1617679076868"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js"></script>
-<script>
-	$(".justified-gallery").justifiedGallery({
-		rowHeight: 160,
-		margins: 10,
-	});
-</script>
-
-  
+</header>
 
 
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">Universal Links 通用链接</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.svg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Keep Team</span>
+                        
+                            <span class="author-label">Lv3</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2020-10-20 10:53:23
+    </span>
+    
+    
+
+    
+    
+    
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <p>[TOC]</p>
+<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>iOS9 之后，才可以支持通用链接。当您支持通用链接时，iOS用户可以点击指向您网站的链接，然后无缝链接到已安装的应用程序，而无需通过Safari。如果未安装您的应用程序，请点击指向您网站的链接以在Safari中打开您的网站。</p>
+<h3 id="通用链接对比自定义URL方案的关键优势。"><a href="#通用链接对比自定义URL方案的关键优势。" class="headerlink" title="通用链接对比自定义URL方案的关键优势。"></a>通用链接对比自定义URL方案的关键优势。</h3><ol>
+<li><code>独特</code>:与自定义URL方案不同，其他应用无法声明通用链接，因为它们使用的是标准的HTTP 或 HTTPS 链接到你的网站。</li>
+<li><code>安全</code>:当用户安装您的应用程序时，iOS会检查您已上传到Web服务器的文件，以确保您的网站允许您的应用程序代表其打开URL。只要您可以创建和上传此文件，因此网站与应用程序的关联是安全的。</li>
+<li><code>灵活</code>:即使未安装您的应用程序，通用链接也可以使用。如果未安装您的应用程序，则按用户期望，点击指向您网站的链接可在Safari中打开内容。</li>
+<li><code>简单</code>:一个URL既适用于您的网站，也适用于您的应用程序。</li>
+<li><code>私人的</code>:其他应用可以与您的应用通信，而无需知道您的应用是否已安装。</li>
+</ol>
+<p>注意：</p>
+<p>通用链接可让用户在点击WKWebView，UIWebView视图和Safari页面中的指向您网站的链接时打开您的应用程序，此外，这些链接还会导致调用openURL:，例如在Mail，Messages和其他应用程序中发生的链接。</p>
+<p>当用户在Safari中浏览您的网站时，他们点击指向当前网页所在域中URL的通用链接，iOS会尊重该用户最有可能的意图并在Safari中打开该链接。如果用户点击指向其他域中URL的通用链接，iOS将在您的应用中打开该链接。</p>
+<p>对于运行9.0之前的iOS版本的用户，点击指向您网站的通用链接可在Safari中打开该链接。</p>
+<h3 id="怎么使用Universal-Links"><a href="#怎么使用Universal-Links" class="headerlink" title="怎么使用Universal Links"></a>怎么使用Universal Links</h3><ol>
+<li><p>先决条件：你必须有一个域名,且这个域名需要支持https。</p>
+</li>
+<li><p>开启 Associated Domains 域<br><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2356" alt="e9116eb0cfb298c7c4835fbbff6699dd.png"></p>
+</li>
+</ol>
+<p>进入苹果Apple Developer —- Member Center - Certificates, Identifiers &amp; Profiles – Identifiers - App IDs –Edit 然后开启打钩 Associated Domains 后保存。</p>
+<ol>
+<li><p>添加 Associated Domains 域<br> 打开工程配置中的Associated Domains，在其中的Domains中填入你想支持的域名，必须以applinks:为前缀。<img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2357" alt="0f4639afb4a83aead318d1962f43fbda.png"></p>
+</li>
+<li><p>创建一个apple-app-site-association包含有关您的应用程序可以处理的URL的JSON数据的文件。这个文件名必须为apple-app-site-association，没有后缀名.</p>
+</li>
+</ol>
+<p>apple-app-site-association文件:<br><figure class="highlight json"><table><tr><td class="code"><pre><code class="hljs json">&#123;<br>    <span class="hljs-attr">&quot;applinks&quot;</span>: &#123;<br>        <span class="hljs-attr">&quot;apps&quot;</span>: [],<br>        <span class="hljs-attr">&quot;details&quot;</span>: [<br>            &#123;<br>                <span class="hljs-attr">&quot;appID&quot;</span>: <span class="hljs-string">&quot;9JA89QQLNQ.com.apple.wwdc&quot;</span>,<br>                <span class="hljs-attr">&quot;paths&quot;</span>: [ <span class="hljs-string">&quot;/wwdc/news/&quot;</span>, <span class="hljs-string">&quot;/videos/wwdc/2015/*&quot;</span>]<br>            &#125;,<br>            &#123;<br>                <span class="hljs-attr">&quot;appID&quot;</span>: <span class="hljs-string">&quot;ABCD1234.com.apple.wwdc&quot;</span>,<br>                <span class="hljs-attr">&quot;paths&quot;</span>: [ <span class="hljs-string">&quot;*&quot;</span> ]<br>            &#125;<br>        ]<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure></p>
+<p>appID：组成方式是 teamId.yourapp’s bundle identifier。如上面的 9JA89QQLNQ就是teamId。登陆开发者中心，在Account - Membership里面可以找到Team ID。</p>
+<p>paths：设定你的app支持的路径列表，只有这些指定的路径的链接，才能被app所处理。星号的写法代表了可识别域名下所有链接。</p>
+<ol>
+<li><p>将apple-app-site-association文件上传到您的HTTPS Web服务器。您可以将文件放置在服务器的根目录或.well-known子目录中. 上传完后,自己先访问一下,看看是否能够获取到，当你在浏览器中输入这个文件链接后，应该是直接下载apple-app-site-association文件。</p>
+</li>
+<li><p>准备您的应用程序以处理通用链接。</p>
+</li>
+<li>进入app后的处理<br> 现在用户点击某个链接，直接可以进我们的app了，但是我们的目的是要能够获取到用户进来的链接，根据链接来展示给用户相应的内容。<br>我们需要在工程里的 AppDelegate 里实现方法<figure class="highlight objectivec"><table><tr><td class="code"><pre><code class="hljs objectivec">- (<span class="hljs-built_in">BOOL</span>)application:(<span class="hljs-built_in">UIApplication</span> *)application continueUserActivity:(<span class="hljs-built_in">NSUserActivity</span> *)userActivity restorationHandler:(<span class="hljs-keyword">void</span> (^)(<span class="hljs-built_in">NSArray</span> * _Nullable))restorationHandler<br>&#123;<br>    <span class="hljs-keyword">if</span> ([userActivity.activityType isEqualToString:<span class="hljs-built_in">NSUserActivityTypeBrowsingWeb</span>])<br>    &#123;<br>        <span class="hljs-built_in">NSURL</span> *url = userActivity.webpageURL;<br>        <span class="hljs-keyword">if</span> (url是我们希望处理的)<br>        &#123;<br>            <span class="hljs-comment">//进行我们的处理</span><br>        &#125;<br>        <span class="hljs-keyword">else</span><br>        &#123;<br>            [[<span class="hljs-built_in">UIApplication</span> sharedApplication] openURL:url];<br>        &#125;<br>    &#125;<br>    <br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">YES</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>在iOS设备中的备忘录中输入App能识别的链接，然后直接点击此链接，就会直接跳转到你的app了。或是长按，在出现的弹出菜单中第二项是在’XXX’中打开，这也代表着成功：</p>
+<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2358" alt="fd06b12cf48d7696c55a54b8e89a8a36.png"></p>
+<p>或是你将要测试的网址在safari中打开，在出现的网页上方下滑，可以看到有在”XX”应用中打开：</p>
+<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2359" alt="7604062dbe0dbbc5a32bbf9465e9dda0.png"></p>
+<p>在微信的网页浏览器中也是可以的，虽然微信屏蔽了所有的scheme方式跳转到其它app，但是Universal Links是由系统直接处理的，微信屏蔽不了，这也就实现了从微信跳转到我们的app。</p>
+<p>苹果为了方便开发者，提供了一个网页来验证我们编写的这个apple-app-site-association是否合法有效，进入<a class="link"   target="_blank" rel="noopener" href="https://link.jianshu.com/?t=https://search.developer.apple.com/appsearch-validation-tool/" >验证网址<i class="fas fa-external-link-alt"></i></a>进行验证：</p>
+<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2360" alt="2594434ea57c0d0fd24e7182f1f15905.png"></p>
+<h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><p>1.apple-app-site-association文件不能带后缀，务必把”.json”的后缀去掉！有些人的电脑是隐藏文件后缀的，这要格外注意；</p>
+<p>2.apple-app-site-association一定要传到域名根目录下；</p>
+<p>3.WebServer需要支持https，且https使用有效的证书（是私密链接）。笔者在这里卡了很久，原因就是后台给配的https使用无效的证书，导致应用安装的时候不能正确的下载apple-app-site-association文件；</p>
+<p>4.如果想测试这个功能，可以让后台搭一个测试服务器，并配置虚拟主机生成域名，然后iOS这边通过host访问域名就可以了。注意”applink:”后面写的一定是域名，不能是IP；</p>
+<p>5.抓包的结果显示，网络顺畅的情况下，应用会在在刚安装（不是打开）的时候会去applink中的地址下载apple-app-site-association文件，所以如果需要测试，请保证网络通畅；</p>
+<p>6.当所有都准备好，需要测试该功能的时候，只需要在记事本或短信中输入App能识别的链接，然后直接点击或是长按就可以了，直接点的效果是跳转到你的App，然后右上角是“去网页”的箭头，长按的效果是弹出的菜单中第二项是“在’XXX’中打开”，这也代表着成功。直接在Safari中输入链接是无效的，必须从一处跳入才可以（比如上一级网页）。</p>
+<p>7.苹果有个网址（这里）可以检测你的apple-app-site-association是否是有效的，准备好了可以测试一下。</p>
+<p>8.测试的时候，建议使用dev证书打包，之后安装到手机上测试功能。未安装应用的情况下直接在手机上跑好像也是可以的，因为抓到过请求。</p>
+<p>9.如果你有问题，但上面没有列出，Stackoverflow上面有个问题，可以看下其他人的建议。 </p>
+<p>10.前端开发经常面临跨域问题，必须要求跨域，如果不跨域，就不行。<br>只有当前webview的url域名，与跳转目标url域名不一致时，Universal Link 才生效。</p>
+<h3 id="学习"><a href="#学习" class="headerlink" title="学习"></a>学习</h3><p><a class="link"   target="_blank" rel="noopener" href="https://developer.apple.com/library/archive/documentation/General/Conceptual/AppSearch/UniversalLinks.html#//apple_ref/doc/uid/TP40016308-CH12-SW1" >Apple官方文档<i class="fas fa-external-link-alt"></i></a></p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://www.jianshu.com/p/d1e0c1886046" >iOS开发 - Universal Links 通用链接<i class="fas fa-external-link-alt"></i></a></p>
+<p><a class="link"   target="_blank" rel="noopener" href="http://strivingboy.github.io/blog/2015/09/27/ios9/" >博客<i class="fas fa-external-link-alt"></i></a></p>
+<p><a href="">WWDC2019内参，小专栏</a></p>
+
+        </div>
+
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2020/10/20/UICollectionView%E9%97%B4%E9%9A%99%E9%97%AE%E9%A2%98/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">UICollectionView间隙问题</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2020/10/20/iOS-%E9%95%BF%E8%BF%9E%E6%8E%A5-socket-%E8%82%A1%E7%A5%A8%E6%96%B9%E5%90%91%E7%A0%94%E7%A9%B6/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">iOS 长连接 socket 股票方向研究</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span>&nbsp;-&nbsp;
+            
+            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Keep Team</a>
+        </div>
+        
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动&nbsp;|&nbsp;主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.2</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="fas fa-arrow-up"></i>
+            </li>
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/header-shrink.js"></script>
+
+<script src="/js/back2top.js"></script>
+
+<script src="/js/dark-light-toggle.js"></script>
+
+
+
+
+
+
+
+
+<div class="post-scripts">
+    
+</div>
 
 
 
 </body>
-
 </html>

@@ -1,232 +1,446 @@
 <!DOCTYPE html>
-
 <html lang="zh-CN">
-
 <head>
-  
-  <title>图像和图形的最佳实践（WWDC 2018 session 219） - b9i60000</title>
-  <meta charset="UTF-8">
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
-  
-  
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="Keep Team">
+    
+    <title>
+        
+            图像和图形的最佳实践（WWDC 2018 session 219） |
+        
+        Keep Theme
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
 
-  <link rel="shortcut icon" href="/favicon.ico" type="image/png" />
-  <meta name="description" content="[TOC] UIImage和UIImageViewUIImage在UIKit中表示一个图形的内容，而UIImageView在UIKit中用来呈现一个视图。但是在这之外还有一个隐藏的、影响程序性能的过程，叫做解码(Decode)。  图片的解码当你用 UIImage 或 CGImageSource 的那几个方法创建图片时，图片数据并不会立刻解码。图片设置到 UIImageView 或者 CALaye">
-<meta property="og:type" content="article">
-<meta property="og:title" content="图像和图形的最佳实践（WWDC 2018 session 219）">
-<meta property="og:url" content="https://github.com/Baichenghui/2020/10/20/%E5%9B%BE%E5%83%8F%E5%92%8C%E5%9B%BE%E5%BD%A2%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%EF%BC%88WWDC-2018-session-219%EF%BC%89/index.html">
-<meta property="og:site_name" content="b9i60000">
-<meta property="og:description" content="[TOC] UIImage和UIImageViewUIImage在UIKit中表示一个图形的内容，而UIImageView在UIKit中用来呈现一个视图。但是在这之外还有一个隐藏的、影响程序性能的过程，叫做解码(Decode)。  图片的解码当你用 UIImage 或 CGImageSource 的那几个方法创建图片时，图片数据并不会立刻解码。图片设置到 UIImageView 或者 CALaye">
-<meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2377">
-<meta property="og:image" content="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2380">
-<meta property="og:image" content="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2379">
-<meta property="og:image" content="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2378">
-<meta property="og:image" content="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2381">
-<meta property="og:image" content="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2382">
-<meta property="og:image" content="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2383">
-<meta property="og:image" content="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2384">
-<meta property="og:image" content="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2385">
-<meta property="og:image" content="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2386">
-<meta property="og:image" content="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2387">
-<meta property="og:image" content="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2388">
-<meta property="og:image" content="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2389">
-<meta property="og:image" content="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2390">
-<meta property="og:image" content="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2391">
-<meta property="og:image" content="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2392">
-<meta property="og:image" content="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2393">
-<meta property="article:published_time" content="2020-10-20T02:51:34.260Z">
-<meta property="article:modified_time" content="2021-04-06T03:13:30.196Z">
-<meta property="article:author" content="b9i60000">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2377">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/highlight.js@9.15.8/styles/atom-one-dark.css,gh/theme-nexmoe/hexo-theme-nexmoe@latest/source/lib/mdui_043tiny/css/mdui.css,gh/theme-nexmoe/hexo-theme-nexmoe@latest/source/lib/iconfont/iconfont.css,gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css?v=233" crossorigin>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css">
-  
-  <link rel="stylesheet" href="/css/style.css?v=1617679076891">
+    <link rel="shortcut icon" href="/images/logo.svg">
+    
+<link rel="stylesheet" href="/css/font-awesome.min.css">
+
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"github.com","root":"/","language":"zh-CN"};
+    KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"/images/avatar.svg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":false,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":false}}},"local_search":{"enable":false,"preload":false},"code_copy":{"enable":false,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.2"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"};
+  </script>
 <meta name="generator" content="Hexo 5.2.0"></head>
 
-<body class="mdui-drawer-body-left">
-  
-  <div id="nexmoe-background">
-    <div class="nexmoe-bg" style="background-image: url(https://cdn.jsdelivr.net/gh/nexmoe/nexmoe.github.io@latest/images/cover/5c3aec85a4343.jpg)"></div>
-    <div class="mdui-appbar mdui-shadow-0">
-      <div class="mdui-toolbar">
-        <a mdui-drawer="{target: '#drawer', swipe: true}" title="menu" class="mdui-btn mdui-btn-icon mdui-ripple"><i class="mdui-icon nexmoefont icon-menu"></i></a>
-        <div class="mdui-toolbar-spacer"></div>
-        <!--<a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></a>-->
-        <a href="/" title="b9i60000" class="mdui-btn mdui-btn-icon"><img src="https://cdn.jsdelivr.net/gh/nexmoe/nexmoe.github.io@latest/images/avatar.png" alt="b9i60000"></a>
-       </div>
-    </div>
-  </div>
-  <div id="nexmoe-header">
-      <div class="nexmoe-drawer mdui-drawer" id="drawer">
-    <div class="nexmoe-avatar mdui-ripple">
-        <a href="/" title="b9i60000">
-            <img src="https://cdn.jsdelivr.net/gh/nexmoe/nexmoe.github.io@latest/images/avatar.png" alt="b9i60000" alt="b9i60000">
-        </a>
-    </div>
-    <div class="nexmoe-count">
-        <div><span>文章</span>17</div>
-        <div><span>标签</span>0</div>
-        <div><span>分类</span>0</div>
-    </div>
-    <div class="nexmoe-list mdui-list" mdui-collapse="{accordion: true}">
-        
-        <a class="nexmoe-list-item mdui-list-item mdui-ripple" href="/" title="回到首页">
-            <i class="mdui-list-item-icon nexmoefont icon-home"></i>
-            <div class="mdui-list-item-content">
-                回到首页
-            </div>
-        </a>
-        
-        <a class="nexmoe-list-item mdui-list-item mdui-ripple" href="/about.html" title="关于博客">
-            <i class="mdui-list-item-icon nexmoefont icon-info-circle"></i>
-            <div class="mdui-list-item-content">
-                关于博客
-            </div>
-        </a>
-        
-        <a class="nexmoe-list-item mdui-list-item mdui-ripple" href="/PY.html" title="我的朋友">
-            <i class="mdui-list-item-icon nexmoefont icon-unorderedlist"></i>
-            <div class="mdui-list-item-content">
-                我的朋友
-            </div>
-        </a>
-        
-    </div>
-    <aside id="nexmoe-sidebar">
-  
-  <div class="nexmoe-widget-wrap">
-    <div class="nexmoe-widget nexmoe-search">
-        <form id="search_form" action_e="https://cn.bing.com/search?q=site:nexmoe.com" onsubmit="return search();">
-            <label><input id="search_value" name="q" type="search" placeholder="搜索"></label>
-        </form>
-    </div>
-</div>
-  
-  <div class="nexmoe-widget-wrap">
-    <div class="nexmoe-widget nexmoe-social">
-        <a class="mdui-ripple" href="https://jq.qq.com/?_wv=1027&k=5CfKHun" target="_blank" mdui-tooltip="{content: 'QQ群'}" style="color: rgb(249, 174, 8);background-color: rgba(249, 174, 8, .1);">
-            <i class="nexmoefont icon-QQ"></i>
-        </a><a class="mdui-ripple" href="https://space.bilibili.com/20238211" target="_blank" mdui-tooltip="{content: '哔哩哔哩'}" style="color: rgb(231, 106, 141);background-color: rgba(231, 106, 141, .15);">
-            <i class="nexmoefont icon-bilibili"></i>
-        </a><a class="mdui-ripple" href="https://github.com/nexmoe/" target="_blank" mdui-tooltip="{content: 'GitHub'}" style="color: rgb(25, 23, 23);background-color: rgba(25, 23, 23, .15);">
-            <i class="nexmoefont icon-github"></i>
-        </a>
-    </div>
-</div>
-  
-  
 
-  
-  
-  
-</aside>
-    <div class="nexmoe-copyright">
-        &copy; 2021 b9i60000
-        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-        & <a href="https://github.com/theme-nexmoe/hexo-theme-nexmoe" target="_blank">Nexmoe</a>
-        
-    </div>
-</div><!-- .nexmoe-drawer -->
-  </div>
-  <div id="nexmoe-content">
-    <div class="nexmoe-primary">
-        <section class="nexmoe-archives">
+<body>
+<div class="progress-bar-container">
     
-    <div class="tagcloud nexmoe-rainbow">
-        
-    </div>
 
-    <div class="categories nexmoe-rainbow">
-        
-    </div>
     
-    <article>
-        
-        
+</div>
 
-        
-            <h2>2020</h2>
-            <ul>
-            
-                <li><span>12-22</span><a href="/2020/12/22/%E6%8A%80%E6%9C%AF%E6%94%AF%E6%8C%81/" >技术支持</a></li>
-            
-                <li><span>12-15</span><a href="/2020/12/15/%E6%97%A5%E7%A8%8B%E6%97%A5%E5%8E%86%E9%9A%90%E7%A7%81%E6%94%BF%E7%AD%96/" >隐私政策</a></li>
-            
-                <li><span>10-20</span><a href="/2020/10/20/mac-%E7%BB%88%E7%AB%AF%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8D%E4%BD%BF%E7%94%A8%E7%9A%84%E4%BB%80%E4%B9%88%E8%84%9A%E6%9C%AC%EF%BC%8C%E4%BB%A5%E5%8F%8A%E5%88%87%E6%8D%A2/" >mac 终端查看当前使用的什么脚本，以及切换</a></li>
-            
-                <li><span>10-20</span><a href="/2020/10/20/macbook-%E7%94%B5%E6%B1%A0%E5%81%A5%E5%BA%B7%E7%A8%8B%E5%BA%A6%E6%A3%80%E6%B5%8B%E7%BB%88%E7%AB%AF%E5%91%BD%E4%BB%A4/" >macbook 电池健康程度检测终端命令</a></li>
-            
-                <li><span>10-20</span><a href="/2020/10/20/Gitlab-fastlane-%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%EF%BC%88%E5%B0%8F%E7%99%BD%E4%BB%8E0%E5%88%B01%EF%BC%89/" >Gitlab+fastlane 持续集成（小白从0到1）</a></li>
-            
-                <li><span>10-20</span><a href="/2020/10/20/sizeToFit-%E5%92%8C-sizeThatFits/" >sizeToFit 和 sizeThatFits</a></li>
-            
-                <li><span>10-20</span><a href="/2020/10/20/%E5%88%A8%E6%A0%B9%E9%97%AE%E5%BA%95%E4%B9%8B-translatesAutoresizingMaskIntoConstraints/" >刨根问底之 translatesAutoresizingMaskIntoConstraints</a></li>
-            
-                <li><span>10-20</span><a href="/2020/10/20/UICollectionView%E9%97%B4%E9%9A%99%E9%97%AE%E9%A2%98/" >UICollectionView间隙问题</a></li>
-            
-                <li><span>10-20</span><a href="/2020/10/20/Universal-Links-%E9%80%9A%E7%94%A8%E9%93%BE%E6%8E%A5/" >Universal Links 通用链接</a></li>
-            
-                <li><span>10-20</span><a href="/2020/10/20/iOS-%E9%95%BF%E8%BF%9E%E6%8E%A5-socket-%E8%82%A1%E7%A5%A8%E6%96%B9%E5%90%91%E7%A0%94%E7%A9%B6/" >iOS 长连接 socket 股票方向研究</a></li>
-            
-                <li><span>10-20</span><a href="/2020/10/20/GCD%E7%A0%94%E7%A9%B6/" >GCD研究</a></li>
-            
-                <li><span>10-20</span><a href="/2020/10/20/YBTaskScheduler-%E7%A0%94%E7%A9%B6/" >YBTaskScheduler 研究</a></li>
-            
-                <li><span>10-20</span><a href="/2020/10/20/YYAsyncLayer-%E7%A0%94%E7%A9%B6/" >YYAsyncLayer 研究</a></li>
-            
-                <li><span>10-20</span><a href="/2020/10/20/%E5%9B%BE%E5%83%8F%E5%92%8C%E5%9B%BE%E5%BD%A2%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%EF%BC%88WWDC-2018-session-219%EF%BC%89/" >图像和图形的最佳实践（WWDC 2018 session 219）</a></li>
-            
-                <li><span>10-20</span><a href="/2020/10/20/iOS%E7%A6%BB%E5%B1%8F%E6%B8%B2%E6%9F%93%E7%A0%94%E7%A9%B6/" >iOS离屏渲染研究</a></li>
-            
-                <li><span>10-20</span><a href="/2020/10/20/iOS%20%E9%AB%98%E6%95%88%E5%88%87%E5%9C%86%E8%A7%92%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/" >iOS 高效切圆角方法总结</a></li>
-            
-                <li><span>10-20</span><a href="/2020/10/20/YYWeakProxy-NSProxy/" >YYWeakProxy|NSProxy</a></li>
-            
-            </ul>
-        
-    </article>
-</section>
-        <div class="nexmoe-post-right">
-          <div class="nexmoe-fixed">
-            <div class="nexmoe-tool">
-              <a href="#nexmoe-content" class="toc-link" aria-label="回到顶部" title="top"><button class="mdui-fab mdui-ripple"><i class="nexmoefont icon-caret-top"></i></button></a>
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            <a class="logo-title" href="/">
+                Keep Theme
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                    
+                </ul>
             </div>
-          </div>
+            <div class="mobile">
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
         </div>
     </div>
-  </div>
-  <script src="https://cdn.jsdelivr.net/combine/npm/lazysizes@5.1.0/lazysizes.min.js,gh/highlightjs/cdn-release@9.15.8/build/highlight.min.js,npm/mdui@0.4.3/dist/js/mdui.min.js?v=1"></script>
-<script>
-	hljs.initHighlightingOnLoad();
-</script>
 
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+        </ul>
+    </div>
 
+    <div class="window-mask"></div>
 
-<script src="https://cdn.jsdelivr.net/gh/xtaodada/xtaodada.github.io@0.0.2/copy.js"></script>
- 
-
-<script src="/js/app.js?v=1617679076892"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js"></script>
-<script>
-	$(".justified-gallery").justifiedGallery({
-		rowHeight: 160,
-		margins: 10,
-	});
-</script>
-
-  
+</header>
 
 
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">图像和图形的最佳实践（WWDC 2018 session 219）</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.svg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Keep Team</span>
+                        
+                            <span class="author-label">Lv3</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2020-10-20 10:51:34
+    </span>
+    
+    
+
+    
+    
+    
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <p>[TOC]</p>
+<h3 id="UIImage和UIImageView"><a href="#UIImage和UIImageView" class="headerlink" title="UIImage和UIImageView"></a>UIImage和UIImageView</h3><p>UIImage在UIKit中表示一个图形的内容，而UIImageView在UIKit中用来呈现一个视图。但是在这之外还有一个隐藏的、影响程序性能的过程，叫做解码(Decode)。</p>
+<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2377" alt="408ae032ad58fa3ed7567c071056843a.png"></p>
+<h5 id="图片的解码"><a href="#图片的解码" class="headerlink" title="图片的解码"></a>图片的解码</h5><p>当你用 UIImage 或 CGImageSource 的那几个方法创建图片时，图片数据并不会立刻解码。图片设置到 UIImageView 或者 CALayer.contents 中去，并且 CALayer 被提交到 GPU 前，CGImage 中的数据才会得到解码。这一步是发生在主线程的，并且不可避免。</p>
+<p>如果想要绕开这个机制，常见的做法是在后台线程先把图片绘制到 CGBitmapContext 中，然后从 Bitmap 直接创建图片。目前常见的网络图片库都自带这个功能。</p>
+<p>在了解Decode的过程中，我们首先要了解一个概念：缓冲区(Buffer)。</p>
+<h5 id="缓冲区-Buffer"><a href="#缓冲区-Buffer" class="headerlink" title="缓冲区(Buffer)"></a>缓冲区(Buffer)</h5><ol>
+<li>缓冲区是在内存中连续的区域。</li>
+<li>通常被视为元素序列。</li>
+</ol>
+<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2380" alt="6234b17718adc25d94d92591359cb113.png"></p>
+<h6 id="图像缓冲区-Image-Buffer-："><a href="#图像缓冲区-Image-Buffer-：" class="headerlink" title="图像缓冲区(Image Buffer)："></a>图像缓冲区(Image Buffer)：</h6><p>图像缓冲区中每个元素表示的是图像中一个像素的颜色信息。所以，该Buffer在内存中的大小与图像大小成正比。</p>
+<h6 id="帧缓冲区-Frame-Buffer-："><a href="#帧缓冲区-Frame-Buffer-：" class="headerlink" title="帧缓冲区(Frame Buffer)："></a>帧缓冲区(Frame Buffer)：</h6><p>帧缓冲区是保存应用实际呈现输出的缓冲区。<br>在应用更新视图层次结构时，UIKit会把应用程序的Window以及子视图渲染到帧缓冲区中。这个更新频率在iPhone上是60FPS，在iPad上是120FPS。<br><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2379" alt="5d0b29cb1cf62a7f88ed9d104971a358.gif"></p>
+<h6 id="数据缓冲区-Data-Buffer"><a href="#数据缓冲区-Data-Buffer" class="headerlink" title="数据缓冲区(Data Buffer)"></a>数据缓冲区(Data Buffer)</h6><p>数据缓冲区为保存一系列bytes数据的缓冲区。<br>在图像例子中，数据缓冲区就是保存从网络下载或者保存在磁盘中的图像的数据，这些数据并不直接描述每一个像素的信息。<br><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2378" alt="f70e8ce6d59fbd8b9437a04e4e05e48f.png"></p>
+<h5 id="加载过程"><a href="#加载过程" class="headerlink" title="加载过程"></a>加载过程</h5><h6 id="加载准备"><a href="#加载准备" class="headerlink" title="加载准备"></a>加载准备</h6><p>准备一个图像元数据，一个UIImage，以及一个加载在视图上的UIImageView，如下：<br><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2381" alt="facc0c35e7982012157d52ed9c5323f8.png"></p>
+<h6 id="获取像素信息"><a href="#获取像素信息" class="headerlink" title="获取像素信息"></a>获取像素信息</h6><p>为了将图像中每个像素信息填充到Frame Buffer中，我们需要得到图像像素信息。</p>
+<p>UIImage会为我们处理这一点：UIImage会创建一个与图片大小一致的Image Buffer用来存储解码(Decode)之后的图像像素信息。</p>
+<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2382" alt="00656289e1fe1ef8f2e0ad2c3739ffab.png"></p>
+<h6 id="显示在屏幕上"><a href="#显示在屏幕上" class="headerlink" title="显示在屏幕上"></a>显示在屏幕上</h6><p>UIImageView读取UIImage创建的Image Buffer数据，交由UIKit显示。UIKit会对像素数据缩放到显示大小进行显示。</p>
+<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2383" alt="048fdec73f278bcdd057bc0304705253.png"></p>
+<p>在加载过程中，UIKit会重复多次的要求UIImageView去进行渲染，这就造成了UIImage会多次的解码Data Buffer。</p>
+<p>为了解决这个问题，UIImage会只进行一次Data Buffer的解码，在解码之后，会挂起解码后的Image Buffer。</p>
+<p>所以，在这种情况下，应用对于每一个UIImage解码后，都会在内存中挂起一个Image Buffer。</p>
+<p>由于Image Buffer与图像大小成正比，所以在加载大图片时，应用程序会在内存中挂起很多大的Image Buffer，这可能会造成操作系统介入，并最终杀死应用。</p>
+<h5 id="下采样-downsampling"><a href="#下采样-downsampling" class="headerlink" title="下采样(downsampling)"></a>下采样(downsampling)</h5><p>针对于我们上述提到的问题，我们可以采用叫做下采用(downsampling)的技术。</p>
+<p>我们注意到，我们最终显示在屏幕上的视图往往比实际图片的尺寸要小，而通常情况下，Core Animation Framework会负责缩小图像。</p>
+<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2384" alt="71a31df9d652df1bdcf9cc9021b8b3db.png"></p>
+<p>现在要做的，本质上是把缩放图像操作捕获为一个叫缩略图的对象。由于减小了Image Buffer的大小，进而减小了在加载图片中的使用的内存总大小。</p>
+<p>同时，我们在解码后，将图片像素信息交给UIImageView去渲染至屏幕后，可以丢弃掉对应的Data Buffer，进一步减少内存的使用。</p>
+<p>这个过程如下图：</p>
+<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2385" alt="c8194124dbec3c8245dd3ae3189e8ce9.gif"></p>
+<h6 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h6><p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2386" alt="d6d28e69f0db0002580d99cf353a4431.png"></p>
+<p>几个重要的点：</p>
+<ol>
+<li>创建CGImageSourceRef</li>
+<li>计算需要渲染至屏幕的真实尺寸、</li>
+<li>获取缩略图</li>
+</ol>
+<h6 id="下采样之后效果"><a href="#下采样之后效果" class="headerlink" title="下采样之后效果"></a>下采样之后效果</h6><p>通过以上的改进方式，可以大幅度的缩减内存的使用。以下为一组测试数据：<br>测试环境：Xcode9.4，iPhone 6s Plus, 5184*3456的5.1MB大小的JPG格式图片。</p>
+<ol>
+<li>不使用改进方法，消耗内存为：49.3M</li>
+<li>使用改进方法，消耗内存为：9.4M</li>
+</ol>
+<h5 id="针对滚动视图的优化"><a href="#针对滚动视图的优化" class="headerlink" title="针对滚动视图的优化"></a>针对滚动视图的优化</h5><p>如果我们需要一个滚动视图来展示一大组质量很大的图片时，我们也会遇到内存过高的问题，接下来我们以UICollectionView加载图片来做分析和优化。</p>
+<h6 id="使用下采样-downsampling-的方式优化"><a href="#使用下采样-downsampling-的方式优化" class="headerlink" title="使用下采样(downsampling)的方式优化"></a>使用下采样(downsampling)的方式优化</h6><p>首先我们采用我们上一步优化图片的方式来为每一个cell中的图片进行优化，代码可能如下：</p>
+<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2387" alt="7e545fe88c4125e701978615815333f0.png"></p>
+<p>这样我们为每一个cell上的图片显示进行了优化，进而使得整体内存使用有一个明显的降低。</p>
+<p>但是，这样会引起另一个问题：如果此时滚动视图，CPU可能会很快的将所需展示的内容渲染到帧缓冲区，但是如果滚动过快，CPU还需参与Core Graphics对于新图像的解帧，这个操作是非常耗时的，这样就可能会造成在硬件读取帧缓冲区数据显示至屏幕时，帧缓冲区数据并没有准备好，进而导致用户视角中的卡顿。另外对于电池来说，在CPU不稳定时，可能会影响到电池使用寿命。</p>
+<h6 id="进一步优化"><a href="#进一步优化" class="headerlink" title="进一步优化"></a>进一步优化</h6><p>有两种技术可以帮助我们解决上述问题。</p>
+<ol>
+<li>预取(prefetching)：在某一时刻，我们不需要某个cell，但是在不久的将来会需要这个cell，所以可以把某些工作提前至这个时刻来进行。</li>
+<li>后台执行(performing work in the background)。</li>
+</ol>
+<p>针对于UICollectionView，我们可以做以下处理：</p>
+<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2388" alt="489fb1b6693c03fc68a08655a3b23e53.png">  </p>
+<p>我们为预取的cell进行在后台即全局异步队列(global<br>asynchronous queues)的图像解码，这是我们提到的两种优化技术。</p>
+<p>但是，在使用全局异步队列的时候，可能会出现线程爆炸的问题：如果我们一次性处理多张图像，但是设备只有2个CPU时，此时GCD会创建新的线程来处理解码工作。创建新线程以及在不同线程之间切换是十分消耗时间和资源的。</p>
+<h6 id="解决线程爆炸问题"><a href="#解决线程爆炸问题" class="headerlink" title="解决线程爆炸问题"></a>解决线程爆炸问题</h6><p>我们可以将解码操作异步的分派到串行队列中，如下图：</p>
+<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2389" alt="57beaadf105a2ca2d77631641f2415c9.png"></p>
+<p>这样做可能使得某些图像的解码过程延后，但是更多的是减少了在线程切换过程中浪费的时间和资源。</p>
+<p>至此，我们完成了对于滚动视图加载多张图片的优化。</p>
+<h5 id="图片资源的优化"><a href="#图片资源的优化" class="headerlink" title="图片资源的优化"></a>图片资源的优化</h5><p>在目前的程序中，可以展示的图像资源来源可能有一下几种：</p>
+<ol>
+<li>存储在Image Assets中</li>
+<li>存储在Application或者Bundle的包中</li>
+<li>存储在沙盒的Document或者Cache文件中</li>
+<li>从网络下载的数据中</li>
+</ol>
+<p>对于程序中自带的图像资源，苹果官方推荐我们使用Image Assets来存储，以下是使用该方式的几个优点：</p>
+<ol>
+<li>Image Assets针对基于名称和特性的查找进行了优化，它比在磁盘上搜索文件要快。</li>
+<li>在管理缓冲区方面也有优化。</li>
+<li>允许对设备安装包进行优化，在下载App的时候会只下载能最高效果显示在对应设备的图像资源，从而减小安装包大小。</li>
+<li>对Vector Artwork的支持。</li>
+</ol>
+<h6 id="Vector-Artwork"><a href="#Vector-Artwork" class="headerlink" title="Vector Artwork"></a>Vector Artwork</h6><p>Vector Artwork是iOS 11引入的新特性。我们可以在Image Assets中勾选Preserve Vector Data来启用它。如果启用了Vector Artwork的话，当我们将图像显示到一个比它原始尺寸大或者小的视图中时，这个图像不会变的模糊。因为显示的图像是从矢量图形中重新光栅化而来的，从而使得图像有清晰的边缘。</p>
+<p>启用Vector Artwork后，图像的处理方式和之前图片的处理方式类似，只是将解码阶段变为了光栅化阶段，光栅化阶段将矢量数据转换为位图数据，进而供帧缓冲区读取。</p>
+<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2390" alt="261beb86f4101804b5cfdf75201997c4.png"></p>
+<p>如果我们把应用中所有的图像资源进行了Preserve Vector Data处理的话，会造成一些CPU的使用。<br>所以Xcode对这些情况做了一些处理：如果选中了Preserve Vector Data选项，但是在视图上展示为原始尺寸大小时，Image Assets实际上已经完成了原始尺寸的光栅化，并把相关数据保存在Image Assets中了，所以这种情况可以直接对存储的数据进行解码，而不进行光栅化。</p>
+<p>另外一个建议是：如果计划展示的尺寸为固定的几个尺寸，那么不要依赖Preserve Vector Data，而是准备好对应尺寸的图像资源，从而加快CPU对图像资源的处理。</p>
+<h3 id="自定义绘制内容"><a href="#自定义绘制内容" class="headerlink" title="自定义绘制内容"></a>自定义绘制内容</h3><p>我们有时需要在程序中进行一些自定义的绘制，例如绘制一个如下样式的视图：</p>
+<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2391" alt="ff0b012d2fa40975005f5be41176c647.png"></p>
+<p>我们可以继承UIView，然后在draw方法中进行相应的绘制：</p>
+<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2392" alt="bbe84f6a2a0164c69e23ee7590de4d55.png"></p>
+<p>UIView是基于CALayer来显示内容的；</p>
+<p>而对于UIImageView来说，UIImageView会将UIImage解码后的数据交给CALayer来作为内容显示；</p>
+<p>而对于draw来说，CALayer会创建一个与图像大小成正比的backing store来存储图像数据，然后将图像数据拷贝至backing store中，然后将backing store中的内容绘制到帧缓冲区中。</p>
+<p>通过重写draw方法可能会造成多余的内存消耗以及数据的拷贝.</p>
+<h5 id="Backing-Store"><a href="#Backing-Store" class="headerlink" title="Backing Store"></a>Backing Store</h5><p>重写draw方法时，会触发创建Backing Store，此时的Backing Store的大小与视图的像素大小成正比。</p>
+<p>在iOS12中，Backing Store将会使用动态增长的方式来减少内存的使用。在以前的iOS版本中，我们可以设置CALayer的contentsFromat属性来指定Core Animation Framework在绘制时用到的颜色长度，这个设置会关闭iOS12中关于Backing Store的设置。</p>
+<h5 id="建议实现方式"><a href="#建议实现方式" class="headerlink" title="建议实现方式"></a>建议实现方式</h5><p>对于我们需要自定义绘制的视图，我们应该减少Backing Store的使用。</p>
+<p>通常的做法是将一个大视图构建为多个小视图来实现；<br>同时，系统提供的经过优化的视图属性也不会造成多余内存的使用（例如UIView的backgroundColor属性，就不会创建Backing Store。此时需要注意，使用pattern color时是一个例外，可以使用UIImageView作为UIView的子视图来替代这一效果）。</p>
+<h5 id="将大视图构建为多个小视图"><a href="#将大视图构建为多个小视图" class="headerlink" title="将大视图构建为多个小视图"></a>将大视图构建为多个小视图</h5><p>我们可以构建为以下层级：</p>
+<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p2393" alt="d5e68ec0d562fc3d97870464c8cd875c.png"></p>
+<h6 id="圆角处理"><a href="#圆角处理" class="headerlink" title="圆角处理"></a>圆角处理</h6><p>在我们要进行圆角处理时，使用CALayer的cornerRadius属性，该属性不会引起多余的内存使用。而对于使用maskView和maskLayer来说，会使用到额外的内存空间。</p>
+<p>同时对于圆角之外的透明区域为复杂的不规则形状且cornerRadius满足不了需求时，可以使用UIImageView配合Resizeable的UIImage来进行处理。</p>
+<h6 id="Icon的实现"><a href="#Icon的实现" class="headerlink" title="Icon的实现"></a>Icon的实现</h6><p>Icon可以使用UIImageView来显示。</p>
+<p>为了达到UIImage的复用，UIImageView支持对单色图像着色，同时可以直接渲染到帧缓冲区中。</p>
+<p>这个设置需要对UIImage进行renderingMode的设置或者在Image Assets中进renderingMode设置。</p>
+<p>最后，为UIImageView设置tintColor来完成最终颜色渲染。</p>
+<h6 id="UILabel的优化"><a href="#UILabel的优化" class="headerlink" title="UILabel的优化"></a>UILabel的优化</h6><p>UILabel对于显示单色字符串做了优化处理，可以节省75%大小的Backing Store的使用。</p>
+<p>UILabel对于多彩字符串以及emoji进行了动态增长Backing Store的优化。</p>
+<h3 id="简单讲述在应用中使用先进的CPU和GPU技术。"><a href="#简单讲述在应用中使用先进的CPU和GPU技术。" class="headerlink" title="简单讲述在应用中使用先进的CPU和GPU技术。"></a>简单讲述在应用中使用先进的CPU和GPU技术。</h3><h5 id="Advanced-Image-Effects"><a href="#Advanced-Image-Effects" class="headerlink" title="Advanced Image Effects"></a>Advanced Image Effects</h5><ol>
+<li>实时处理图像时考虑Core Image。</li>
+<li>尽量使用GPU来处理图像，进而解放CPU。</li>
+<li>使用CIImage创建UIImage，并交由UIImageView去展示，这个过程会默认由GPU去处理，减少对CPU的使用。</li>
+</ol>
+<h5 id="Advanced-Image-Processing"><a href="#Advanced-Image-Processing" class="headerlink" title="Advanced Image Processing"></a>Advanced Image Processing</h5><ol>
+<li>使用CVPixelBuffer将数据移动到Metal, Vision和Accelerate等框架。</li>
+<li>使用最好的初始值设定项（不要重复执行已经完成的工作）。</li>
+<li>防止在GPU和CPU直接来回切换。</li>
+<li>确保交给Accelerate的buffers是正确的格式。</li>
+</ol>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ol>
+<li>异步的进行预处理。</li>
+<li>使用UIImageView和UILabel来减少Backing Store的使用。</li>
+<li>不要禁止自定义绘制时系统做的新优化。</li>
+<li>使用Image Assets来存储图像。</li>
+<li>如果要展示相同图片的不同尺寸，不要过多依赖Preserve Vector Data。</li>
+</ol>
+<h3 id="学习"><a href="#学习" class="headerlink" title="学习"></a>学习</h3><p><a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/TuGeLe/article/details/81137995" >图像和图形的最佳实践（WWDC 2018 session 219）<i class="fas fa-external-link-alt"></i></a></p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://developer.apple.com/videos/play/wwdc2018/219/" >WWDC 2018 session 219<i class="fas fa-external-link-alt"></i></a></p>
+
+        </div>
+
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2020/10/20/YYAsyncLayer-%E7%A0%94%E7%A9%B6/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">YYAsyncLayer 研究</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2020/10/20/iOS%E7%A6%BB%E5%B1%8F%E6%B8%B2%E6%9F%93%E7%A0%94%E7%A9%B6/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">iOS离屏渲染研究</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span>&nbsp;-&nbsp;
+            
+            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Keep Team</a>
+        </div>
+        
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动&nbsp;|&nbsp;主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.2</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="fas fa-arrow-up"></i>
+            </li>
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/header-shrink.js"></script>
+
+<script src="/js/back2top.js"></script>
+
+<script src="/js/dark-light-toggle.js"></script>
+
+
+
+
+
+
+
+
+<div class="post-scripts">
+    
+</div>
 
 
 
 </body>
-
 </html>
