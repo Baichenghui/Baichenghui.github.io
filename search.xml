@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Gitlab+fastlane 持续集成（小白从0到1）</title>
-    <url>/2018/06/01/Gitlab-fastlane-%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%EF%BC%88%E5%B0%8F%E7%99%BD%E4%BB%8E0%E5%88%B01%EF%BC%89/</url>
+    <title>Gitlab+fastlane 持续集成</title>
+    <url>/2018/06/01/Gitlab-fastlane-%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/</url>
     <content><![CDATA[<p>[TOC]</p>
 <h5 id="实现步骤"><a href="#实现步骤" class="headerlink" title="实现步骤"></a>实现步骤</h5><ol>
 <li>在gitlab新建项目</li>
@@ -30,11 +30,11 @@
 <h5 id="4、配置-gitlab-ci-yml文件"><a href="#4、配置-gitlab-ci-yml文件" class="headerlink" title="4、配置.gitlab-ci.yml文件"></a>4、配置.gitlab-ci.yml文件</h5><p>注意：<br>variables:<br>  LC_ALL: “en_US.UTF-8”<br>  LANG: “en_US.UTF-8”<br>  GIT_STRATEGY: fetch #开发阶段这要设置一下，默认每次都会clone代码，耗时较长。上线版本设置为clone获取最新代码</p>
 <p><a class="link"   href="https://segmentfault.com/a/1190000019540360" >持续集成之.gitlab-ci.yml篇（详细讲解了各命令的作用）<i class="fas fa-external-link-alt"></i></a></p>
 <p><a class="link"   href="https://s0docs0gitlab0com.icopy.site/ce/ci/yaml/README.html" >（官方文档）<i class="fas fa-external-link-alt"></i></a> </p>
-<h5 id="原理理解"><a href="#原理理解" class="headerlink" title="原理理解"></a>原理理解</h5><p>在配置.gitlab-ci.yml文件中配置需要执行的脚本，这里配置执行fastlane脚本。</p>
+<h5 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h5><p>在配置.gitlab-ci.yml文件中配置需要执行的脚本，这里配置执行fastlane脚本。</p>
 <h5 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h5><p>个人建议，直接看官方文档，除非英文太差，那就找中文资料吧。</p>
 ]]></content>
       <tags>
-        <tag>tool</tag>
+        <tag>fastlane</tag>
       </tags>
   </entry>
   <entry>
@@ -54,8 +54,9 @@
 <p><img src="evernotecid://B57F1AED-083F-4A2B-9367-5A171F86DD13/appyinxiangcom/11846024/ENResource/p4242" alt="719b010b9025a0687f94e8dfb5ad23b4.png"></p>
 <h3 id="具体流程"><a href="#具体流程" class="headerlink" title="具体流程"></a>具体流程</h3><p>1、发起请求<br>2、-（BOOL）canInitxxx<br>    根据userAgent、Method、白名单、URL System Load 判断是否处理请求<br>    不处理，会默认转给系统的NSURLProtocol处理<br>    处理进入下一步<br>3、canonicalRequestForRequest<br>    添加请求头信息<br>4、startLoading<br>    看自己是否有缓存：<br>        是否过期，<br>            过期去请求数据<br>            没过期，读取缓存，client 回调数据给webview展示<br>    看系统是否自己有缓存：<br>        处理同上<br>    无缓存：<br>        请求数据<br>        等到数据，缓存数据并由client 回调数据给webview展示</p>
 <h3 id="填坑"><a href="#填坑" class="headerlink" title="填坑"></a>填坑</h3><p>1、关于私有API<br>因为WKBrowsingContextController和registerSchemeForCustomProtocol应该是私有的所以使用时候需要对字符串做下处理，用加密的方式或者其他就可以了，实测可以过审核的。</p>
-<p>2、关于post请求(个人觉得post就过滤不处理好了)<br>大家会发现拦截不了post请求(拦截到的post请求body体为空)，这个其实和WKWebview没有关系，这个是苹果为了提高效率加快流畅度所以在NSURLProtocol拦截之后索性就不复制body体内的东西，因为body的大小没有限制，开发者可能会把很大的数据放进去那就不好办了。我们可以采取httpbodystream的方式拿到body，这个在之前的文章也有提过</p>
-<figure class="highlight objectivec"><table><tr><td class="code"><pre><code class="hljs objectivec"><span class="hljs-meta">#<span class="hljs-meta-keyword">pragma</span> mark -</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">pragma</span> mark 处理POST请求相关POST  用HTTPBodyStream来处理BODY体</span><br>- (<span class="hljs-built_in">NSMutableURLRequest</span> *)handlePostRequestBodyWithRequest:(<span class="hljs-built_in">NSMutableURLRequest</span> *)request &#123;<br>    <span class="hljs-built_in">NSMutableURLRequest</span> * req = [request mutableCopy];<br>    <span class="hljs-keyword">if</span> ([request.HTTPMethod isEqualToString:<span class="hljs-string">@&quot;POST&quot;</span>]) &#123;<br>        <span class="hljs-keyword">if</span> (!request.HTTPBody) &#123;<br>            uint8_t d[<span class="hljs-number">1024</span>] = &#123;<span class="hljs-number">0</span>&#125;;<br>            <span class="hljs-built_in">NSInputStream</span> *stream = request.HTTPBodyStream;<br>            <span class="hljs-built_in">NSMutableData</span> *data = [[<span class="hljs-built_in">NSMutableData</span> alloc] init];<br>            [stream open];<br>            <span class="hljs-keyword">while</span> ([stream hasBytesAvailable]) &#123;<br>                <span class="hljs-built_in">NSInteger</span> len = [stream read:d maxLength:<span class="hljs-number">1024</span>];<br>                <span class="hljs-keyword">if</span> (len &gt; <span class="hljs-number">0</span> &amp;&amp; stream.streamError == <span class="hljs-literal">nil</span>) &#123;<br>                    [data appendBytes:(<span class="hljs-keyword">void</span> *)d length:len];<br>                &#125;<br>            &#125;<br>            req.HTTPBody = [data <span class="hljs-keyword">copy</span>];<br>            [stream close];<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> req;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>2、关于post请求(个人觉得post就过滤不处理好了)<br>大家会发现拦截不了post请求(拦截到的post请求body体为空)，这个其实和WKWebview没有关系，这个是苹果为了提高效率加快流畅度所以在NSURLProtocol拦截之后索性就不复制body体内的东西，因为body的大小没有限制，开发者可能会把很大的数据放进去那就不好办了。</p>
+<p>网上有人说下面的方式可以处理post请求参数的问题，我动手试了发现并不起作用，因为HTTPBodyStream都是空的。<br><figure class="highlight objectivec"><table><tr><td class="code"><pre><code class="hljs objectivec"><span class="hljs-meta">#<span class="hljs-meta-keyword">pragma</span> mark -</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">pragma</span> mark 处理POST请求相关POST  用HTTPBodyStream来处理BODY体</span><br>- (<span class="hljs-built_in">NSMutableURLRequest</span> *)handlePostRequestBodyWithRequest:(<span class="hljs-built_in">NSMutableURLRequest</span> *)request &#123;<br>    <span class="hljs-built_in">NSMutableURLRequest</span> * req = [request mutableCopy];<br>    <span class="hljs-keyword">if</span> ([request.HTTPMethod isEqualToString:<span class="hljs-string">@&quot;POST&quot;</span>]) &#123;<br>        <span class="hljs-keyword">if</span> (!request.HTTPBody) &#123;<br>            uint8_t d[<span class="hljs-number">1024</span>] = &#123;<span class="hljs-number">0</span>&#125;;<br>            <span class="hljs-built_in">NSInputStream</span> *stream = request.HTTPBodyStream;<br>            <span class="hljs-built_in">NSMutableData</span> *data = [[<span class="hljs-built_in">NSMutableData</span> alloc] init];<br>            [stream open];<br>            <span class="hljs-keyword">while</span> ([stream hasBytesAvailable]) &#123;<br>                <span class="hljs-built_in">NSInteger</span> len = [stream read:d maxLength:<span class="hljs-number">1024</span>];<br>                <span class="hljs-keyword">if</span> (len &gt; <span class="hljs-number">0</span> &amp;&amp; stream.streamError == <span class="hljs-literal">nil</span>) &#123;<br>                    [data appendBytes:(<span class="hljs-keyword">void</span> *)d length:len];<br>                &#125;<br>            &#125;<br>            req.HTTPBody = [data <span class="hljs-keyword">copy</span>];<br>            [stream close];<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> req;<br>&#125;<br></code></pre></td></tr></table></figure></p>
+<p>目前我的解决办法是：把post请求参数单独保存，利用键值对保存不同post请求的参数，然后拦截post请求修改请求体。 </p>
 <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a class="link"   href="https://www.jianshu.com/p/ec5d6c204e17" >NSURLProtocol 的使用<i class="fas fa-external-link-alt"></i></a></p>
 <p><a class="link"   href="https://blog.csdn.net/weixin_37664648/article/details/80021430" >NSURLProtocol拦截网络请求<i class="fas fa-external-link-alt"></i></a></p>
 <p><a class="link"   href="https://www.jianshu.com/p/ae5e8f9988d8?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation" >iOS中NSURLProtocol黑魔法的使用<i class="fas fa-external-link-alt"></i></a></p>
@@ -209,23 +210,6 @@ NSProxy 做为消息转发的抽象代理类，自身能够处理的方法极少
       </tags>
   </entry>
   <entry>
-    <title>iOS播放器设计</title>
-    <url>/2019/01/06/iOS%E6%92%AD%E6%94%BE%E5%99%A8%E8%AE%BE%E8%AE%A1/</url>
-    <content><![CDATA[<p>[TOC]</p>
-<h3 id="需求目标"><a href="#需求目标" class="headerlink" title="需求目标"></a>需求目标</h3><p>1、基础播放器可随时替代（本地、远程播放、暂停、拖动进度、后台播放）<br>2、记录上次播放、播放模式（单曲，顺序，随机）等<br>3、播放单个故事，播放专辑列表<br>4、网络慢，加载进度条和语音提示<br>5、播放失败、播放状态变更时自定义日志log上传bugly</p>
-<h3 id="设计思路"><a href="#设计思路" class="headerlink" title="设计思路"></a>设计思路</h3><p>分层：<br>基础层：给url就播放，开始使用AVPlayer，后续可能采用ffmpeg<br>业务层：播放记录、播放模式、专辑列表播放、播放状态回调、根据故事id播放故事</p>
-<p>技术点：<br>1、抽象工厂模式，解决基础播放器快速替换问题<br>2、策略模式，实现不同播放模式，资源列表排序算法<br>3、AVFoundation后台播放需要设置一下模式<br>4、节能</p>
-<figure class="highlight reasonml"><table><tr><td class="code"><pre><code class="hljs reasonml"><span class="hljs-keyword">do</span> &#123;<br>    <span class="hljs-comment">//keep alive audio at background</span><br>    <span class="hljs-keyword">try</span> <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">AVAudioSession</span>.</span></span>shared<span class="hljs-constructor">Instance()</span>.set<span class="hljs-constructor">Category(AVAudioSession.Category.<span class="hljs-params">playback</span>)</span><br>&#125; catch _ &#123; &#125;<br><br><span class="hljs-keyword">do</span> &#123;<br>    <span class="hljs-keyword">try</span> <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">AVAudioSession</span>.</span></span>shared<span class="hljs-constructor">Instance()</span>.set<span class="hljs-constructor">Active(<span class="hljs-params">true</span>)</span><br>&#125; catch _ &#123; &#125;<br></code></pre></td></tr></table></figure>
-<p>4、开启远程控制器后,才会后台自动切歌播放(开启线控,还能支持耳机上的线控操作)<br><figure class="highlight scheme"><table><tr><td class="code"><pre><code class="hljs scheme">[[<span class="hljs-name">UIApplication</span> sharedApplication] beginReceivingRemoteControlEvents]<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure><br>5、系统远端事件捕获不到问题,需要重写下面方法<br><figure class="highlight objectivec"><table><tr><td class="code"><pre><code class="hljs objectivec">-(<span class="hljs-built_in">BOOL</span>)canBecomeFirstResponder&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">YES</span>;<br>&#125;<br><br><span class="hljs-meta">#<span class="hljs-meta-keyword">pragma</span> mark - 接收到远程控制时执行的方法</span><br>- (<span class="hljs-keyword">void</span>) remoteControlReceivedWithEvent: (<span class="hljs-built_in">UIEvent</span> *) receivedEvent&#123;<br><br>&#125;<br></code></pre></td></tr></table></figure><br>6、锁屏播放信息设置<br><figure class="highlight objectivec"><table><tr><td class="code"><pre><code class="hljs objectivec"><span class="hljs-built_in">MPNowPlayingInfoCenter</span> *center = [<span class="hljs-built_in">MPNowPlayingInfoCenter</span> defaultCenter];<br><span class="hljs-built_in">NSDictionary</span> *songInfo = @&#123;<br>    <span class="hljs-built_in">MPMediaItemPropertyTitle</span>: title,<br>    <span class="hljs-built_in">MPMediaItemPropertyArtist</span>: artist<br>    <span class="hljs-built_in">MPMediaItemPropertyPlaybackDuration</span> : [<span class="hljs-built_in">NSNumber</span> numberWithFloat:length]<br>&#125;;<br>center.nowPlayingInfo = songInfo;<br></code></pre></td></tr></table></figure></p>
-<h3 id="主要流程"><a href="#主要流程" class="headerlink" title="主要流程"></a>主要流程</h3><p>1、根据故事id查看是否有播放记录？<br>    有播放记录，获取播放进度<br>    无播放记录，播放进度为初始值<br>2、查看该故事音频是否有本地缓存？<br>    有缓存，设置播放进度，播放本地<br>    无缓存，设置播放进度，播放远程<br>3、开始播放，添加播放记录。<br>4、播放过程中，定时器定时获取播放进度，设置进度条，同时更播放进度记录，更新锁屏上的播放信息。<br>5、暂停更新播放进度。<br>6、播放完成更新播放进度。<br>7、播放状态、网络状态、音频获取状态变换回调，方便打点。</p>
-<h3 id="主要遇到问题以及解决"><a href="#主要遇到问题以及解决" class="headerlink" title="主要遇到问题以及解决"></a>主要遇到问题以及解决</h3><p>1、架构：层次分明，职责清晰，利用合适的设计模式解决替换与算法分离问题。<br>2、卡顿：获取锁屏图片时卡顿，在子线程获取成功之后，图片的解码过程也放到子线程。<br>3、耗电：定时器及时关闭，锁屏信息只在锁屏和进入后台才更新</p>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a class="link"   href="https://www.jianshu.com/p/18ed7531117a" >视频播放器本地代理服务设计<i class="fas fa-external-link-alt"></i></a></p>
-]]></content>
-      <tags>
-        <tag>架构设计</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>iOS离屏渲染研究</title>
     <url>/2018/04/01/iOS%E7%A6%BB%E5%B1%8F%E6%B8%B2%E6%9F%93%E7%A0%94%E7%A9%B6/</url>
     <content><![CDATA[<p>[TOC]</p>
@@ -272,11 +256,36 @@ NSProxy 做为消息转发的抽象代理类，自身能够处理的方法极少
       </tags>
   </entry>
   <entry>
-    <title>iOS绘制k线总结</title>
-    <url>/2021/01/13/iOS%E7%BB%98%E5%88%B6k%E7%BA%BF/</url>
-    <content><![CDATA[]]></content>
+    <title>iOS播放器设计</title>
+    <url>/2019/01/06/iOS%E6%92%AD%E6%94%BE%E5%99%A8%E8%AE%BE%E8%AE%A1/</url>
+    <content><![CDATA[<p>[TOC]</p>
+<h3 id="需求目标"><a href="#需求目标" class="headerlink" title="需求目标"></a>需求目标</h3><p>1、基础播放器可随时替代（本地、远程播放、暂停、拖动进度、后台播放）<br>2、记录上次播放、播放模式（单曲，顺序，随机）等<br>3、播放单个故事，播放专辑列表<br>4、网络慢，加载进度条和语音提示<br>5、播放失败、播放状态变更时自定义日志log上传bugly</p>
+<h3 id="设计思路"><a href="#设计思路" class="headerlink" title="设计思路"></a>设计思路</h3><p>分层：<br>基础层：给url就播放，开始使用AVPlayer，后续可能采用ffmpeg<br>业务层：播放记录、播放模式、专辑列表播放、播放状态回调、根据故事id播放故事</p>
+<p>技术点：<br>1、抽象工厂模式，解决基础播放器快速替换问题<br>2、策略模式，实现不同播放模式，资源列表排序算法<br>3、AVFoundation后台播放需要设置一下模式<br>4、节能</p>
+<figure class="highlight reasonml"><table><tr><td class="code"><pre><code class="hljs reasonml"><span class="hljs-keyword">do</span> &#123;<br>    <span class="hljs-comment">//keep alive audio at background</span><br>    <span class="hljs-keyword">try</span> <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">AVAudioSession</span>.</span></span>shared<span class="hljs-constructor">Instance()</span>.set<span class="hljs-constructor">Category(AVAudioSession.Category.<span class="hljs-params">playback</span>)</span><br>&#125; catch _ &#123; &#125;<br><br><span class="hljs-keyword">do</span> &#123;<br>    <span class="hljs-keyword">try</span> <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">AVAudioSession</span>.</span></span>shared<span class="hljs-constructor">Instance()</span>.set<span class="hljs-constructor">Active(<span class="hljs-params">true</span>)</span><br>&#125; catch _ &#123; &#125;<br></code></pre></td></tr></table></figure>
+<p>4、开启远程控制器后,才会后台自动切歌播放(开启线控,还能支持耳机上的线控操作)<br><figure class="highlight scheme"><table><tr><td class="code"><pre><code class="hljs scheme">[[<span class="hljs-name">UIApplication</span> sharedApplication] beginReceivingRemoteControlEvents]<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure><br>5、系统远端事件捕获不到问题,需要重写下面方法<br><figure class="highlight objectivec"><table><tr><td class="code"><pre><code class="hljs objectivec">-(<span class="hljs-built_in">BOOL</span>)canBecomeFirstResponder&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">YES</span>;<br>&#125;<br><br><span class="hljs-meta">#<span class="hljs-meta-keyword">pragma</span> mark - 接收到远程控制时执行的方法</span><br>- (<span class="hljs-keyword">void</span>) remoteControlReceivedWithEvent: (<span class="hljs-built_in">UIEvent</span> *) receivedEvent&#123;<br><br>&#125;<br></code></pre></td></tr></table></figure><br>6、锁屏播放信息设置<br><figure class="highlight objectivec"><table><tr><td class="code"><pre><code class="hljs objectivec"><span class="hljs-built_in">MPNowPlayingInfoCenter</span> *center = [<span class="hljs-built_in">MPNowPlayingInfoCenter</span> defaultCenter];<br><span class="hljs-built_in">NSDictionary</span> *songInfo = @&#123;<br>    <span class="hljs-built_in">MPMediaItemPropertyTitle</span>: title,<br>    <span class="hljs-built_in">MPMediaItemPropertyArtist</span>: artist<br>    <span class="hljs-built_in">MPMediaItemPropertyPlaybackDuration</span> : [<span class="hljs-built_in">NSNumber</span> numberWithFloat:length]<br>&#125;;<br>center.nowPlayingInfo = songInfo;<br></code></pre></td></tr></table></figure></p>
+<h3 id="主要流程"><a href="#主要流程" class="headerlink" title="主要流程"></a>主要流程</h3><p>1、根据故事id查看是否有播放记录？<br>    有播放记录，获取播放进度<br>    无播放记录，播放进度为初始值<br>2、查看该故事音频是否有本地缓存？<br>    有缓存，设置播放进度，播放本地<br>    无缓存，设置播放进度，播放远程<br>3、开始播放，添加播放记录。<br>4、播放过程中，定时器定时获取播放进度，设置进度条，同时更播放进度记录，更新锁屏上的播放信息。<br>5、暂停更新播放进度。<br>6、播放完成更新播放进度。<br>7、播放状态、网络状态、音频获取状态变换回调，方便打点。</p>
+<h3 id="主要遇到问题以及解决"><a href="#主要遇到问题以及解决" class="headerlink" title="主要遇到问题以及解决"></a>主要遇到问题以及解决</h3><p>1、架构：层次分明，职责清晰，利用合适的设计模式解决替换与算法分离问题。<br>2、卡顿：获取锁屏图片时卡顿，在子线程获取成功之后，图片的解码过程也放到子线程。<br>3、耗电：定时器及时关闭，锁屏信息只在锁屏和进入后台才更新</p>
+]]></content>
       <tags>
-        <tag>k线</tag>
+        <tag>架构设计</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>sizeToFit 和 sizeThatFits</title>
+    <url>/2017/05/01/sizeToFit-%E5%92%8C-sizeThatFits/</url>
+    <content><![CDATA[<p>[toc]</p>
+<h5 id="sizeToFit"><a href="#sizeToFit" class="headerlink" title="sizeToFit"></a>sizeToFit</h5><p>sizeToFit: 会计算出最优的 size 而且会改变自己的size</p>
+<figure class="highlight reasonml"><table><tr><td class="code"><pre><code class="hljs reasonml">UILabel *label = <span class="hljs-literal">[[UIL<span class="hljs-identifier">abel</span> <span class="hljs-identifier">alloc</span>]</span> initWithFrame:<span class="hljs-constructor">CGRectMake(100, 100, 0, 0)</span>];<br>label.backgroundColor = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">UIColor</span>.</span></span>grayColor;<br>label.font = <span class="hljs-literal">[UIF<span class="hljs-identifier">ont</span> <span class="hljs-identifier">systemFontOfSize</span>:<span class="hljs-number">20</span>]</span>;<br>label.text = @<span class="hljs-string">&quot;上海欢迎你!!!&quot;</span>;<br><br><span class="hljs-comment">//sizeToFit: 直接改变了label的宽和高, 使它根据上面的字符串的大小做合适的改变</span><br><span class="hljs-literal">[<span class="hljs-identifier">label</span> <span class="hljs-identifier">sizeToFit</span>]</span>;<br><br><span class="hljs-constructor">NSLog(@<span class="hljs-string">&quot;width = %.0f height = %.0f&quot;</span>,<span class="hljs-params">label</span>.<span class="hljs-params">frame</span>.<span class="hljs-params">size</span>.<span class="hljs-params">width</span>, <span class="hljs-params">label</span>.<span class="hljs-params">frame</span>.<span class="hljs-params">size</span>.<span class="hljs-params">height</span>)</span>;<br><span class="hljs-literal">[<span class="hljs-identifier">self</span>.<span class="hljs-identifier">view</span> <span class="hljs-identifier">addSubview</span>:<span class="hljs-identifier">label</span>]</span>;<br><br><span class="hljs-comment">//输出结果:</span><br>width = <span class="hljs-number">119</span> height = <span class="hljs-number">24</span><br><br>注意: 使用sizeToFit时, 一定要设置控件的frame, 并且不可以使用Masonry, 否则sizeToFit将失效<br><br></code></pre></td></tr></table></figure>
+<h5 id="sizeThatFits"><a href="#sizeThatFits" class="headerlink" title="sizeThatFits"></a>sizeThatFits</h5><p>sizeThatFits: 会计算出最优的 size 但是不会改变 自己的size</p>
+<figure class="highlight reasonml"><table><tr><td class="code"><pre><code class="hljs reasonml">UILabel *label = <span class="hljs-literal">[[UIL<span class="hljs-identifier">abel</span> <span class="hljs-identifier">alloc</span>]</span> initWithFrame:<span class="hljs-constructor">CGRectMake(100, 100, 0, 0)</span>];<br>label.backgroundColor = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">UIColor</span>.</span></span>grayColor;<br>label.font = <span class="hljs-literal">[UIF<span class="hljs-identifier">ont</span> <span class="hljs-identifier">systemFontOfSize</span>:<span class="hljs-number">20</span>]</span>;<br>label.text = @<span class="hljs-string">&quot;上海欢迎你!!!&quot;</span>;<br><br><span class="hljs-comment">//sizeThatFits并没有改变原始label的大小</span><br>CGSize sizeThatFits =  <span class="hljs-literal">[<span class="hljs-identifier">label</span> <span class="hljs-identifier">sizeThatFits</span>:CGS<span class="hljs-identifier">izeZero</span>]</span>;<br><span class="hljs-constructor">NSLog(@<span class="hljs-string">&quot;sizeThatFits: width = %.1f height = %.1f&quot;</span>, <span class="hljs-params">sizeThatFits</span>.<span class="hljs-params">width</span>, <span class="hljs-params">sizeThatFits</span>.<span class="hljs-params">height</span>)</span>;<br><br><span class="hljs-constructor">NSLog(@<span class="hljs-string">&quot;label: width = %.1f height = %.1f&quot;</span>,<span class="hljs-params">label</span>.<span class="hljs-params">frame</span>.<span class="hljs-params">size</span>.<span class="hljs-params">width</span>, <span class="hljs-params">label</span>.<span class="hljs-params">frame</span>.<span class="hljs-params">size</span>.<span class="hljs-params">height</span>)</span>;<br><br><span class="hljs-literal">[<span class="hljs-identifier">self</span>.<span class="hljs-identifier">view</span> <span class="hljs-identifier">addSubview</span>:<span class="hljs-identifier">label</span>]</span>;<br><br><br>输出结果:<br>sizeThatFits: width = <span class="hljs-number">119.0</span> height = <span class="hljs-number">24.0</span><br>label: width = <span class="hljs-number">0.0</span> height = <span class="hljs-number">0.0</span><br><br></code></pre></td></tr></table></figure>
+<h5 id="iOS-sizeToFit-和-sizeThatFits的联系"><a href="#iOS-sizeToFit-和-sizeThatFits的联系" class="headerlink" title="iOS sizeToFit 和 sizeThatFits的联系"></a>iOS sizeToFit 和 sizeThatFits的联系</h5><p>如果你的控件对尺寸有严格的限定，比如有一个统一的宽高比或者是固定尺寸，那么最好能实现系统给出的约定成俗的接口。<br>sizeToFit 用在基于 frame 布局的情况下，由你的控件去实现 sizeThatFits: 方法：</p>
+<figure class="highlight processing"><table><tr><td class="code"><pre><code class="hljs processing">- (CGSize)sizeThatFits:(CGSize)<span class="hljs-built_in">size</span> &#123;<br>    CGSize fitSize = [<span class="hljs-keyword">super</span> sizeThatFits:<span class="hljs-built_in">size</span>];<br>    fitSize.<span class="hljs-built_in">height</span> += self.label.frame.<span class="hljs-built_in">size</span>.<span class="hljs-built_in">height</span>;<br>    <span class="hljs-comment">// 如果是固定尺寸，就像 UISwtich 那样返回一个固定 Size 就 OK 了</span><br>    <span class="hljs-keyword">return</span> fitSize;<br>&#125; <br></code></pre></td></tr></table></figure>
+<p>然后在外部调用该控件的 sizeToFit 方法，这个方法内部会自动调用 sizeThatFits 并更新自身的 Size：</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[self.customView sizeToFit]</span><span class="hljs-comment">; </span><br></code></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>UI</tag>
       </tags>
   </entry>
   <entry>
@@ -293,34 +302,6 @@ NSProxy 做为消息转发的抽象代理类，自身能够处理的方法极少
 ]]></content>
       <tags>
         <tag>command</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>sizeToFit 和 sizeThatFits</title>
-    <url>/2017/05/01/sizeToFit-%E5%92%8C-sizeThatFits/</url>
-    <content><![CDATA[<p>[toc]</p>
-<h5 id="sizeToFit"><a href="#sizeToFit" class="headerlink" title="sizeToFit"></a>sizeToFit</h5><p>sizeToFit: 会计算出最优的 size 而且会改变自己的size</p>
-<figure class="highlight reasonml"><table><tr><td class="code"><pre><code class="hljs reasonml">UILabel *label = <span class="hljs-literal">[[UIL<span class="hljs-identifier">abel</span> <span class="hljs-identifier">alloc</span>]</span> initWithFrame:<span class="hljs-constructor">CGRectMake(100, 100, 0, 0)</span>];<br>label.backgroundColor = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">UIColor</span>.</span></span>grayColor;<br>label.font = <span class="hljs-literal">[UIF<span class="hljs-identifier">ont</span> <span class="hljs-identifier">systemFontOfSize</span>:<span class="hljs-number">20</span>]</span>;<br>label.text = @<span class="hljs-string">&quot;北京欢迎你!!!&quot;</span>;<br><br><span class="hljs-comment">//sizeToFit: 直接改变了label的宽和高, 使它根据上面的字符串的大小做合适的改变</span><br><span class="hljs-literal">[<span class="hljs-identifier">label</span> <span class="hljs-identifier">sizeToFit</span>]</span>;<br><br><span class="hljs-constructor">NSLog(@<span class="hljs-string">&quot;width = %.0f height = %.0f&quot;</span>,<span class="hljs-params">label</span>.<span class="hljs-params">frame</span>.<span class="hljs-params">size</span>.<span class="hljs-params">width</span>, <span class="hljs-params">label</span>.<span class="hljs-params">frame</span>.<span class="hljs-params">size</span>.<span class="hljs-params">height</span>)</span>;<br><span class="hljs-literal">[<span class="hljs-identifier">self</span>.<span class="hljs-identifier">view</span> <span class="hljs-identifier">addSubview</span>:<span class="hljs-identifier">label</span>]</span>;<br><br><span class="hljs-comment">//输出结果:</span><br>width = <span class="hljs-number">119</span> height = <span class="hljs-number">24</span><br><br>注意: 使用sizeToFit时, 一定要设置控件的frame, 并且不可以使用Masonry, 否则sizeToFit将失效<br><br></code></pre></td></tr></table></figure>
-<h5 id="sizeThatFits"><a href="#sizeThatFits" class="headerlink" title="sizeThatFits"></a>sizeThatFits</h5><p>sizeThatFits: 会计算出最优的 size 但是不会改变 自己的size</p>
-<figure class="highlight reasonml"><table><tr><td class="code"><pre><code class="hljs reasonml">UILabel *label = <span class="hljs-literal">[[UIL<span class="hljs-identifier">abel</span> <span class="hljs-identifier">alloc</span>]</span> initWithFrame:<span class="hljs-constructor">CGRectMake(100, 100, 0, 0)</span>];<br>label.backgroundColor = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">UIColor</span>.</span></span>grayColor;<br>label.font = <span class="hljs-literal">[UIF<span class="hljs-identifier">ont</span> <span class="hljs-identifier">systemFontOfSize</span>:<span class="hljs-number">20</span>]</span>;<br>label.text = @<span class="hljs-string">&quot;北京欢迎你!!!&quot;</span>;<br><br><span class="hljs-comment">//sizeThatFits并没有改变原始label的大小</span><br>CGSize sizeThatFits =  <span class="hljs-literal">[<span class="hljs-identifier">label</span> <span class="hljs-identifier">sizeThatFits</span>:CGS<span class="hljs-identifier">izeZero</span>]</span>;<br><span class="hljs-constructor">NSLog(@<span class="hljs-string">&quot;sizeThatFits: width = %.1f height = %.1f&quot;</span>, <span class="hljs-params">sizeThatFits</span>.<span class="hljs-params">width</span>, <span class="hljs-params">sizeThatFits</span>.<span class="hljs-params">height</span>)</span>;<br><br><span class="hljs-constructor">NSLog(@<span class="hljs-string">&quot;label: width = %.1f height = %.1f&quot;</span>,<span class="hljs-params">label</span>.<span class="hljs-params">frame</span>.<span class="hljs-params">size</span>.<span class="hljs-params">width</span>, <span class="hljs-params">label</span>.<span class="hljs-params">frame</span>.<span class="hljs-params">size</span>.<span class="hljs-params">height</span>)</span>;<br><br><span class="hljs-literal">[<span class="hljs-identifier">self</span>.<span class="hljs-identifier">view</span> <span class="hljs-identifier">addSubview</span>:<span class="hljs-identifier">label</span>]</span>;<br><br><br>输出结果:<br>sizeThatFits: width = <span class="hljs-number">119.0</span> height = <span class="hljs-number">24.0</span><br>label: width = <span class="hljs-number">0.0</span> height = <span class="hljs-number">0.0</span><br><br></code></pre></td></tr></table></figure>
-<h5 id="iOS-sizeToFit-和-sizeThatFits的联系"><a href="#iOS-sizeToFit-和-sizeThatFits的联系" class="headerlink" title="iOS sizeToFit 和 sizeThatFits的联系"></a>iOS sizeToFit 和 sizeThatFits的联系</h5><p>如果你的控件对尺寸有严格的限定，比如有一个统一的宽高比或者是固定尺寸，那么最好能实现系统给出的约定成俗的接口。<br>sizeToFit 用在基于 frame 布局的情况下，由你的控件去实现 sizeThatFits: 方法：</p>
-<figure class="highlight processing"><table><tr><td class="code"><pre><code class="hljs processing">- (CGSize)sizeThatFits:(CGSize)<span class="hljs-built_in">size</span> &#123;<br>    CGSize fitSize = [<span class="hljs-keyword">super</span> sizeThatFits:<span class="hljs-built_in">size</span>];<br>    fitSize.<span class="hljs-built_in">height</span> += self.label.frame.<span class="hljs-built_in">size</span>.<span class="hljs-built_in">height</span>;<br>    <span class="hljs-comment">// 如果是固定尺寸，就像 UISwtich 那样返回一个固定 Size 就 OK 了</span><br>    <span class="hljs-keyword">return</span> fitSize;<br>&#125; <br></code></pre></td></tr></table></figure>
-<p>然后在外部调用该控件的 sizeToFit 方法，这个方法内部会自动调用 sizeThatFits 并更新自身的 Size：</p>
-<figure class="highlight ini"><table><tr><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[self.customView sizeToFit]</span><span class="hljs-comment">; </span><br></code></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>UI</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>socket 研究</title>
-    <url>/2020/06/08/socket-%E7%A0%94%E7%A9%B6/</url>
-    <content><![CDATA[<h6 id="什么是socket"><a href="#什么是socket" class="headerlink" title="什么是socket?"></a>什么是socket?</h6><p>是一组对TCP/UDP协议封装的api接口，处于应用层与传输层之间</p>
-<p><a class="link"   href="https://www.jianshu.com/p/8e599ca5dfe8" >Socket简易分析<i class="fas fa-external-link-alt"></i></a></p>
-<h6 id="粘包半包是什么？怎么处理？"><a href="#粘包半包是什么？怎么处理？" class="headerlink" title="粘包半包是什么？怎么处理？"></a>粘包半包是什么？怎么处理？</h6><p><a class="link"   href="https://www.jb51.net/article/105278.htm" >IOS 详解socket编程[oc]粘包、半包处理<i class="fas fa-external-link-alt"></i></a></p>
-]]></content>
-      <tags>
-        <tag>socket</tag>
       </tags>
   </entry>
   <entry>
@@ -345,6 +326,28 @@ NSProxy 做为消息转发的抽象代理类，自身能够处理的方法极少
       </tags>
   </entry>
   <entry>
+    <title>socket 研究</title>
+    <url>/2020/06/08/socket-%E7%A0%94%E7%A9%B6/</url>
+    <content><![CDATA[<h6 id="什么是socket"><a href="#什么是socket" class="headerlink" title="什么是socket?"></a>什么是socket?</h6><p>是一组对TCP/UDP协议封装的api接口，处于应用层与传输层之间</p>
+<p><a class="link"   href="https://www.jianshu.com/p/8e599ca5dfe8" >Socket简易分析<i class="fas fa-external-link-alt"></i></a></p>
+<h6 id="粘包半包是什么？怎么处理？"><a href="#粘包半包是什么？怎么处理？" class="headerlink" title="粘包半包是什么？怎么处理？"></a>粘包半包是什么？怎么处理？</h6><p><a class="link"   href="https://www.jb51.net/article/105278.htm" >IOS 详解socket编程[oc]粘包、半包处理<i class="fas fa-external-link-alt"></i></a></p>
+]]></content>
+      <tags>
+        <tag>socket</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>技术支持</title>
+    <url>/2020/12/15/%E6%8A%80%E6%9C%AF%E6%94%AF%E6%8C%81/</url>
+    <content><![CDATA[<p>开发者QQ：2696437433</p>
+<p>开发者邮箱：baichenghui88888@gmail.com </p>
+<p>微信号：xiaobailong_b9i_1992</p>
+]]></content>
+      <tags>
+        <tag>日程日历App</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>常用lldb命令</title>
     <url>/2018/12/19/%E5%B8%B8%E7%94%A8lldb%E5%91%BD%E4%BB%A4/</url>
     <content><![CDATA[<h6 id="常用"><a href="#常用" class="headerlink" title="常用"></a>常用</h6><p>bt：堆栈信息<br>p:打印对象信息，内容比较全<br>po:打印对象信息<br>breakpoint set -n “-[方法名]”:断点<br>si:下一指令，汇编级别<br>s:下一步，高级源码级别<br>call:方法调用<br>thread return:退出当前线程<br>expression -O — self.view :打印当前对象内容，可以看见属性</p>
@@ -363,17 +366,6 @@ NSProxy 做为消息转发的抽象代理类，自身能够处理的方法极少
 ]]></content>
       <tags>
         <tag>lldb</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>技术支持</title>
-    <url>/2020/12/15/%E6%8A%80%E6%9C%AF%E6%94%AF%E6%8C%81/</url>
-    <content><![CDATA[<p>开发者QQ：2696437433</p>
-<p>开发者邮箱：baichenghui88888@gmail.com </p>
-<p>微信号：xiaobailong_b9i_1992</p>
-]]></content>
-      <tags>
-        <tag>日程日历App</tag>
       </tags>
   </entry>
   <entry>

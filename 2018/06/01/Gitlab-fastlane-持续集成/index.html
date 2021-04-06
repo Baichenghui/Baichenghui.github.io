@@ -9,7 +9,7 @@
     
     <title>
         
-            Gitlab+fastlane 持续集成（小白从0到1） |
+            Gitlab+fastlane 持续集成 |
         
         ChenghuiBai&#39;s Blog
     </title>
@@ -145,7 +145,7 @@
     <div class="article-content-container">
 
         <div class="article-title">
-            <span class="title-hover-animation">Gitlab+fastlane 持续集成（小白从0到1）</span>
+            <span class="title-hover-animation">Gitlab+fastlane 持续集成</span>
         </div>
 
         
@@ -172,7 +172,7 @@
             <ul>
                 
                     <li>
-                        <a href="/tags/tool/">tool</a>&nbsp;
+                        <a href="/tags/fastlane/">fastlane</a>&nbsp;
                     </li>
                 
             </ul>
@@ -182,7 +182,7 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fas fa-file-word"></i>&nbsp;<span>375 Words</span>
+            <i class="fas fa-file-word"></i>&nbsp;<span>373 Words</span>
         </span>
     
     
@@ -230,7 +230,7 @@
 <h5 id="4、配置-gitlab-ci-yml文件"><a href="#4、配置-gitlab-ci-yml文件" class="headerlink" title="4、配置.gitlab-ci.yml文件"></a>4、配置.gitlab-ci.yml文件</h5><p>注意：<br>variables:<br>  LC_ALL: “en_US.UTF-8”<br>  LANG: “en_US.UTF-8”<br>  GIT_STRATEGY: fetch #开发阶段这要设置一下，默认每次都会clone代码，耗时较长。上线版本设置为clone获取最新代码</p>
 <p><a class="link"   target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000019540360" >持续集成之.gitlab-ci.yml篇（详细讲解了各命令的作用）<i class="fas fa-external-link-alt"></i></a></p>
 <p><a class="link"   target="_blank" rel="noopener" href="https://s0docs0gitlab0com.icopy.site/ce/ci/yaml/README.html" >（官方文档）<i class="fas fa-external-link-alt"></i></a> </p>
-<h5 id="原理理解"><a href="#原理理解" class="headerlink" title="原理理解"></a>原理理解</h5><p>在配置.gitlab-ci.yml文件中配置需要执行的脚本，这里配置执行fastlane脚本。</p>
+<h5 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h5><p>在配置.gitlab-ci.yml文件中配置需要执行的脚本，这里配置执行fastlane脚本。</p>
 <h5 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h5><p>个人建议，直接看官方文档，除非英文太差，那就找中文资料吧。</p>
 
         </div>
@@ -239,11 +239,11 @@
             <div class="post-copyright-info">
                 <div class="article-copyright-info-container">
     <ul>
-        <li>Post title：Gitlab+fastlane 持续集成（小白从0到1）</li>
+        <li>Post title：Gitlab+fastlane 持续集成</li>
         <li>Post author：ChenghuiBai</li>
         <li>Create time：2018-06-01 08:31:29</li>
         <li>
-            Post link：https://baichenghui.github.io/2018/06/01/Gitlab-fastlane-持续集成（小白从0到1）/
+            Post link：https://baichenghui.github.io/2018/06/01/Gitlab-fastlane-持续集成/
         </li>
         <li>
             Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
@@ -402,7 +402,7 @@
         <aside class="page-aside">
             <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E6%AD%A5%E9%AA%A4"><span class="nav-number">1.</span> <span class="nav-text">实现步骤</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1%E3%80%81%E5%9C%A8gitlab%E6%96%B0%E5%BB%BA%E9%A1%B9%E7%9B%AE"><span class="nav-number">2.</span> <span class="nav-text">1、在gitlab新建项目</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2%E3%80%81%E9%85%8D%E7%BD%AEgitlab-runner"><span class="nav-number">3.</span> <span class="nav-text">2、配置gitlab-runner</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3%E3%80%81%E5%AE%89%E8%A3%85%E5%B9%B6%E9%85%8D%E7%BD%AEfastlane"><span class="nav-number">4.</span> <span class="nav-text">3、安装并配置fastlane</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%AE%89%E8%A3%85fastlane"><span class="nav-number">4.1.</span> <span class="nav-text">安装fastlane</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%AE%89%E8%A3%85firim%E6%8F%92%E4%BB%B6"><span class="nav-number">4.2.</span> <span class="nav-text">安装firim插件</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Appfile"><span class="nav-number">4.3.</span> <span class="nav-text">Appfile</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Deliverfile"><span class="nav-number">4.4.</span> <span class="nav-text">Deliverfile</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Fastfile"><span class="nav-number">4.5.</span> <span class="nav-text">Fastfile</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Gymfile"><span class="nav-number">4.6.</span> <span class="nav-text">Gymfile</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Snapfile"><span class="nav-number">4.7.</span> <span class="nav-text">Snapfile</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Matchfile"><span class="nav-number">4.8.</span> <span class="nav-text">Matchfile</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Pluginfile"><span class="nav-number">4.9.</span> <span class="nav-text">Pluginfile</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4%E3%80%81%E9%85%8D%E7%BD%AE-gitlab-ci-yml%E6%96%87%E4%BB%B6"><span class="nav-number">5.</span> <span class="nav-text">4、配置.gitlab-ci.yml文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8E%9F%E7%90%86%E7%90%86%E8%A7%A3"><span class="nav-number">6.</span> <span class="nav-text">原理理解</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BB%93%E5%B0%BE"><span class="nav-number">7.</span> <span class="nav-text">结尾</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E6%AD%A5%E9%AA%A4"><span class="nav-number">1.</span> <span class="nav-text">实现步骤</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1%E3%80%81%E5%9C%A8gitlab%E6%96%B0%E5%BB%BA%E9%A1%B9%E7%9B%AE"><span class="nav-number">2.</span> <span class="nav-text">1、在gitlab新建项目</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2%E3%80%81%E9%85%8D%E7%BD%AEgitlab-runner"><span class="nav-number">3.</span> <span class="nav-text">2、配置gitlab-runner</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3%E3%80%81%E5%AE%89%E8%A3%85%E5%B9%B6%E9%85%8D%E7%BD%AEfastlane"><span class="nav-number">4.</span> <span class="nav-text">3、安装并配置fastlane</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%AE%89%E8%A3%85fastlane"><span class="nav-number">4.1.</span> <span class="nav-text">安装fastlane</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%AE%89%E8%A3%85firim%E6%8F%92%E4%BB%B6"><span class="nav-number">4.2.</span> <span class="nav-text">安装firim插件</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Appfile"><span class="nav-number">4.3.</span> <span class="nav-text">Appfile</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Deliverfile"><span class="nav-number">4.4.</span> <span class="nav-text">Deliverfile</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Fastfile"><span class="nav-number">4.5.</span> <span class="nav-text">Fastfile</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Gymfile"><span class="nav-number">4.6.</span> <span class="nav-text">Gymfile</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Snapfile"><span class="nav-number">4.7.</span> <span class="nav-text">Snapfile</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Matchfile"><span class="nav-number">4.8.</span> <span class="nav-text">Matchfile</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Pluginfile"><span class="nav-number">4.9.</span> <span class="nav-text">Pluginfile</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4%E3%80%81%E9%85%8D%E7%BD%AE-gitlab-ci-yml%E6%96%87%E4%BB%B6"><span class="nav-number">5.</span> <span class="nav-text">4、配置.gitlab-ci.yml文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8E%9F%E7%90%86"><span class="nav-number">6.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BB%93%E5%B0%BE"><span class="nav-number">7.</span> <span class="nav-text">结尾</span></a></li></ol>
     </div>
 </div>
         </aside>
