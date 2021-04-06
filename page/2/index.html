@@ -5,23 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="keywords" content="Hexo Theme Keep">
     <meta name="description" content="Hexo Theme Keep">
-    <meta name="author" content="Keep Team">
+    <meta name="author" content="ChenghuiBai">
     
     <title>
         
-        Keep Theme
+        ChenghuiBai&#39;s Blog
     </title>
     
 <link rel="stylesheet" href="/css/style.css">
 
-    <link rel="shortcut icon" href="/images/logo.svg">
+    <link rel="shortcut icon" href="/images/logo.png">
     
 <link rel="stylesheet" href="/css/font-awesome.min.css">
 
     <script id="hexo-configurations">
     let KEEP = window.KEEP || {};
-    KEEP.hexo_config = {"hostname":"github.com","root":"/","language":"zh-CN"};
-    KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"/images/avatar.svg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":false,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":false}}},"local_search":{"enable":false,"preload":false},"code_copy":{"enable":false,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.2"};
+    KEEP.hexo_config = {"hostname":"example.com","root":"/","language":"zh-CN","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"#0066CC","avatar":"/images/avatar.png","favicon":"/images/logo.png","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Keep coding and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":false}}},"local_search":{"enable":false,"preload":false},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.2"};
     KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"};
   </script>
 <meta name="generator" content="Hexo 5.2.0"></head>
@@ -29,6 +29,8 @@
 
 <body>
 <div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
     
 
     
@@ -47,7 +49,7 @@
     <div class="header-content">
         <div class="left">
             <a class="logo-title" href="/">
-                Keep Theme
+                ChenghuiBai&#39;s Blog
             </a>
         </div>
 
@@ -68,6 +70,22 @@
                                href="/archives"
                             >
                                 归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
                             </a>
                         </li>
                     
@@ -96,6 +114,16 @@
                        href="/archives">归档</a>
                 </li>
             
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
         </ul>
     </div>
 
@@ -119,29 +147,37 @@
                 
 
                 <h3 class="home-article-title">
-                    <a href="/2020/10/20/GCD%E7%A0%94%E7%A9%B6/">
-                        GCD研究
+                    <a href="/2018/05/03/translatesAutoresizingMaskIntoConstraints/">
+                        translatesAutoresizingMaskIntoConstraints
                     </a>
                 </h3>
 
                 <div class="home-article-content markdown-body">
                     
-                        [TOC]
-简介1个进程中可以开启多条线程，每条线程可以并行（同时）执行不同的任务多线程技术可以提高程序的执行效率
-作用显示\刷新UI界面、处理UI事件（比如点击事件、滚动事件、拖拽事件等）在主线程执行。
-耗时操作，开启子线程执行。
-原理同一时间，C...
+                        我们查看官方文档，可以看到文档是这样介绍该属性的：它是一个用来决定，是否将视图的自动调整大小的遮罩(autoresizing mask)转换为 Auto Layout 约束的布尔值。通过文档介绍我们可以得知：当该属性为 true 时，系统会自动通过视...
                     
                 </div>
 
                 <div class="home-article-meta-info-container">
     <div class="home-article-meta-info">
-        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Tue Oct 20 2020 10:52:31 GMT+0800">2020-10-20</span></span>
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Thu May 03 2018 21:35:09 GMT+0800">2018-05-03</span></span>
         
+        
+            <span class="home-article-tag">
+                <i class="fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/UI/">UI</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
         
     </div>
 
-    <a href="/2020/10/20/GCD%E7%A0%94%E7%A9%B6/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
+    <a href="/2018/05/03/translatesAutoresizingMaskIntoConstraints/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
 </div>
 
             </li>
@@ -151,101 +187,7 @@
                 
 
                 <h3 class="home-article-title">
-                    <a href="/2020/10/20/YBTaskScheduler-%E7%A0%94%E7%A9%B6/">
-                        YBTaskScheduler 研究
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        学习YBTaskScheduler
-iOS 任务调度器：为 CPU 和内存减负
-[TOC]
-作用可能遇到的问题当主线程执行大量的任务会造成卡顿，应该把这些任务移动到子线程异步执行。
-但是异步执行的任务量过大，会导致cpu和内存占用率过高，然后引发一系...
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Tue Oct 20 2020 10:52:15 GMT+0800">2020-10-20</span></span>
-        
-        
-    </div>
-
-    <a href="/2020/10/20/YBTaskScheduler-%E7%A0%94%E7%A9%B6/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
-</div>
-
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2020/10/20/YYAsyncLayer-%E7%A0%94%E7%A9%B6/">
-                        YYAsyncLayer 研究
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        [TOC]
-引言异步绘制是界面流畅度提升的思路，YYAsyncLayer 是 ibireme 写的一个异步绘制的轮子。质量比较高，涉及到很多优化思维，值得学习。多学技术，学好技术。
-为什么要异步绘制屏幕显示图像的原理
-CPU 计算好显示内容提交到 G...
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Tue Oct 20 2020 10:51:51 GMT+0800">2020-10-20</span></span>
-        
-        
-    </div>
-
-    <a href="/2020/10/20/YYAsyncLayer-%E7%A0%94%E7%A9%B6/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
-</div>
-
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2020/10/20/%E5%9B%BE%E5%83%8F%E5%92%8C%E5%9B%BE%E5%BD%A2%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%EF%BC%88WWDC-2018-session-219%EF%BC%89/">
-                        图像和图形的最佳实践（WWDC 2018 session 219）
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        [TOC]
-UIImage和UIImageViewUIImage在UIKit中表示一个图形的内容，而UIImageView在UIKit中用来呈现一个视图。但是在这之外还有一个隐藏的、影响程序性能的过程，叫做解码(Decode)。
-
-图片的解码当你用 ...
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Tue Oct 20 2020 10:51:34 GMT+0800">2020-10-20</span></span>
-        
-        
-    </div>
-
-    <a href="/2020/10/20/%E5%9B%BE%E5%83%8F%E5%92%8C%E5%9B%BE%E5%BD%A2%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%EF%BC%88WWDC-2018-session-219%EF%BC%89/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
-</div>
-
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2020/10/20/iOS%E7%A6%BB%E5%B1%8F%E6%B8%B2%E6%9F%93%E7%A0%94%E7%A9%B6/">
+                    <a href="/2018/04/01/iOS%E7%A6%BB%E5%B1%8F%E6%B8%B2%E6%9F%93%E7%A0%94%E7%A9%B6/">
                         iOS离屏渲染研究
                     </a>
                 </h3>
@@ -259,12 +201,24 @@ UIImage和UIImageViewUIImage在UIKit中表示一个图形的内容，而UIImageV
 
                 <div class="home-article-meta-info-container">
     <div class="home-article-meta-info">
-        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Tue Oct 20 2020 10:51:12 GMT+0800">2020-10-20</span></span>
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Sun Apr 01 2018 08:31:29 GMT+0800">2018-04-01</span></span>
         
+        
+            <span class="home-article-tag">
+                <i class="fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/%E7%A6%BB%E5%B1%8F%E6%B8%B2%E6%9F%93/">离屏渲染</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
         
     </div>
 
-    <a href="/2020/10/20/iOS%E7%A6%BB%E5%B1%8F%E6%B8%B2%E6%9F%93%E7%A0%94%E7%A9%B6/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
+    <a href="/2018/04/01/iOS%E7%A6%BB%E5%B1%8F%E6%B8%B2%E6%9F%93%E7%A0%94%E7%A9%B6/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
 </div>
 
             </li>
@@ -274,7 +228,134 @@ UIImage和UIImageViewUIImage在UIKit中表示一个图形的内容，而UIImageV
                 
 
                 <h3 class="home-article-title">
-                    <a href="/2020/10/20/iOS%20%E9%AB%98%E6%95%88%E5%88%87%E5%9C%86%E8%A7%92%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/">
+                    <a href="/2018/01/13/mac%20%E7%9B%B8%E5%85%B3%E7%BB%88%E7%AB%AF%E5%91%BD%E4%BB%A4/">
+                        mac 相关终端命令
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        电池健康程度检测终端命令:
+ioreg -rn AppleSmartBattery | grep -i capacity
+ 查看
+ echo $SHELL
+ 切换 bash 要在macOS上更改用户帐户的默认外壳，只需chsh -s在“终端”窗口中运...
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Sat Jan 13 2018 10:41:58 GMT+0800">2018-01-13</span></span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/command/">command</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/2018/01/13/mac%20%E7%9B%B8%E5%85%B3%E7%BB%88%E7%AB%AF%E5%91%BD%E4%BB%A4/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
+                    <a href="/2017/11/01/YYAsyncLayer-%E7%A0%94%E7%A9%B6/">
+                        YYAsyncLayer 研究
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        [TOC]
+引言异步绘制是界面流畅度提升的思路，YYAsyncLayer 是 ibireme 写的一个异步绘制的轮子。质量比较高，涉及到很多优化思维，值得学习。
+为什么要异步绘制屏幕显示图像的原理
+CPU 计算好显示内容提交到 GPU，GPU 渲染完...
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Wed Nov 01 2017 08:21:04 GMT+0800">2017-11-01</span></span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/">源码学习</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/2017/11/01/YYAsyncLayer-%E7%A0%94%E7%A9%B6/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
+                    <a href="/2017/10/15/YYWeakProxy-NSProxy/">
+                        YYWeakProxy|NSProxy
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        YYWeakProxy解决NSTimer循环引用问题：YYWeakProxy *weakProxy = [YYWeakProxy proxyWithTarget:self];self.timer = [NSTimer scheduledTimerWi...
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Sun Oct 15 2017 08:01:21 GMT+0800">2017-10-15</span></span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/">源码学习</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/2017/10/15/YYWeakProxy-NSProxy/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
+                    <a href="/2017/07/01/iOS%20%E9%AB%98%E6%95%88%E5%88%87%E5%9C%86%E8%A7%92%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/">
                         iOS 高效切圆角方法总结
                     </a>
                 </h3>
@@ -290,12 +371,24 @@ UIView的co...
 
                 <div class="home-article-meta-info-container">
     <div class="home-article-meta-info">
-        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Tue Oct 20 2020 10:46:14 GMT+0800">2020-10-20</span></span>
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Sat Jul 01 2017 21:21:24 GMT+0800">2017-07-01</span></span>
         
+        
+            <span class="home-article-tag">
+                <i class="fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/UI/">UI</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
         
     </div>
 
-    <a href="/2020/10/20/iOS%20%E9%AB%98%E6%95%88%E5%88%87%E5%9C%86%E8%A7%92%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
+    <a href="/2017/07/01/iOS%20%E9%AB%98%E6%95%88%E5%88%87%E5%9C%86%E8%A7%92%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
 </div>
 
             </li>
@@ -305,25 +398,79 @@ UIView的co...
                 
 
                 <h3 class="home-article-title">
-                    <a href="/2020/10/20/YYWeakProxy-NSProxy/">
-                        YYWeakProxy|NSProxy
+                    <a href="/2017/05/01/sizeToFit-%E5%92%8C-sizeThatFits/">
+                        sizeToFit 和 sizeThatFits
                     </a>
                 </h3>
 
                 <div class="home-article-content markdown-body">
                     
-                        YYWeakProxy解决NSTimer循环引用问题：YYWeakProxy *weakProxy = [YYWeakProxy proxyWithTarget:self];   self.timer = [NSTimer scheduledTime...
+                        [toc]
+sizeToFitsizeToFit: 会计算出最优的 size 而且会改变自己的size
+UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(100, 100, 0, 0...
                     
                 </div>
 
                 <div class="home-article-meta-info-container">
     <div class="home-article-meta-info">
-        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Tue Oct 20 2020 10:26:12 GMT+0800">2020-10-20</span></span>
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Mon May 01 2017 11:01:08 GMT+0800">2017-05-01</span></span>
         
+        
+            <span class="home-article-tag">
+                <i class="fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/UI/">UI</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
         
     </div>
 
-    <a href="/2020/10/20/YYWeakProxy-NSProxy/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
+    <a href="/2017/05/01/sizeToFit-%E5%92%8C-sizeThatFits/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
+                    <a href="/2017/02/26/hexo-%E4%BD%BF%E7%94%A8/">
+                        hexo 使用
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        主题配置步骤1、cd 跳转到博客所在文件夹2、clone 主题如：git clone https://github.com/theme-next/hexo-theme-next themes/next3、将博客文件夹目录下_config.yml里th...
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Sun Feb 26 2017 14:38:32 GMT+0800">2017-02-26</span></span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/hexo/">hexo</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/2017/02/26/hexo-%E4%BD%BF%E7%94%A8/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
 </div>
 
             </li>
@@ -356,10 +503,24 @@ UIView的co...
         <div class="copyright-info info-item">
             &copy;
             
-              <span>2020</span>&nbsp;-&nbsp;
+              <span>2017</span>&nbsp;-&nbsp;
             
-            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Keep Team</a>
+            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">ChenghuiBai</a>
         </div>
+        
+            <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
         
         <div class="theme-info info-item">
             由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动&nbsp;|&nbsp;主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.2</a>
@@ -443,6 +604,10 @@ UIView的co...
 
 
 
+
+
+    
+<script src="/js/code-copy.js"></script>
 
 
 

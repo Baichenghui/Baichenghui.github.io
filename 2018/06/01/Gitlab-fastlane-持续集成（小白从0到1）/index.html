@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="ChenghuiBai">
+    
+    <title>
+        
+            Gitlab+fastlane 持续集成（小白从0到1） |
+        
+        ChenghuiBai&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.png">
+    
+<link rel="stylesheet" href="/css/font-awesome.min.css">
+
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"example.com","root":"/","language":"zh-CN","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"#0066CC","avatar":"/images/avatar.png","favicon":"/images/logo.png","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Keep coding and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":false}}},"local_search":{"enable":false,"preload":false},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.2"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            <a class="logo-title" href="/">
+                ChenghuiBai&#39;s Blog
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">Gitlab+fastlane 持续集成（小白从0到1）</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.png">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">ChenghuiBai</span>
+                        
+                            <span class="author-label">Lv3</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2018-06-01 08:31:29
+    </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/tool/">tool</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fas fa-file-word"></i>&nbsp;<span>375 字</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fas fa-clock"></i>&nbsp;<span>1 分钟</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <p>[TOC]</p>
+<h5 id="实现步骤"><a href="#实现步骤" class="headerlink" title="实现步骤"></a>实现步骤</h5><ol>
+<li>在gitlab新建项目</li>
+<li>配置并启动gitlab-runner</li>
+<li>安装并配置fastlane</li>
+<li>配置.gitlab-ci.yml文件</li>
+</ol>
+<h5 id="1、在gitlab新建项目"><a href="#1、在gitlab新建项目" class="headerlink" title="1、在gitlab新建项目"></a>1、在gitlab新建项目</h5><p>做开发的都会</p>
+<h5 id="2、配置gitlab-runner"><a href="#2、配置gitlab-runner" class="headerlink" title="2、配置gitlab-runner"></a>2、配置gitlab-runner</h5><p><a class="link"   target="_blank" rel="noopener" href="https://docs.gitlab.com/runner/register/index.html" >gitlab-runner文档<i class="fas fa-external-link-alt"></i></a></p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://www.jianshu.com/p/c7995ad64f48" >gitlab-runner的配置——for Mac<i class="fas fa-external-link-alt"></i></a></p>
+<h5 id="3、安装并配置fastlane"><a href="#3、安装并配置fastlane" class="headerlink" title="3、安装并配置fastlane"></a>3、安装并配置fastlane</h5><h6 id="安装fastlane"><a href="#安装fastlane" class="headerlink" title="安装fastlane"></a>安装fastlane</h6><p><a class="link"   target="_blank" rel="noopener" href="https://s0docs0fastlane0tools.icopy.site/" >fastlane中文文档<i class="fas fa-external-link-alt"></i></a></p>
+<p>注意：任何的安装可能都需要你配置下环境变量</p>
+<h6 id="安装firim插件"><a href="#安装firim插件" class="headerlink" title="安装firim插件"></a>安装firim插件</h6><figure class="highlight ebnf"><table><tr><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">fastlane add_plugin firim</span><br></code></pre></td></tr></table></figure>
+<p>注意：这个要在工程fastlane文件夹所在目录执行</p>
+<h6 id="Appfile"><a href="#Appfile" class="headerlink" title="Appfile"></a>Appfile</h6><p>用于存放 app_identifier（bundle id）、 apple_id(appl开发中账号邮箱地址)、team_id、itc_team_id</p>
+<h6 id="Deliverfile"><a href="#Deliverfile" class="headerlink" title="Deliverfile"></a>Deliverfile</h6><p>deliver工具的配置文件</p>
+<h6 id="Fastfile"><a href="#Fastfile" class="headerlink" title="Fastfile"></a>Fastfile</h6><p>用于管理你所创建的 lane，lane 则会调用 action。</p>
+<h6 id="Gymfile"><a href="#Gymfile" class="headerlink" title="Gymfile"></a>Gymfile</h6><p><a class="link"   target="_blank" rel="noopener" href="http://docs.fastlane.tools/actions/gym/" >官方文档<i class="fas fa-external-link-alt"></i></a></p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://www.jianshu.com/p/f62c8a980c35" >Fastlane - gym<i class="fas fa-external-link-alt"></i></a></p>
+<p><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p3931" alt="18aa7066fa1a32b15eca900e3670743f.png"></p>
+<h6 id="Snapfile"><a href="#Snapfile" class="headerlink" title="Snapfile"></a>Snapfile</h6><p>用于指定需要进行屏幕截图的设备类型和语种。</p>
+<h6 id="Matchfile"><a href="#Matchfile" class="headerlink" title="Matchfile"></a>Matchfile</h6><p><a class="link"   target="_blank" rel="noopener" href="https://www.jianshu.com/p/5962940522a2" >使用Match来管理代码签名<i class="fas fa-external-link-alt"></i></a></p>
+<h6 id="Pluginfile"><a href="#Pluginfile" class="headerlink" title="Pluginfile"></a>Pluginfile</h6><p>安装的插件会在这里面显示，如前面提到的插件firim安装之后,Pluginfile中：</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">gem</span> <span class="hljs-string">&#x27;fastlane-plugin-firim&#x27;</span><br></code></pre></td></tr></table></figure>
+<h5 id="4、配置-gitlab-ci-yml文件"><a href="#4、配置-gitlab-ci-yml文件" class="headerlink" title="4、配置.gitlab-ci.yml文件"></a>4、配置.gitlab-ci.yml文件</h5><p>注意：<br>variables:<br>  LC_ALL: “en_US.UTF-8”<br>  LANG: “en_US.UTF-8”<br>  GIT_STRATEGY: fetch #开发阶段这要设置一下，默认每次都会clone代码，耗时较长。上线版本设置为clone获取最新代码</p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000019540360" >持续集成之.gitlab-ci.yml篇（详细讲解了各命令的作用）<i class="fas fa-external-link-alt"></i></a></p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://s0docs0gitlab0com.icopy.site/ce/ci/yaml/README.html" >（官方文档）<i class="fas fa-external-link-alt"></i></a> </p>
+<h5 id="原理理解"><a href="#原理理解" class="headerlink" title="原理理解"></a>原理理解</h5><p>在配置.gitlab-ci.yml文件中配置需要执行的脚本，这里配置执行fastlane脚本。</p>
+<h5 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h5><p>个人建议，直接看官方文档，除非英文太差，那就找中文资料吧。</p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：Gitlab+fastlane 持续集成（小白从0到1）</li>
+        <li>本文作者：ChenghuiBai</li>
+        <li>创建时间：2018-06-01 08:31:29</li>
+        <li>
+            本文链接：https://baichenghui.github.io/2018/06/01/Gitlab-fastlane-持续集成（小白从0到1）/
+        </li>
+        <li>
+            版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2018/07/08/GCD%E7%A0%94%E7%A9%B6/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">GCD研究</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2018/05/03/translatesAutoresizingMaskIntoConstraints/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">translatesAutoresizingMaskIntoConstraints</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2017</span>&nbsp;-&nbsp;
+            
+            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">ChenghuiBai</a>
+        </div>
+        
+            <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动&nbsp;|&nbsp;主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.2</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="fas fa-arrow-up"></i>
+            </li>
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E6%AD%A5%E9%AA%A4"><span class="nav-number">1.</span> <span class="nav-text">实现步骤</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1%E3%80%81%E5%9C%A8gitlab%E6%96%B0%E5%BB%BA%E9%A1%B9%E7%9B%AE"><span class="nav-number">2.</span> <span class="nav-text">1、在gitlab新建项目</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2%E3%80%81%E9%85%8D%E7%BD%AEgitlab-runner"><span class="nav-number">3.</span> <span class="nav-text">2、配置gitlab-runner</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3%E3%80%81%E5%AE%89%E8%A3%85%E5%B9%B6%E9%85%8D%E7%BD%AEfastlane"><span class="nav-number">4.</span> <span class="nav-text">3、安装并配置fastlane</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%AE%89%E8%A3%85fastlane"><span class="nav-number">4.1.</span> <span class="nav-text">安装fastlane</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%AE%89%E8%A3%85firim%E6%8F%92%E4%BB%B6"><span class="nav-number">4.2.</span> <span class="nav-text">安装firim插件</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Appfile"><span class="nav-number">4.3.</span> <span class="nav-text">Appfile</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Deliverfile"><span class="nav-number">4.4.</span> <span class="nav-text">Deliverfile</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Fastfile"><span class="nav-number">4.5.</span> <span class="nav-text">Fastfile</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Gymfile"><span class="nav-number">4.6.</span> <span class="nav-text">Gymfile</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Snapfile"><span class="nav-number">4.7.</span> <span class="nav-text">Snapfile</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Matchfile"><span class="nav-number">4.8.</span> <span class="nav-text">Matchfile</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Pluginfile"><span class="nav-number">4.9.</span> <span class="nav-text">Pluginfile</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4%E3%80%81%E9%85%8D%E7%BD%AE-gitlab-ci-yml%E6%96%87%E4%BB%B6"><span class="nav-number">5.</span> <span class="nav-text">4、配置.gitlab-ci.yml文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8E%9F%E7%90%86%E7%90%86%E8%A7%A3"><span class="nav-number">6.</span> <span class="nav-text">原理理解</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BB%93%E5%B0%BE"><span class="nav-number">7.</span> <span class="nav-text">结尾</span></a></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/header-shrink.js"></script>
+
+<script src="/js/back2top.js"></script>
+
+<script src="/js/dark-light-toggle.js"></script>
+
+
+
+
+
+    
+<script src="/js/code-copy.js"></script>
+
+
+
+
+
+<div class="post-scripts">
+    
+        
+<script src="/js/left-side-toggle.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+<script src="/js/toc.js"></script>
+
+    
+</div>
+
+
+
+</body>
+</html>

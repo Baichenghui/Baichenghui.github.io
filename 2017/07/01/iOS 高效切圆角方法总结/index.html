@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="ChenghuiBai">
+    
+    <title>
+        
+            iOS 高效切圆角方法总结 |
+        
+        ChenghuiBai&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.png">
+    
+<link rel="stylesheet" href="/css/font-awesome.min.css">
+
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"example.com","root":"/","language":"zh-CN","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"#0066CC","avatar":"/images/avatar.png","favicon":"/images/logo.png","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Keep coding and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":false}}},"local_search":{"enable":false,"preload":false},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.2"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            <a class="logo-title" href="/">
+                ChenghuiBai&#39;s Blog
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">iOS 高效切圆角方法总结</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.png">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">ChenghuiBai</span>
+                        
+                            <span class="author-label">Lv3</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2017-07-01 21:21:24
+    </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/UI/">UI</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fas fa-file-word"></i>&nbsp;<span>1.3k 字</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fas fa-clock"></i>&nbsp;<span>5 分钟</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <p>[TOC]</p>
+<h3 id="UIView设置圆角"><a href="#UIView设置圆角" class="headerlink" title="UIView设置圆角"></a>UIView设置圆角</h3><h5 id="四个圆角"><a href="#四个圆角" class="headerlink" title="四个圆角"></a>四个圆角</h5><p>对于 contents 无内容或者内容的背景透明(无涉及到圆角以外的区域)的layer，直接设置layer的 backgroundColor 和 cornerRadius 属性来绘制圆角:</p>
+<ol>
+<li>UIView的contents无内容可以直接通过设置cornerRadius达到效果。</li>
+<li>UILable的contents也一样，所以也可通过<br>设置cornerRadius达到效果。不过label不能直接设置backgroundColor，因为这样设置的是contents的backgroundColor，需要设置layer. backgroundColor。 </li>
+</ol>
+<figure class="highlight stata"><table><tr><td class="code"><pre><code class="hljs stata">UIView *<span class="hljs-keyword">view</span> = [[UIView alloc] init];<br><span class="hljs-keyword">view</span>.backgroundColor = [UIColor blackColor];<br><span class="hljs-keyword">view</span>.layer.cornerRadius = 3.f;<br><span class="hljs-comment">// 以下两行，任写一行</span><br><span class="hljs-keyword">view</span>.layer.masksToBounds = <span class="hljs-keyword">NO</span>;<br><span class="hljs-keyword">view</span>.clipToBounds = <span class="hljs-keyword">NO</span>;<br><span class="hljs-comment">// 以下两行，千万不要加！</span><br><span class="hljs-keyword">view</span>.layer.masksToBounds = YES;<br><span class="hljs-keyword">view</span>.clipToBounds = YES;<br></code></pre></td></tr></table></figure>
+<p>注意点：UIView 只要设置图层的 cornerRadius 属性即可（不明白的话，可以看看官方文档里对 cornerRadius 的描述），如果设置 layer.masksToBounds = YES，会造成不必要的离屏渲染。 </p>
+<h5 id="单独某个方向的圆角-特殊情况需要设置layer-masksToBounds，就不要通过cornerRadius方式了"><a href="#单独某个方向的圆角-特殊情况需要设置layer-masksToBounds，就不要通过cornerRadius方式了" class="headerlink" title="单独某个方向的圆角/特殊情况需要设置layer.masksToBounds，就不要通过cornerRadius方式了"></a>单独某个方向的圆角/特殊情况需要设置layer.masksToBounds，就不要通过cornerRadius方式了</h5><figure class="highlight objectivec"><table><tr><td class="code"><pre><code class="hljs objectivec"><span class="hljs-class"><span class="hljs-keyword">@implementation</span> <span class="hljs-title">UIView</span> (<span class="hljs-title">RounderCorner</span>)</span><br><br>- (<span class="hljs-keyword">void</span>)hh_addRounderCornerWithRadius:(<span class="hljs-built_in">CGFloat</span>)radius size:(<span class="hljs-built_in">CGSize</span>)size corners:(<span class="hljs-built_in">UIRectCorner</span>)corner<br>&#123;<br><br>    <span class="hljs-comment">//绘制一个圆角图片</span><br>    <span class="hljs-built_in">UIImage</span> *image = [<span class="hljs-built_in">UIImage</span> hh_corver:.....];<br>    <br>    <span class="hljs-built_in">UIImageView</span> *imageView = [[<span class="hljs-built_in">UIImageView</span> alloc] initWithFrame:<span class="hljs-built_in">CGRectMake</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, size.width, size.height)];<br>    [imageView setImage:image];<br>    [<span class="hljs-keyword">self</span> insertSubview:imageView atIndex:<span class="hljs-number">0</span>];<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="文本类视图"><a href="#文本类视图" class="headerlink" title="文本类视图"></a>文本类视图</h3><h5 id="UITextField"><a href="#UITextField" class="headerlink" title="UITextField"></a>UITextField</h5><p>UITextField有两种实现方法</p>
+<figure class="highlight objectivec"><table><tr><td class="code"><pre><code class="hljs objectivec"><span class="hljs-comment">// 天然支持设置圆角边框</span><br><span class="hljs-built_in">UITextField</span> *textField = [[<span class="hljs-built_in">UITextField</span> alloc] init];<br>textField.borderStyle = <span class="hljs-built_in">UITextBorderStyleRoundedRect</span>;<br></code></pre></td></tr></table></figure>
+<figure class="highlight mel"><table><tr><td class="code"><pre><code class="hljs mel"><span class="hljs-comment">// 与 UIView 类似</span><br>UITextField *<span class="hljs-keyword">textField</span> = [[UITextField alloc] init];<br><span class="hljs-keyword">textField</span>.layer.cornerRadius = cornerRadius;<br></code></pre></td></tr></table></figure>
+<h5 id="UITextView"><a href="#UITextView" class="headerlink" title="UITextView"></a>UITextView</h5><figure class="highlight objectivec"><table><tr><td class="code"><pre><code class="hljs objectivec"><span class="hljs-comment">// 与 UIView 类似</span><br><span class="hljs-built_in">UITextView</span> *textView = [[<span class="hljs-built_in">UITextView</span> alloc] init];<br>textView.layer.cornerRadius = cornerRadius;<br></code></pre></td></tr></table></figure>
+<h5 id="UILabel"><a href="#UILabel" class="headerlink" title="UILabel"></a>UILabel</h5><figure class="highlight delphi"><table><tr><td class="code"><pre><code class="hljs delphi">UILabel *<span class="hljs-keyword">label</span> = [[UILabel alloc] init];<br><span class="hljs-comment">// 重点在此！！设置视图的图层背景色，千万不要直接设置 label.backgroundColor</span><br><span class="hljs-keyword">label</span>.layer.backgroundColor = [UIColor grayColor].CGColor;<br><span class="hljs-keyword">label</span>.layer.cornerRadius = cornerRadius;<br></code></pre></td></tr></table></figure>
+<h3 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h3><h5 id="UIButton"><a href="#UIButton" class="headerlink" title="UIButton"></a>UIButton</h5><p>说明：UIButton 的背景图片，如果是复杂的图片，可以依靠 UI 切图来实现。如果是简单的纯色背景图片，可以利用代码绘制带圆角的图片。</p>
+<figure class="highlight objectivec"><table><tr><td class="code"><pre><code class="hljs objectivec"><span class="hljs-built_in">UIButton</span> *button = [<span class="hljs-built_in">UIButton</span> buttonWithType:<span class="hljs-built_in">UIButtonTypeCustom</span>];<br><span class="hljs-comment">// 设置 UIButton 的背景图片。</span><br>[button setBackgroundImage:image forState:<span class="hljs-built_in">UIControlStateNormal</span>];<br></code></pre></td></tr></table></figure>
+<p>背景图片绘制方法</p>
+<figure class="highlight objectivec"><table><tr><td class="code"><pre><code class="hljs objectivec">+ (<span class="hljs-built_in">UIImage</span> *)pureColorImageWithSize:(<span class="hljs-built_in">CGSize</span>)size color:(<span class="hljs-built_in">UIColor</span> *)color cornRadius:(<span class="hljs-built_in">CGFloat</span>)cornRadius &#123;<br>  <span class="hljs-built_in">UIView</span> *view = [[<span class="hljs-built_in">UIView</span> alloc] initWithFrame:<span class="hljs-built_in">CGRectMake</span>(<span class="hljs-number">0.0</span>f, <span class="hljs-number">0.0</span>f, size.width, size.height)];<br>  view.backgroundColor = color;<br>  view.layer.cornerRadius = cornerRadius;<br>  <span class="hljs-comment">// 下面方法，第一个参数表示区域大小。第二个参数表示是否是非透明的。如果需要显示半透明效果，需要传NO，否则传YES。第三个参数是屏幕密度</span><br>  <span class="hljs-built_in">UIGraphicsBeginImageContextWithOptions</span>(view.bounds.size, <span class="hljs-literal">NO</span>, [<span class="hljs-built_in">UIScreen</span> mainScreen].scale);<br>  [view.layer renderInContext:<span class="hljs-built_in">UIGraphicsGetCurrentContext</span>()];<br>  <span class="hljs-built_in">UIImage</span> *image = <span class="hljs-built_in">UIGraphicsGetImageFromCurrentImageContext</span>();<br>  <span class="hljs-built_in">UIGraphicsEndImageContext</span>();<br><br>  <span class="hljs-keyword">return</span> image;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h5 id="UIImageView"><a href="#UIImageView" class="headerlink" title="UIImageView"></a>UIImageView</h5><p>UIImageView 有四种方式实现圆角：</p>
+<p>1、截取图片方式（性能较好，基本不掉帧）<br><figure class="highlight objectivec"><table><tr><td class="code"><pre><code class="hljs objectivec">+ (<span class="hljs-built_in">UIImage</span> *)dx_imageByRoundCornerRadius:(<span class="hljs-built_in">CGFloat</span>)radius<br>                                 corners:(<span class="hljs-built_in">UIRectCorner</span>)corners<br>                                    size:(<span class="hljs-built_in">CGSize</span>)size<br>                               fillColor:(<span class="hljs-built_in">UIColor</span> *)fillColor<br>&#123;<br>    <span class="hljs-keyword">if</span> (corners != <span class="hljs-built_in">UIRectCornerAllCorners</span>) &#123;<br>        <span class="hljs-built_in">UIRectCorner</span> tmp = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">if</span> (corners &amp; <span class="hljs-built_in">UIRectCornerTopLeft</span>) tmp |= <span class="hljs-built_in">UIRectCornerBottomLeft</span>;<br>        <span class="hljs-keyword">if</span> (corners &amp; <span class="hljs-built_in">UIRectCornerTopRight</span>) tmp |= <span class="hljs-built_in">UIRectCornerBottomRight</span>;<br>        <span class="hljs-keyword">if</span> (corners &amp; <span class="hljs-built_in">UIRectCornerBottomLeft</span>) tmp |= <span class="hljs-built_in">UIRectCornerTopLeft</span>;<br>        <span class="hljs-keyword">if</span> (corners &amp; <span class="hljs-built_in">UIRectCornerBottomRight</span>) tmp |= <span class="hljs-built_in">UIRectCornerTopRight</span>;<br>        corners = tmp;<br>    &#125;<br><br>    <span class="hljs-built_in">UIGraphicsBeginImageContextWithOptions</span>(size, <span class="hljs-literal">NO</span>, [<span class="hljs-built_in">UIScreen</span> mainScreen].scale);<br>    <span class="hljs-built_in">CGContextRef</span> context = <span class="hljs-built_in">UIGraphicsGetCurrentContext</span>();<br>    <span class="hljs-built_in">CGRect</span> rect = <span class="hljs-built_in">CGRectMake</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, size.width, size.height);<br>    <span class="hljs-built_in">CGContextScaleCTM</span>(context, <span class="hljs-number">1</span>, <span class="hljs-number">-1</span>);<br>    <span class="hljs-built_in">CGContextTranslateCTM</span>(context, <span class="hljs-number">0</span>, -rect.size.height);<br>  <br>    <span class="hljs-built_in">UIBezierPath</span> *path = [<span class="hljs-built_in">UIBezierPath</span> bezierPathWithRoundedRect:rect byRoundingCorners:corners cornerRadii:<span class="hljs-built_in">CGSizeMake</span>(radius, radius)];<br>    [fillColor set];<br>    [path fill]; <br>    <br>    [path addClip];<br>    <span class="hljs-built_in">CGContextDrawPath</span>(context, kCGPathFill);<br>    <br>    <span class="hljs-built_in">UIImage</span> *image = <span class="hljs-built_in">UIGraphicsGetImageFromCurrentImageContext</span>();<br>    <span class="hljs-built_in">UIGraphicsEndImageContext</span>();<br>    <span class="hljs-keyword">return</span> image;<br>&#125;<br><br></code></pre></td></tr></table></figure></p>
+<figure class="highlight objectivec"><table><tr><td class="code"><pre><code class="hljs objectivec">- (<span class="hljs-keyword">void</span>)tx_addCornerWithRadius:(<span class="hljs-built_in">CGFloat</span>)radius corner:(<span class="hljs-built_in">UIRectCorner</span>)corner &#123;<br>    <span class="hljs-keyword">self</span>.image = [<span class="hljs-keyword">self</span>.image dx_imageAddCornerWithRadius:radius andSize:<span class="hljs-keyword">self</span>.bounds.size];<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<p>实际开发中，网络图片最好截图之后存入缓存，下次直接使用，不用再裁减。YYWebImageView的设计方案即如此。<br><a class="link"   target="_blank" rel="noopener" href="https://github.com/ibireme/YYWebImage" >YYWebImage<i class="fas fa-external-link-alt"></i></a><br><a class="link"   target="_blank" rel="noopener" href="https://github.com/walkdianzi/DSImageViewRound/tree/master" >fork SDWebImage库修改实现<i class="fas fa-external-link-alt"></i></a></p>
+<p>2、贝塞尔曲线切割圆角（不推荐，掉帧严重）</p>
+<figure class="highlight objectivec"><table><tr><td class="code"><pre><code class="hljs objectivec">- (<span class="hljs-built_in">UIImageView</span> *)roundedRectImageViewWithCornerRadius:(<span class="hljs-built_in">CGFloat</span>)cornerRadius &#123;<br>    <span class="hljs-built_in">UIBezierPath</span> *bezierPath = [<span class="hljs-built_in">UIBezierPath</span> bezierPathWithRoundedRect:<span class="hljs-keyword">self</span>.bounds cornerRadius:cornerRadius];<br>    <span class="hljs-built_in">CAShapeLayer</span> *layer = [<span class="hljs-built_in">CAShapeLayer</span> layer];<br>    layer.path = bezierPath.CGPath;<br>    <span class="hljs-keyword">self</span>.layer.mask = layer;<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">self</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>3、绘制四个角的遮罩（使用场景受限）</p>
+<p>在 UIImageView 上添加一个四个角有内容，其它部分是透明的视图，只对 UIImageView 圆角部分进行遮挡。但要保证被遮挡的部分背景色要与周围背景相同，避免穿帮。所以当 UIImageView 处于一个复杂的背景时，是不适合使用这个方法的。</p>
+<p>4、最不推荐做法（当一个页面只有少量圆角图片时才推荐使用）</p>
+<figure class="highlight abnf"><table><tr><td class="code"><pre><code class="hljs abnf">UIImageView *imageView = [[UIImageView alloc] init]<span class="hljs-comment">;</span><br>imageView.layer.cornerRadius = <span class="hljs-number">5</span>.f<span class="hljs-comment">;</span><br>imageView.layer.masksToBounds = YES<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure>
+<h3 id="扩展：其他会导致离屏渲染的解决方案"><a href="#扩展：其他会导致离屏渲染的解决方案" class="headerlink" title="扩展：其他会导致离屏渲染的解决方案"></a>扩展：其他会导致离屏渲染的解决方案</h3><p>以下离屏渲染操作，按对性能影响等级从高到低进行排序:</p>
+<h5 id="1-shadows（阴影）"><a href="#1-shadows（阴影）" class="headerlink" title="1. shadows（阴影）"></a>1. shadows（阴影）</h5><p>方案：在设置完layer的shadow属性之后，设置layer.shadowPath = [UIBezierPath pathWithCGRect:view.bounds].CGPath;</p>
+<h5 id="2-圆角（前边已解决过）"><a href="#2-圆角（前边已解决过）" class="headerlink" title="2.圆角（前边已解决过）"></a>2.圆角（前边已解决过）</h5><h5 id="3-mask遮罩"><a href="#3-mask遮罩" class="headerlink" title="3.mask遮罩"></a>3.mask遮罩</h5><p>方案：不用mask</p>
+<h5 id="4-allowsGroupOpacity（组不透明）"><a href="#4-allowsGroupOpacity（组不透明）" class="headerlink" title="4. allowsGroupOpacity（组不透明）"></a>4. allowsGroupOpacity（组不透明）</h5><p>开启CALayer的 allowsGroupOpacity 属性后，子 layer 在视觉上的透明度的上限是其父 layer 的 opacity (对应UIView的 alpha )，并且从 iOS 7 以后默认全局开启了这个功能，这样做是为了让子视图与其容器视图保持同样的透明度。<br>方案：关闭 allowsGroupOpacity 属性，按产品需求自己控制layer透明度。 </p>
+<h5 id="5-edge-antialiasing（抗锯齿）"><a href="#5-edge-antialiasing（抗锯齿）" class="headerlink" title="5. edge antialiasing（抗锯齿）"></a>5. edge antialiasing（抗锯齿）</h5><p>方案：不设置 allowsEdgeAntialiasing 属性为YES(默认为NO)</p>
+<h5 id="6-shouldRasterize-光栅化"><a href="#6-shouldRasterize-光栅化" class="headerlink" title="6. shouldRasterize(光栅化)"></a>6. shouldRasterize(光栅化)</h5><p>当视图内容是静态不变时，设置 shouldRasterize(光栅化)为YES，此方案最为实用方便。</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">view.layer.shouldRasterize</span> = <span class="hljs-literal">true</span><span class="hljs-comment">;</span><br><span class="hljs-attr">view.layer.rasterizationScale</span> = view.layer.contentsScale<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure>
+<p>但当视图内容是动态变化(如后台下载图片完毕后切换到主线程设置)时，使用此方案反而为增加系统负荷。</p>
+<h5 id="7-Core-Graphics-API-核心绘图"><a href="#7-Core-Graphics-API-核心绘图" class="headerlink" title="7.Core Graphics API(核心绘图)"></a>7.Core Graphics API(核心绘图)</h5><p>Core Graphics API(核心绘图)的绘制操作会导致CPU的离屏渲染。<br>方案：放到后台线程中进行。</p>
+<h3 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a>Demo</h3><p><a class="link"   target="_blank" rel="noopener" href="https://github.com/Baichenghui/Study/tree/master/CornerDemo" >demo<i class="fas fa-external-link-alt"></i></a></p>
+<h3 id="学习"><a href="#学习" class="headerlink" title="学习"></a>学习</h3><p><a class="link"   target="_blank" rel="noopener" href="https://www.jianshu.com/p/f8a3400836b5" >https://www.jianshu.com/p/f8a3400836b5<i class="fas fa-external-link-alt"></i></a><br><a class="link"   target="_blank" rel="noopener" href="https://www.jianshu.com/p/e879aeff93f3" >https://www.jianshu.com/p/e879aeff93f3<i class="fas fa-external-link-alt"></i></a><br><a class="link"   target="_blank" rel="noopener" href="https://www.jianshu.com/p/b9bef82eace1" >https://www.jianshu.com/p/b9bef82eace1<i class="fas fa-external-link-alt"></i></a><br><a class="link"   target="_blank" rel="noopener" href="https://www.jianshu.com/p/3141c1177d35" >https://www.jianshu.com/p/3141c1177d35<i class="fas fa-external-link-alt"></i></a></p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：iOS 高效切圆角方法总结</li>
+        <li>本文作者：ChenghuiBai</li>
+        <li>创建时间：2017-07-01 21:21:24</li>
+        <li>
+            本文链接：https://baichenghui.github.io/2017/07/01/iOS 高效切圆角方法总结/
+        </li>
+        <li>
+            版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2017/10/15/YYWeakProxy-NSProxy/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">YYWeakProxy|NSProxy</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2017/05/01/sizeToFit-%E5%92%8C-sizeThatFits/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">sizeToFit 和 sizeThatFits</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2017</span>&nbsp;-&nbsp;
+            
+            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">ChenghuiBai</a>
+        </div>
+        
+            <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动&nbsp;|&nbsp;主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.2</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="fas fa-arrow-up"></i>
+            </li>
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#UIView%E8%AE%BE%E7%BD%AE%E5%9C%86%E8%A7%92"><span class="nav-number">1.</span> <span class="nav-text">UIView设置圆角</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9B%9B%E4%B8%AA%E5%9C%86%E8%A7%92"><span class="nav-number">1.0.1.</span> <span class="nav-text">四个圆角</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8D%95%E7%8B%AC%E6%9F%90%E4%B8%AA%E6%96%B9%E5%90%91%E7%9A%84%E5%9C%86%E8%A7%92-%E7%89%B9%E6%AE%8A%E6%83%85%E5%86%B5%E9%9C%80%E8%A6%81%E8%AE%BE%E7%BD%AElayer-masksToBounds%EF%BC%8C%E5%B0%B1%E4%B8%8D%E8%A6%81%E9%80%9A%E8%BF%87cornerRadius%E6%96%B9%E5%BC%8F%E4%BA%86"><span class="nav-number">1.0.2.</span> <span class="nav-text">单独某个方向的圆角&#x2F;特殊情况需要设置layer.masksToBounds，就不要通过cornerRadius方式了</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E6%9C%AC%E7%B1%BB%E8%A7%86%E5%9B%BE"><span class="nav-number">2.</span> <span class="nav-text">文本类视图</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#UITextField"><span class="nav-number">2.0.1.</span> <span class="nav-text">UITextField</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#UITextView"><span class="nav-number">2.0.2.</span> <span class="nav-text">UITextView</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#UILabel"><span class="nav-number">2.0.3.</span> <span class="nav-text">UILabel</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E5%AE%83"><span class="nav-number">3.</span> <span class="nav-text">其它</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#UIButton"><span class="nav-number">3.0.1.</span> <span class="nav-text">UIButton</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#UIImageView"><span class="nav-number">3.0.2.</span> <span class="nav-text">UIImageView</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%EF%BC%9A%E5%85%B6%E4%BB%96%E4%BC%9A%E5%AF%BC%E8%87%B4%E7%A6%BB%E5%B1%8F%E6%B8%B2%E6%9F%93%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">4.</span> <span class="nav-text">扩展：其他会导致离屏渲染的解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-shadows%EF%BC%88%E9%98%B4%E5%BD%B1%EF%BC%89"><span class="nav-number">4.0.1.</span> <span class="nav-text">1. shadows（阴影）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-%E5%9C%86%E8%A7%92%EF%BC%88%E5%89%8D%E8%BE%B9%E5%B7%B2%E8%A7%A3%E5%86%B3%E8%BF%87%EF%BC%89"><span class="nav-number">4.0.2.</span> <span class="nav-text">2.圆角（前边已解决过）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-mask%E9%81%AE%E7%BD%A9"><span class="nav-number">4.0.3.</span> <span class="nav-text">3.mask遮罩</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-allowsGroupOpacity%EF%BC%88%E7%BB%84%E4%B8%8D%E9%80%8F%E6%98%8E%EF%BC%89"><span class="nav-number">4.0.4.</span> <span class="nav-text">4. allowsGroupOpacity（组不透明）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-edge-antialiasing%EF%BC%88%E6%8A%97%E9%94%AF%E9%BD%BF%EF%BC%89"><span class="nav-number">4.0.5.</span> <span class="nav-text">5. edge antialiasing（抗锯齿）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-shouldRasterize-%E5%85%89%E6%A0%85%E5%8C%96"><span class="nav-number">4.0.6.</span> <span class="nav-text">6. shouldRasterize(光栅化)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#7-Core-Graphics-API-%E6%A0%B8%E5%BF%83%E7%BB%98%E5%9B%BE"><span class="nav-number">4.0.7.</span> <span class="nav-text">7.Core Graphics API(核心绘图)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Demo"><span class="nav-number">5.</span> <span class="nav-text">Demo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0"><span class="nav-number">6.</span> <span class="nav-text">学习</span></a></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/header-shrink.js"></script>
+
+<script src="/js/back2top.js"></script>
+
+<script src="/js/dark-light-toggle.js"></script>
+
+
+
+
+
+    
+<script src="/js/code-copy.js"></script>
+
+
+
+
+
+<div class="post-scripts">
+    
+        
+<script src="/js/left-side-toggle.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+<script src="/js/toc.js"></script>
+
+    
+</div>
+
+
+
+</body>
+</html>

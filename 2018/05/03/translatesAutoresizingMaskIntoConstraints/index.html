@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="ChenghuiBai">
+    
+    <title>
+        
+            translatesAutoresizingMaskIntoConstraints |
+        
+        ChenghuiBai&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.png">
+    
+<link rel="stylesheet" href="/css/font-awesome.min.css">
+
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"example.com","root":"/","language":"zh-CN","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"#0066CC","avatar":"/images/avatar.png","favicon":"/images/logo.png","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Keep coding and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":false}}},"local_search":{"enable":false,"preload":false},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.2"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            <a class="logo-title" href="/">
+                ChenghuiBai&#39;s Blog
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">translatesAutoresizingMaskIntoConstraints</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.png">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">ChenghuiBai</span>
+                        
+                            <span class="author-label">Lv3</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2018-05-03 21:35:09
+    </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/UI/">UI</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fas fa-file-word"></i>&nbsp;<span>597 字</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fas fa-clock"></i>&nbsp;<span>2 分钟</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <p>我们查看官方文档，可以看到文档是这样介绍该属性的：<br><figure class="highlight scss"><table><tr><td class="code"><pre><code class="hljs scss">它是一个用来决定，是否将视图的自动调整大小的遮罩(autoresizing <span class="hljs-attribute">mask</span>)转换为 <span class="hljs-attribute">Auto</span> Layout 约束的布尔值。<br></code></pre></td></tr></table></figure><br>通过文档介绍我们可以得知：当该属性为 true 时，系统会自动通过视图的 autoresizing mask 创建一组视图的约束，这些约束是基于你提供的 frame、bounds、center 这些属性。也就是说，当你给视图的 frame 赋值之后，它会为你创建静态的、基于 frame 的 Auto Layout 约束。如下：</p>
+<h5 id="属性值为-true且指定-frame"><a href="#属性值为-true且指定-frame" class="headerlink" title="属性值为 true且指定 frame"></a>属性值为 true且指定 frame</h5><figure class="highlight reasonml"><table><tr><td class="code"><pre><code class="hljs reasonml"><span class="hljs-keyword">let</span> exampleView = <span class="hljs-constructor">UIView(<span class="hljs-params">frame</span>: CGRect(<span class="hljs-params">x</span>: 100, <span class="hljs-params">y</span>: 100, <span class="hljs-params">width</span>: 100, <span class="hljs-params">height</span>: 100)</span>)<br><span class="hljs-comment">// 系统根据你指定的frame 给 exampleView 创建静态的 Auto Layout 约束</span><br>exampleView.backgroundColor = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">UIColor</span>.</span></span>green<br>view.add<span class="hljs-constructor">Subview(<span class="hljs-params">exampleView</span>)</span><br></code></pre></td></tr></table></figure>
+<p>复制代码在上述情况中，你是不能给视图添加额外的约束来修改它的位置或大小的，如果添加额外的约束会导致约束冲突。如下：</p>
+<h5 id="属性值为-true，指定-frame-且添加额外约束"><a href="#属性值为-true，指定-frame-且添加额外约束" class="headerlink" title="属性值为 true，指定 frame 且添加额外约束"></a>属性值为 true，指定 frame 且添加额外约束</h5><figure class="highlight less"><table><tr><td class="code"><pre><code class="hljs less"><span class="hljs-comment">// 例 1-1面的代码下添加此代码，会导致约束冲突</span><br><span class="hljs-selector-tag">NSLayoutConstraint</span><span class="hljs-selector-class">.activate</span>([<br>    exampleView.widthAnchor.constraint(<span class="hljs-attribute">equalToConstant</span>: <span class="hljs-number">50</span>)<br>    ])<br>    <br></code></pre></td></tr></table></figure>
+<p>复制代码错误提示如下图所示：<br><img src="evernotecid://3252F98A-C8F0-41C3-834D-D7F7BDDE3269/appyinxiangcom/11846024/ENResource/p3903" alt="3aca4f9fb265f63d5204dcadd60e448a.png"></p>
+<h5 id="添加额外约束导致约束冲突"><a href="#添加额外约束导致约束冲突" class="headerlink" title="添加额外约束导致约束冲突"></a>添加额外约束导致约束冲突</h5><p>如果你想使用 Auto Layout 动态计算、改变视图尺寸的话，你必须将该属性值改为 false 。然后你只需提供无歧义、无冲突的约束即可。如例 1-3 代码所示：<br>例 1-3 属性值为 false</p>
+<figure class="highlight reasonml"><table><tr><td class="code"><pre><code class="hljs reasonml"><span class="hljs-comment">// 布局效果等同于 例 1-1</span><br><span class="hljs-keyword">let</span> exampleView = <span class="hljs-constructor">UIView(<span class="hljs-params">frame</span>: .<span class="hljs-params">zero</span>)</span><br>exampleView.backgroundColor = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">UIColor</span>.</span></span>green<br>view.add<span class="hljs-constructor">Subview(<span class="hljs-params">exampleView</span>)</span><br><span class="hljs-comment">// 使用 Auto Layout 时，务必将此属性值设为 false</span><br>exampleView.translatesAutoresizingMaskIntoConstraints = <span class="hljs-literal">false</span><br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">NSLayoutConstraint</span>.</span></span>activate(<span class="hljs-literal">[</span><br><span class="hljs-literal">    <span class="hljs-identifier">exampleView</span>.<span class="hljs-identifier">topAnchor</span>.<span class="hljs-identifier">constraint</span>(<span class="hljs-identifier">equalTo</span>: <span class="hljs-identifier">view</span>.<span class="hljs-identifier">topAnchor</span>, <span class="hljs-identifier">constant</span>: <span class="hljs-number">100</span>),</span><br><span class="hljs-literal">    <span class="hljs-identifier">exampleView</span>.<span class="hljs-identifier">leftAnchor</span>.<span class="hljs-identifier">constraint</span>(<span class="hljs-identifier">equalTo</span>: <span class="hljs-identifier">view</span>.<span class="hljs-identifier">leftAnchor</span>, <span class="hljs-identifier">constant</span>: <span class="hljs-number">100</span>),</span><br><span class="hljs-literal">    <span class="hljs-identifier">exampleView</span>.<span class="hljs-identifier">widthAnchor</span>.<span class="hljs-identifier">constraint</span>(<span class="hljs-identifier">equalToConstant</span>: <span class="hljs-number">100</span>),</span><br><span class="hljs-literal">    <span class="hljs-identifier">exampleView</span>.<span class="hljs-identifier">heightAnchor</span>.<span class="hljs-identifier">constraint</span>(<span class="hljs-identifier">equalToConstant</span>: <span class="hljs-number">100</span>)</span><br><span class="hljs-literal">    ]</span>)<br>    <br></code></pre></td></tr></table></figure>
+<p>复制代码当你代码创建视图时，视图的 translatesAutoresizingMaskIntoConstraints 默认为 true，当你使用 Interface Builder 时，系统会自动将 translatesAutoresizingMaskIntoConstraints 的值设为 false。</p>
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>代码创建视图时，视图的 translatesAutoresizingMaskIntoConstraints 属性值默认为 true</p>
+<p>Interface Builder 中创建视图时，系统会自动将视图的 translatesAutoresizingMaskIntoConstraints 属性值设为 false</p>
+<p>代码创建的视图，且使用 frame 进行布局时，不能添加额外的约束，会导致约束冲突</p>
+<p>代码创建的视图，且使用 Auto Layout 进行布局时，需将属性值设为 false</p>
+<h5 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h5><p><a class="link"   target="_blank" rel="noopener" href="https://developer.apple.com/documentation/uikit/uiview/1622572-translatesautoresizingmaskintoco" >translatesAutoresizingMaskIntoConstraints<i class="fas fa-external-link-alt"></i></a><br><a class="link"   target="_blank" rel="noopener" href="https://stackoverflow.com/questions/47800210/when-should-translatesautoresizingmaskintoconstraints-be-set-to-true" >When should translatesAutoresizingMaskIntoConstraints be set to true?<i class="fas fa-external-link-alt"></i></a></p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：translatesAutoresizingMaskIntoConstraints</li>
+        <li>本文作者：ChenghuiBai</li>
+        <li>创建时间：2018-05-03 21:35:09</li>
+        <li>
+            本文链接：https://baichenghui.github.io/2018/05/03/translatesAutoresizingMaskIntoConstraints/
+        </li>
+        <li>
+            版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2018/06/01/Gitlab-fastlane-%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%EF%BC%88%E5%B0%8F%E7%99%BD%E4%BB%8E0%E5%88%B01%EF%BC%89/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Gitlab+fastlane 持续集成（小白从0到1）</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2018/04/01/iOS%E7%A6%BB%E5%B1%8F%E6%B8%B2%E6%9F%93%E7%A0%94%E7%A9%B6/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">iOS离屏渲染研究</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2017</span>&nbsp;-&nbsp;
+            
+            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">ChenghuiBai</a>
+        </div>
+        
+            <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动&nbsp;|&nbsp;主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.2</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="fas fa-arrow-up"></i>
+            </li>
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7%E5%80%BC%E4%B8%BA-true%E4%B8%94%E6%8C%87%E5%AE%9A-frame"><span class="nav-number">1.</span> <span class="nav-text">属性值为 true且指定 frame</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7%E5%80%BC%E4%B8%BA-true%EF%BC%8C%E6%8C%87%E5%AE%9A-frame-%E4%B8%94%E6%B7%BB%E5%8A%A0%E9%A2%9D%E5%A4%96%E7%BA%A6%E6%9D%9F"><span class="nav-number">2.</span> <span class="nav-text">属性值为 true，指定 frame 且添加额外约束</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E9%A2%9D%E5%A4%96%E7%BA%A6%E6%9D%9F%E5%AF%BC%E8%87%B4%E7%BA%A6%E6%9D%9F%E5%86%B2%E7%AA%81"><span class="nav-number">3.</span> <span class="nav-text">添加额外约束导致约束冲突</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/header-shrink.js"></script>
+
+<script src="/js/back2top.js"></script>
+
+<script src="/js/dark-light-toggle.js"></script>
+
+
+
+
+
+    
+<script src="/js/code-copy.js"></script>
+
+
+
+
+
+<div class="post-scripts">
+    
+        
+<script src="/js/left-side-toggle.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+<script src="/js/toc.js"></script>
+
+    
+</div>
+
+
+
+</body>
+</html>

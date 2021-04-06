@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="ChenghuiBai">
+    
+    <title>
+        
+            NSURLProtocol 研究 |
+        
+        ChenghuiBai&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.png">
+    
+<link rel="stylesheet" href="/css/font-awesome.min.css">
+
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"example.com","root":"/","language":"zh-CN","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"#0066CC","avatar":"/images/avatar.png","favicon":"/images/logo.png","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Keep coding and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":false}}},"local_search":{"enable":false,"preload":false},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.2"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            <a class="logo-title" href="/">
+                ChenghuiBai&#39;s Blog
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">NSURLProtocol 研究</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.png">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">ChenghuiBai</span>
+                        
+                            <span class="author-label">Lv3</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2019-08-06 21:08:43
+    </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/Foundation/">Foundation</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fas fa-file-word"></i>&nbsp;<span>995 字</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fas fa-clock"></i>&nbsp;<span>3 分钟</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <p>[TOC]</p>
+<h3 id="API"><a href="#API" class="headerlink" title="API"></a>API</h3><p>// 这个方法是注册NSURLProtocol子类的方法.<br><figure class="highlight gcode"><table><tr><td class="code"><pre><code class="hljs gcode">+ <span class="hljs-comment">(BOOL)</span>registerClass:<span class="hljs-comment">(Class)</span>protocolClass;<br></code></pre></td></tr></table></figure></p>
+<p>// 这个方法是注册后,NSURLProtocol就会通过这个方法确定参数request是否需要被处理<br>// return : YES 需要经过这个NSURLProtocol”协议” 的处理, NO 这个 协议request不需要遵守这个NSURLProtocol”协议”<br>// 这个方法的左右 : 1, 筛选Request是否需要遵守这个NSURLRequest , 2, 处理http: , https等URL<br><figure class="highlight objectivec"><table><tr><td class="code"><pre><code class="hljs objectivec">+ (<span class="hljs-built_in">BOOL</span>)canInitWithRequest:(<span class="hljs-built_in">NSURLRequest</span> *)request;<br></code></pre></td></tr></table></figure></p>
+<p>// 这个方法就是返回request,当然这里可以处理的需求有 : 1,规范化请求头的信息 2, 处理DNS劫持,重定向App中所有的请求指向等<br><figure class="highlight lisp"><table><tr><td class="code"><pre><code class="hljs lisp">+ (<span class="hljs-name">NSURLRequest</span> *)canonicalRequestForRequest:(NSURLRequest *)request<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure></p>
+<p>// 这个方法主要用来判断两个请求是否是同一个请求，如果是，则可以使用缓存数据，通常只需要调用父类的实现即可,默认为YES,而且一般不在这里做事情<br><figure class="highlight objectivec"><table><tr><td class="code"><pre><code class="hljs objectivec">+ (<span class="hljs-built_in">BOOL</span>)requestIsCacheEquivalent:(<span class="hljs-built_in">NSURLRequest</span> *)a toRequest:(<span class="hljs-built_in">NSURLRequest</span> *)b;<br></code></pre></td></tr></table></figure></p>
+<p>// abstract Initializes an NSURLProtocol given request, cached response, and client.<br>// 开始初始化一个NSURLProtocol抽象对象, 包含请求, cachedResponse , 和建立client<br><figure class="highlight elm"><table><tr><td class="code"><pre><code class="hljs elm">- (instance<span class="hljs-keyword">type</span>)initWithRequest:(<span class="hljs-type">NSURLRequest</span> *)request cachedResponse:(nullable <span class="hljs-type">NSCachedURLResponse</span> *)cachedResponse client:(nullable id &lt;<span class="hljs-type">NSURLProtocolClient</span>&gt;)client <span class="hljs-type">NS_DESIGNATED_INITIALIZER</span>;<br></code></pre></td></tr></table></figure></p>
+<p>// 需要在该方法中发起一个请求，对于NSURLConnection来说，就是创建一个NSURLConnection，对于NSURLSession，就是发起一个NSURLSessionTask<br>// 另外一点就是这个方法之后,会回调<NSURLProtocolClient>协议中的方法,<br><figure class="highlight lisp"><table><tr><td class="code"><pre><code class="hljs lisp">- (<span class="hljs-name">void</span>)startLoading<br></code></pre></td></tr></table></figure></p>
+<p>// 这个方法是和start是对应的 一般在这个方法中,断开Connection<br>// 另外一点就是当NSURLProtocolClient的协议方法都回调完毕后,就会开始执行这个方法了<br><figure class="highlight lisp"><table><tr><td class="code"><pre><code class="hljs lisp">- (<span class="hljs-name">void</span>)stopLoading<br><br></code></pre></td></tr></table></figure></p>
+<h3 id="多个NSURLProtocol注册"><a href="#多个NSURLProtocol注册" class="headerlink" title="多个NSURLProtocol注册"></a>多个NSURLProtocol注册</h3><p>在开发过程中,遇到的一些问题总结一下</p>
+<p>如果注册了两个NSURLProtocol,执行顺序是怎样?###</p>
+<p>Protocols的遍历是反向的，也就是最后注册的Protocol会被优先判断。<br>如下图, 先注册AAAA,再注册BBBB的话优先判断的是BBBB,</p>
+<p><img src="evernotecid://B57F1AED-083F-4A2B-9367-5A171F86DD13/appyinxiangcom/11846024/ENResource/p4242" alt="719b010b9025a0687f94e8dfb5ad23b4.png"></p>
+<h3 id="具体流程"><a href="#具体流程" class="headerlink" title="具体流程"></a>具体流程</h3><figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs mermaid">graph TD<br>A[模块A] --&gt;|A1| B(模块B)<br>B --&gt; C&#123;判断条件C&#125;<br>C --&gt;|条件C1| D[模块D]<br>C --&gt;|条件C2| E[模块E]<br>C --&gt;|条件C3| F[模块F]<br></code></pre></td></tr></table></figure>
+<p>1、发起请求<br>2、-（BOOL）canInitxxx<br>    根据userAgent、Method、白名单、URL System Load 判断是否处理请求<br>    不处理，会默认转给系统的NSURLProtocol处理<br>    处理进入下一步<br>3、canonicalRequestForRequest<br>    添加请求头信息<br>4、startLoading<br>    看自己是否有缓存：<br>        是否过期，<br>            过期去请求数据<br>            没过期，读取缓存，client 回调数据给webview展示<br>    看系统是否自己有缓存：<br>        处理同上<br>    无缓存：<br>        请求数据<br>        等到数据，缓存数据并由client 回调数据给webview展示</p>
+<h3 id="填坑"><a href="#填坑" class="headerlink" title="填坑"></a>填坑</h3><p>1、关于私有API<br>因为WKBrowsingContextController和registerSchemeForCustomProtocol应该是私有的所以使用时候需要对字符串做下处理，用加密的方式或者其他就可以了，实测可以过审核的。</p>
+<p>2、关于post请求(个人觉得post就过滤不处理好了)<br>大家会发现拦截不了post请求(拦截到的post请求body体为空)，这个其实和WKWebview没有关系，这个是苹果为了提高效率加快流畅度所以在NSURLProtocol拦截之后索性就不复制body体内的东西，因为body的大小没有限制，开发者可能会把很大的数据放进去那就不好办了。我们可以采取httpbodystream的方式拿到body，这个在之前的文章也有提过</p>
+<figure class="highlight objectivec"><table><tr><td class="code"><pre><code class="hljs objectivec"><span class="hljs-meta">#<span class="hljs-meta-keyword">pragma</span> mark -</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">pragma</span> mark 处理POST请求相关POST  用HTTPBodyStream来处理BODY体</span><br>- (<span class="hljs-built_in">NSMutableURLRequest</span> *)handlePostRequestBodyWithRequest:(<span class="hljs-built_in">NSMutableURLRequest</span> *)request &#123;<br>    <span class="hljs-built_in">NSMutableURLRequest</span> * req = [request mutableCopy];<br>    <span class="hljs-keyword">if</span> ([request.HTTPMethod isEqualToString:<span class="hljs-string">@&quot;POST&quot;</span>]) &#123;<br>        <span class="hljs-keyword">if</span> (!request.HTTPBody) &#123;<br>            uint8_t d[<span class="hljs-number">1024</span>] = &#123;<span class="hljs-number">0</span>&#125;;<br>            <span class="hljs-built_in">NSInputStream</span> *stream = request.HTTPBodyStream;<br>            <span class="hljs-built_in">NSMutableData</span> *data = [[<span class="hljs-built_in">NSMutableData</span> alloc] init];<br>            [stream open];<br>            <span class="hljs-keyword">while</span> ([stream hasBytesAvailable]) &#123;<br>                <span class="hljs-built_in">NSInteger</span> len = [stream read:d maxLength:<span class="hljs-number">1024</span>];<br>                <span class="hljs-keyword">if</span> (len &gt; <span class="hljs-number">0</span> &amp;&amp; stream.streamError == <span class="hljs-literal">nil</span>) &#123;<br>                    [data appendBytes:(<span class="hljs-keyword">void</span> *)d length:len];<br>                &#125;<br>            &#125;<br>            req.HTTPBody = [data <span class="hljs-keyword">copy</span>];<br>            [stream close];<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> req;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a class="link"   target="_blank" rel="noopener" href="https://www.jianshu.com/p/ec5d6c204e17" >NSURLProtocol 的使用<i class="fas fa-external-link-alt"></i></a></p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_37664648/article/details/80021430" >NSURLProtocol拦截网络请求<i class="fas fa-external-link-alt"></i></a></p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://www.jianshu.com/p/ae5e8f9988d8?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation" >iOS中NSURLProtocol黑魔法的使用<i class="fas fa-external-link-alt"></i></a></p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://www.jianshu.com/p/02781c0bbca9" >NSURLProtocol全攻略<i class="fas fa-external-link-alt"></i></a></p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://www.jianshu.com/p/bb20ff351fa2" >WKWebView 那些坑(转自 腾讯Bugly)<i class="fas fa-external-link-alt"></i></a></p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://www.jianshu.com/p/cd4c1bf1fd5f" >可能是最全的iOS端HttpDns集成方案<i class="fas fa-external-link-alt"></i></a></p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://www.jianshu.com/p/dabad9068dd5" >iOS-网络优化（一）<i class="fas fa-external-link-alt"></i></a></p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：NSURLProtocol 研究</li>
+        <li>本文作者：ChenghuiBai</li>
+        <li>创建时间：2019-08-06 21:08:43</li>
+        <li>
+            本文链接：https://baichenghui.github.io/2019/08/06/NSURLProtocol-研究/
+        </li>
+        <li>
+            版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2020/12/08/socket-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">socket 学习笔记</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2019/06/06/YBTaskScheduler-%E7%A0%94%E7%A9%B6/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">YBTaskScheduler 研究</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2017</span>&nbsp;-&nbsp;
+            
+            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">ChenghuiBai</a>
+        </div>
+        
+            <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动&nbsp;|&nbsp;主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.2</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="fas fa-arrow-up"></i>
+            </li>
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#API"><span class="nav-number">1.</span> <span class="nav-text">API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E4%B8%AANSURLProtocol%E6%B3%A8%E5%86%8C"><span class="nav-number">2.</span> <span class="nav-text">多个NSURLProtocol注册</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E6%B5%81%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text">具体流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A1%AB%E5%9D%91"><span class="nav-number">4.</span> <span class="nav-text">填坑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/header-shrink.js"></script>
+
+<script src="/js/back2top.js"></script>
+
+<script src="/js/dark-light-toggle.js"></script>
+
+
+
+
+
+    
+<script src="/js/code-copy.js"></script>
+
+
+
+
+
+<div class="post-scripts">
+    
+        
+<script src="/js/left-side-toggle.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+<script src="/js/toc.js"></script>
+
+    
+</div>
+
+
+
+</body>
+</html>
