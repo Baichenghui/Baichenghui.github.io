@@ -307,7 +307,7 @@ NSProxy 做为消息转发的抽象代理类，自身能够处理的方法极少
   </entry>
   <entry>
     <title>socket 学习笔记</title>
-    <url>/2020/12/08/socket-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <url>/2020/06/08/socket-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[<h6 id="什么是socket"><a href="#什么是socket" class="headerlink" title="什么是socket?"></a>什么是socket?</h6><p>是一组对TCP/UDP协议封装的api接口，处于应用层与传输层之间</p>
 <p><a class="link"   href="https://www.jianshu.com/p/8e599ca5dfe8" >Socket简易分析<i class="fas fa-external-link-alt"></i></a></p>
 <h6 id="粘包半包是什么？怎么处理？"><a href="#粘包半包是什么？怎么处理？" class="headerlink" title="粘包半包是什么？怎么处理？"></a>粘包半包是什么？怎么处理？</h6><p><a class="link"   href="https://www.jb51.net/article/105278.htm" >IOS 详解socket编程[oc]粘包、半包处理<i class="fas fa-external-link-alt"></i></a></p>
