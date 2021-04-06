@@ -38,38 +38,6 @@
       </tags>
   </entry>
   <entry>
-    <title>NSURLProtocol 研究</title>
-    <url>/2019/08/06/NSURLProtocol-%E7%A0%94%E7%A9%B6/</url>
-    <content><![CDATA[<p>[TOC]</p>
-<h3 id="API"><a href="#API" class="headerlink" title="API"></a>API</h3><p>// 这个方法是注册NSURLProtocol子类的方法.<br><figure class="highlight gcode"><table><tr><td class="code"><pre><code class="hljs gcode">+ <span class="hljs-comment">(BOOL)</span>registerClass:<span class="hljs-comment">(Class)</span>protocolClass;<br></code></pre></td></tr></table></figure></p>
-<p>// 这个方法是注册后,NSURLProtocol就会通过这个方法确定参数request是否需要被处理<br>// return : YES 需要经过这个NSURLProtocol”协议” 的处理, NO 这个 协议request不需要遵守这个NSURLProtocol”协议”<br>// 这个方法的左右 : 1, 筛选Request是否需要遵守这个NSURLRequest , 2, 处理http: , https等URL<br><figure class="highlight objectivec"><table><tr><td class="code"><pre><code class="hljs objectivec">+ (<span class="hljs-built_in">BOOL</span>)canInitWithRequest:(<span class="hljs-built_in">NSURLRequest</span> *)request;<br></code></pre></td></tr></table></figure></p>
-<p>// 这个方法就是返回request,当然这里可以处理的需求有 : 1,规范化请求头的信息 2, 处理DNS劫持,重定向App中所有的请求指向等<br><figure class="highlight lisp"><table><tr><td class="code"><pre><code class="hljs lisp">+ (<span class="hljs-name">NSURLRequest</span> *)canonicalRequestForRequest:(NSURLRequest *)request<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure></p>
-<p>// 这个方法主要用来判断两个请求是否是同一个请求，如果是，则可以使用缓存数据，通常只需要调用父类的实现即可,默认为YES,而且一般不在这里做事情<br><figure class="highlight objectivec"><table><tr><td class="code"><pre><code class="hljs objectivec">+ (<span class="hljs-built_in">BOOL</span>)requestIsCacheEquivalent:(<span class="hljs-built_in">NSURLRequest</span> *)a toRequest:(<span class="hljs-built_in">NSURLRequest</span> *)b;<br></code></pre></td></tr></table></figure></p>
-<p>// abstract Initializes an NSURLProtocol given request, cached response, and client.<br>// 开始初始化一个NSURLProtocol抽象对象, 包含请求, cachedResponse , 和建立client<br><figure class="highlight elm"><table><tr><td class="code"><pre><code class="hljs elm">- (instance<span class="hljs-keyword">type</span>)initWithRequest:(<span class="hljs-type">NSURLRequest</span> *)request cachedResponse:(nullable <span class="hljs-type">NSCachedURLResponse</span> *)cachedResponse client:(nullable id &lt;<span class="hljs-type">NSURLProtocolClient</span>&gt;)client <span class="hljs-type">NS_DESIGNATED_INITIALIZER</span>;<br></code></pre></td></tr></table></figure></p>
-<p>// 需要在该方法中发起一个请求，对于NSURLConnection来说，就是创建一个NSURLConnection，对于NSURLSession，就是发起一个NSURLSessionTask<br>// 另外一点就是这个方法之后,会回调<NSURLProtocolClient>协议中的方法,<br><figure class="highlight lisp"><table><tr><td class="code"><pre><code class="hljs lisp">- (<span class="hljs-name">void</span>)startLoading<br></code></pre></td></tr></table></figure></p>
-<p>// 这个方法是和start是对应的 一般在这个方法中,断开Connection<br>// 另外一点就是当NSURLProtocolClient的协议方法都回调完毕后,就会开始执行这个方法了<br><figure class="highlight lisp"><table><tr><td class="code"><pre><code class="hljs lisp">- (<span class="hljs-name">void</span>)stopLoading<br><br></code></pre></td></tr></table></figure></p>
-<h3 id="多个NSURLProtocol注册"><a href="#多个NSURLProtocol注册" class="headerlink" title="多个NSURLProtocol注册"></a>多个NSURLProtocol注册</h3><p>在开发过程中,遇到的一些问题总结一下</p>
-<p>如果注册了两个NSURLProtocol,执行顺序是怎样?###</p>
-<p>Protocols的遍历是反向的，也就是最后注册的Protocol会被优先判断。<br>如下图, 先注册AAAA,再注册BBBB的话优先判断的是BBBB,</p>
-<p><img src="evernotecid://B57F1AED-083F-4A2B-9367-5A171F86DD13/appyinxiangcom/11846024/ENResource/p4242" alt="719b010b9025a0687f94e8dfb5ad23b4.png"></p>
-<h3 id="具体流程"><a href="#具体流程" class="headerlink" title="具体流程"></a>具体流程</h3><p>1、发起请求<br>2、-（BOOL）canInitxxx<br>    根据userAgent、Method、白名单、URL System Load 判断是否处理请求<br>    不处理，会默认转给系统的NSURLProtocol处理<br>    处理进入下一步<br>3、canonicalRequestForRequest<br>    添加请求头信息<br>4、startLoading<br>    看自己是否有缓存：<br>        是否过期，<br>            过期去请求数据<br>            没过期，读取缓存，client 回调数据给webview展示<br>    看系统是否自己有缓存：<br>        处理同上<br>    无缓存：<br>        请求数据<br>        等到数据，缓存数据并由client 回调数据给webview展示</p>
-<h3 id="填坑"><a href="#填坑" class="headerlink" title="填坑"></a>填坑</h3><p>1、关于私有API<br>因为WKBrowsingContextController和registerSchemeForCustomProtocol应该是私有的所以使用时候需要对字符串做下处理，用加密的方式或者其他就可以了，实测可以过审核的。</p>
-<p>2、关于post请求(个人觉得post就过滤不处理好了)<br>大家会发现拦截不了post请求(拦截到的post请求body体为空)，这个其实和WKWebview没有关系，这个是苹果为了提高效率加快流畅度所以在NSURLProtocol拦截之后索性就不复制body体内的东西，因为body的大小没有限制，开发者可能会把很大的数据放进去那就不好办了。</p>
-<p>网上有人说下面的方式可以处理post请求参数的问题，我动手试了发现并不起作用，因为HTTPBodyStream都是空的。<br><figure class="highlight objectivec"><table><tr><td class="code"><pre><code class="hljs objectivec"><span class="hljs-meta">#<span class="hljs-meta-keyword">pragma</span> mark -</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">pragma</span> mark 处理POST请求相关POST  用HTTPBodyStream来处理BODY体</span><br>- (<span class="hljs-built_in">NSMutableURLRequest</span> *)handlePostRequestBodyWithRequest:(<span class="hljs-built_in">NSMutableURLRequest</span> *)request &#123;<br>    <span class="hljs-built_in">NSMutableURLRequest</span> * req = [request mutableCopy];<br>    <span class="hljs-keyword">if</span> ([request.HTTPMethod isEqualToString:<span class="hljs-string">@&quot;POST&quot;</span>]) &#123;<br>        <span class="hljs-keyword">if</span> (!request.HTTPBody) &#123;<br>            uint8_t d[<span class="hljs-number">1024</span>] = &#123;<span class="hljs-number">0</span>&#125;;<br>            <span class="hljs-built_in">NSInputStream</span> *stream = request.HTTPBodyStream;<br>            <span class="hljs-built_in">NSMutableData</span> *data = [[<span class="hljs-built_in">NSMutableData</span> alloc] init];<br>            [stream open];<br>            <span class="hljs-keyword">while</span> ([stream hasBytesAvailable]) &#123;<br>                <span class="hljs-built_in">NSInteger</span> len = [stream read:d maxLength:<span class="hljs-number">1024</span>];<br>                <span class="hljs-keyword">if</span> (len &gt; <span class="hljs-number">0</span> &amp;&amp; stream.streamError == <span class="hljs-literal">nil</span>) &#123;<br>                    [data appendBytes:(<span class="hljs-keyword">void</span> *)d length:len];<br>                &#125;<br>            &#125;<br>            req.HTTPBody = [data <span class="hljs-keyword">copy</span>];<br>            [stream close];<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> req;<br>&#125;<br></code></pre></td></tr></table></figure></p>
-<p>目前我的解决办法是：把post请求参数单独保存，利用键值对保存不同post请求的参数，然后拦截post请求修改请求体。 </p>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a class="link"   href="https://www.jianshu.com/p/ec5d6c204e17" >NSURLProtocol 的使用<i class="fas fa-external-link-alt"></i></a></p>
-<p><a class="link"   href="https://blog.csdn.net/weixin_37664648/article/details/80021430" >NSURLProtocol拦截网络请求<i class="fas fa-external-link-alt"></i></a></p>
-<p><a class="link"   href="https://www.jianshu.com/p/ae5e8f9988d8?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation" >iOS中NSURLProtocol黑魔法的使用<i class="fas fa-external-link-alt"></i></a></p>
-<p><a class="link"   href="https://www.jianshu.com/p/02781c0bbca9" >NSURLProtocol全攻略<i class="fas fa-external-link-alt"></i></a></p>
-<p><a class="link"   href="https://www.jianshu.com/p/bb20ff351fa2" >WKWebView 那些坑(转自 腾讯Bugly)<i class="fas fa-external-link-alt"></i></a></p>
-<p><a class="link"   href="https://www.jianshu.com/p/cd4c1bf1fd5f" >可能是最全的iOS端HttpDns集成方案<i class="fas fa-external-link-alt"></i></a></p>
-<p><a class="link"   href="https://www.jianshu.com/p/dabad9068dd5" >iOS-网络优化（一）<i class="fas fa-external-link-alt"></i></a></p>
-]]></content>
-      <tags>
-        <tag>Foundation</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>YBTaskScheduler 研究</title>
     <url>/2019/06/06/YBTaskScheduler-%E7%A0%94%E7%A9%B6/</url>
     <content><![CDATA[<p>学习<br><a class="link"   href="https://github.com/indulgeIn/YBTaskScheduler" >YBTaskScheduler<i class="fas fa-external-link-alt"></i></a></p>
@@ -112,6 +80,38 @@
       </tags>
   </entry>
   <entry>
+    <title>NSURLProtocol 研究</title>
+    <url>/2019/08/06/NSURLProtocol-%E7%A0%94%E7%A9%B6/</url>
+    <content><![CDATA[<p>[TOC]</p>
+<h3 id="API"><a href="#API" class="headerlink" title="API"></a>API</h3><p>// 这个方法是注册NSURLProtocol子类的方法.<br><figure class="highlight gcode"><table><tr><td class="code"><pre><code class="hljs gcode">+ <span class="hljs-comment">(BOOL)</span>registerClass:<span class="hljs-comment">(Class)</span>protocolClass;<br></code></pre></td></tr></table></figure></p>
+<p>// 这个方法是注册后,NSURLProtocol就会通过这个方法确定参数request是否需要被处理<br>// return : YES 需要经过这个NSURLProtocol”协议” 的处理, NO 这个 协议request不需要遵守这个NSURLProtocol”协议”<br>// 这个方法的左右 : 1, 筛选Request是否需要遵守这个NSURLRequest , 2, 处理http: , https等URL<br><figure class="highlight objectivec"><table><tr><td class="code"><pre><code class="hljs objectivec">+ (<span class="hljs-built_in">BOOL</span>)canInitWithRequest:(<span class="hljs-built_in">NSURLRequest</span> *)request;<br></code></pre></td></tr></table></figure></p>
+<p>// 这个方法就是返回request,当然这里可以处理的需求有 : 1,规范化请求头的信息 2, 处理DNS劫持,重定向App中所有的请求指向等<br><figure class="highlight lisp"><table><tr><td class="code"><pre><code class="hljs lisp">+ (<span class="hljs-name">NSURLRequest</span> *)canonicalRequestForRequest:(NSURLRequest *)request<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure></p>
+<p>// 这个方法主要用来判断两个请求是否是同一个请求，如果是，则可以使用缓存数据，通常只需要调用父类的实现即可,默认为YES,而且一般不在这里做事情<br><figure class="highlight objectivec"><table><tr><td class="code"><pre><code class="hljs objectivec">+ (<span class="hljs-built_in">BOOL</span>)requestIsCacheEquivalent:(<span class="hljs-built_in">NSURLRequest</span> *)a toRequest:(<span class="hljs-built_in">NSURLRequest</span> *)b;<br></code></pre></td></tr></table></figure></p>
+<p>// abstract Initializes an NSURLProtocol given request, cached response, and client.<br>// 开始初始化一个NSURLProtocol抽象对象, 包含请求, cachedResponse , 和建立client<br><figure class="highlight elm"><table><tr><td class="code"><pre><code class="hljs elm">- (instance<span class="hljs-keyword">type</span>)initWithRequest:(<span class="hljs-type">NSURLRequest</span> *)request cachedResponse:(nullable <span class="hljs-type">NSCachedURLResponse</span> *)cachedResponse client:(nullable id &lt;<span class="hljs-type">NSURLProtocolClient</span>&gt;)client <span class="hljs-type">NS_DESIGNATED_INITIALIZER</span>;<br></code></pre></td></tr></table></figure></p>
+<p>// 需要在该方法中发起一个请求，对于NSURLConnection来说，就是创建一个NSURLConnection，对于NSURLSession，就是发起一个NSURLSessionTask<br>// 另外一点就是这个方法之后,会回调<NSURLProtocolClient>协议中的方法,<br><figure class="highlight lisp"><table><tr><td class="code"><pre><code class="hljs lisp">- (<span class="hljs-name">void</span>)startLoading<br></code></pre></td></tr></table></figure></p>
+<p>// 这个方法是和start是对应的 一般在这个方法中,断开Connection<br>// 另外一点就是当NSURLProtocolClient的协议方法都回调完毕后,就会开始执行这个方法了<br><figure class="highlight lisp"><table><tr><td class="code"><pre><code class="hljs lisp">- (<span class="hljs-name">void</span>)stopLoading<br><br></code></pre></td></tr></table></figure></p>
+<h3 id="多个NSURLProtocol注册"><a href="#多个NSURLProtocol注册" class="headerlink" title="多个NSURLProtocol注册"></a>多个NSURLProtocol注册</h3><p>在开发过程中,遇到的一些问题总结一下</p>
+<p>如果注册了两个NSURLProtocol,执行顺序是怎样?###</p>
+<p>Protocols的遍历是反向的，也就是最后注册的Protocol会被优先判断。<br>如下图, 先注册AAAA,再注册BBBB的话优先判断的是BBBB,</p>
+<p><img src="evernotecid://B57F1AED-083F-4A2B-9367-5A171F86DD13/appyinxiangcom/11846024/ENResource/p4242" alt="719b010b9025a0687f94e8dfb5ad23b4.png"></p>
+<h3 id="具体流程"><a href="#具体流程" class="headerlink" title="具体流程"></a>具体流程</h3><p>1、发起请求<br>2、-（BOOL）canInitxxx<br>    根据userAgent、Method、白名单、URL System Load 判断是否处理请求<br>    不处理，会默认转给系统的NSURLProtocol处理<br>    处理进入下一步<br>3、canonicalRequestForRequest<br>    添加请求头信息<br>4、startLoading<br>    看自己是否有缓存：<br>        是否过期，<br>            过期去请求数据<br>            没过期，读取缓存，client 回调数据给webview展示<br>    看系统是否自己有缓存：<br>        处理同上<br>    无缓存：<br>        请求数据<br>        等到数据，缓存数据并由client 回调数据给webview展示</p>
+<h3 id="填坑"><a href="#填坑" class="headerlink" title="填坑"></a>填坑</h3><p>1、关于私有API<br>因为WKBrowsingContextController和registerSchemeForCustomProtocol应该是私有的所以使用时候需要对字符串做下处理，用加密的方式或者其他就可以了，实测可以过审核的。</p>
+<p>2、关于post请求(个人觉得post就过滤不处理好了)<br>大家会发现拦截不了post请求(拦截到的post请求body体为空)，这个其实和WKWebview没有关系，这个是苹果为了提高效率加快流畅度所以在NSURLProtocol拦截之后索性就不复制body体内的东西，因为body的大小没有限制，开发者可能会把很大的数据放进去那就不好办了。</p>
+<p>网上有人说下面的方式可以处理post请求参数的问题，我动手试了发现并不起作用，因为HTTPBodyStream都是空的。<br><figure class="highlight objectivec"><table><tr><td class="code"><pre><code class="hljs objectivec"><span class="hljs-meta">#<span class="hljs-meta-keyword">pragma</span> mark -</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">pragma</span> mark 处理POST请求相关POST  用HTTPBodyStream来处理BODY体</span><br>- (<span class="hljs-built_in">NSMutableURLRequest</span> *)handlePostRequestBodyWithRequest:(<span class="hljs-built_in">NSMutableURLRequest</span> *)request &#123;<br>    <span class="hljs-built_in">NSMutableURLRequest</span> * req = [request mutableCopy];<br>    <span class="hljs-keyword">if</span> ([request.HTTPMethod isEqualToString:<span class="hljs-string">@&quot;POST&quot;</span>]) &#123;<br>        <span class="hljs-keyword">if</span> (!request.HTTPBody) &#123;<br>            uint8_t d[<span class="hljs-number">1024</span>] = &#123;<span class="hljs-number">0</span>&#125;;<br>            <span class="hljs-built_in">NSInputStream</span> *stream = request.HTTPBodyStream;<br>            <span class="hljs-built_in">NSMutableData</span> *data = [[<span class="hljs-built_in">NSMutableData</span> alloc] init];<br>            [stream open];<br>            <span class="hljs-keyword">while</span> ([stream hasBytesAvailable]) &#123;<br>                <span class="hljs-built_in">NSInteger</span> len = [stream read:d maxLength:<span class="hljs-number">1024</span>];<br>                <span class="hljs-keyword">if</span> (len &gt; <span class="hljs-number">0</span> &amp;&amp; stream.streamError == <span class="hljs-literal">nil</span>) &#123;<br>                    [data appendBytes:(<span class="hljs-keyword">void</span> *)d length:len];<br>                &#125;<br>            &#125;<br>            req.HTTPBody = [data <span class="hljs-keyword">copy</span>];<br>            [stream close];<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> req;<br>&#125;<br></code></pre></td></tr></table></figure></p>
+<p>目前我的解决办法是：把post请求参数单独保存，利用键值对保存不同post请求的参数，然后拦截post请求修改请求体。 </p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a class="link"   href="https://www.jianshu.com/p/ec5d6c204e17" >NSURLProtocol 的使用<i class="fas fa-external-link-alt"></i></a></p>
+<p><a class="link"   href="https://blog.csdn.net/weixin_37664648/article/details/80021430" >NSURLProtocol拦截网络请求<i class="fas fa-external-link-alt"></i></a></p>
+<p><a class="link"   href="https://www.jianshu.com/p/ae5e8f9988d8?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation" >iOS中NSURLProtocol黑魔法的使用<i class="fas fa-external-link-alt"></i></a></p>
+<p><a class="link"   href="https://www.jianshu.com/p/02781c0bbca9" >NSURLProtocol全攻略<i class="fas fa-external-link-alt"></i></a></p>
+<p><a class="link"   href="https://www.jianshu.com/p/bb20ff351fa2" >WKWebView 那些坑(转自 腾讯Bugly)<i class="fas fa-external-link-alt"></i></a></p>
+<p><a class="link"   href="https://www.jianshu.com/p/cd4c1bf1fd5f" >可能是最全的iOS端HttpDns集成方案<i class="fas fa-external-link-alt"></i></a></p>
+<p><a class="link"   href="https://www.jianshu.com/p/dabad9068dd5" >iOS-网络优化（一）<i class="fas fa-external-link-alt"></i></a></p>
+]]></content>
+      <tags>
+        <tag>Foundation</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>YYWeakProxy|NSProxy</title>
     <url>/2017/10/15/YYWeakProxy-NSProxy/</url>
     <content><![CDATA[<h5 id="YYWeakProxy解决NSTimer循环引用问题："><a href="#YYWeakProxy解决NSTimer循环引用问题：" class="headerlink" title="YYWeakProxy解决NSTimer循环引用问题："></a>YYWeakProxy解决NSTimer循环引用问题：</h5><pre><code><figure class="highlight groovy"><table><tr><td class="code"><pre><code class="hljs groovy">YYWeakProxy *weakProxy = [YYWeakProxy <span class="hljs-attr">proxyWithTarget:</span>self];<br>self.timer = [NSTimer <span class="hljs-attr">scheduledTimerWithTimeInterval:</span><span class="hljs-number">1.0</span> <span class="hljs-attr">target:</span>weakProxy <span class="hljs-attr">selector:</span><span class="hljs-meta">@selector</span>(weakProxyTimer) <span class="hljs-attr">userInfo:</span>nil <span class="hljs-attr">repeats:</span>YES];<br></code></pre></td></tr></table></figure>
@@ -142,6 +142,24 @@ NSProxy 做为消息转发的抽象代理类，自身能够处理的方法极少
 ]]></content>
       <tags>
         <tag>tool</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hexo 使用</title>
+    <url>/2017/02/26/hexo-%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<h3 id="主题配置步骤"><a href="#主题配置步骤" class="headerlink" title="主题配置步骤"></a>主题配置步骤</h3><p>1、cd 跳转到博客所在文件夹<br>2、clone 主题<br>如：<br><figure class="highlight awk"><table><tr><td class="code"><pre><code class="hljs awk">git clone https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/theme-next/</span>hexo-theme-<span class="hljs-keyword">next</span> themes/<span class="hljs-keyword">next</span><br></code></pre></td></tr></table></figure><br>3、将博客文件夹目录下_config.yml里theme的名称landscape修改为next，然后执行cd到你的博客文件夹目录下执行如下命令：</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><code class="hljs awk">hexo clean   <span class="hljs-regexp">//</span>清除缓存文件 (db.json) 和已生成的静态文件 (public)<br>hexo g       <span class="hljs-regexp">//</span>生成缓存和静态文件<br>hexo d       <span class="hljs-regexp">//</span>重新部署到服务器<br></code></pre></td></tr></table></figure>
+<p>也可以将3个命令合并一起执行</p>
+<figure class="highlight sas"><table><tr><td class="code"><pre><code class="hljs sas">hexo clean <span class="hljs-variable">&amp;&amp;</span> hexo g <span class="hljs-variable">&amp;&amp;</span> hexo d<br></code></pre></td></tr></table></figure>
+<p>注意：每次修改_config.yml，都要执行上面3个命令，至于其他修改，<a class="link"   href="http://theme-next.iissnan.com" >Next使用文档<i class="fas fa-external-link-alt"></i></a>里有极详细的介绍。</p>
+<h3 id="新建"><a href="#新建" class="headerlink" title="新建"></a>新建</h3><h5 id="新建文章"><a href="#新建文章" class="headerlink" title="新建文章"></a>新建文章</h5><figure class="highlight haxe"><table><tr><td class="code"><pre><code class="hljs haxe">hexo <span class="hljs-keyword">new</span> <span class="hljs-type">post</span> <span class="hljs-string">&quot;我的第一篇博客&quot;</span>      <span class="hljs-comment">//名字可以自己取</span><br></code></pre></td></tr></table></figure>
+<h5 id="图片引用"><a href="#图片引用" class="headerlink" title="图片引用"></a>图片引用</h5><figure class="highlight django"><table><tr><td class="code"><pre><code class="hljs django"><span class="hljs-template-tag">&#123;% <span class="hljs-name">asset_img</span> hexoLocal.png hexo初始的样子 %&#125;</span><br></code></pre></td></tr></table></figure>
+<p>hexo初始的样子 是对图片的描述</p>
+<h6 id="测试预览"><a href="#测试预览" class="headerlink" title="测试预览"></a>测试预览</h6><figure class="highlight nginx"><table><tr><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">hexo</span> s --<span class="hljs-literal">debug</span><br></code></pre></td></tr></table></figure>
+<h6 id="发布"><a href="#发布" class="headerlink" title="发布"></a>发布</h6><p>主题更换后的操作一致</p>
+]]></content>
+      <tags>
+        <tag>hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -192,21 +210,19 @@ NSProxy 做为消息转发的抽象代理类，自身能够处理的方法极少
       </tags>
   </entry>
   <entry>
-    <title>hexo 使用</title>
-    <url>/2017/02/26/hexo-%E4%BD%BF%E7%94%A8/</url>
-    <content><![CDATA[<h3 id="主题配置步骤"><a href="#主题配置步骤" class="headerlink" title="主题配置步骤"></a>主题配置步骤</h3><p>1、cd 跳转到博客所在文件夹<br>2、clone 主题<br>如：<br><figure class="highlight awk"><table><tr><td class="code"><pre><code class="hljs awk">git clone https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/theme-next/</span>hexo-theme-<span class="hljs-keyword">next</span> themes/<span class="hljs-keyword">next</span><br></code></pre></td></tr></table></figure><br>3、将博客文件夹目录下_config.yml里theme的名称landscape修改为next，然后执行cd到你的博客文件夹目录下执行如下命令：</p>
-<figure class="highlight awk"><table><tr><td class="code"><pre><code class="hljs awk">hexo clean   <span class="hljs-regexp">//</span>清除缓存文件 (db.json) 和已生成的静态文件 (public)<br>hexo g       <span class="hljs-regexp">//</span>生成缓存和静态文件<br>hexo d       <span class="hljs-regexp">//</span>重新部署到服务器<br></code></pre></td></tr></table></figure>
-<p>也可以将3个命令合并一起执行</p>
-<figure class="highlight sas"><table><tr><td class="code"><pre><code class="hljs sas">hexo clean <span class="hljs-variable">&amp;&amp;</span> hexo g <span class="hljs-variable">&amp;&amp;</span> hexo d<br></code></pre></td></tr></table></figure>
-<p>注意：每次修改_config.yml，都要执行上面3个命令，至于其他修改，<a class="link"   href="http://theme-next.iissnan.com" >Next使用文档<i class="fas fa-external-link-alt"></i></a>里有极详细的介绍。</p>
-<h3 id="新建"><a href="#新建" class="headerlink" title="新建"></a>新建</h3><h5 id="新建文章"><a href="#新建文章" class="headerlink" title="新建文章"></a>新建文章</h5><figure class="highlight haxe"><table><tr><td class="code"><pre><code class="hljs haxe">hexo <span class="hljs-keyword">new</span> <span class="hljs-type">post</span> <span class="hljs-string">&quot;我的第一篇博客&quot;</span>      <span class="hljs-comment">//名字可以自己取</span><br></code></pre></td></tr></table></figure>
-<h5 id="图片引用"><a href="#图片引用" class="headerlink" title="图片引用"></a>图片引用</h5><figure class="highlight django"><table><tr><td class="code"><pre><code class="hljs django"><span class="hljs-template-tag">&#123;% <span class="hljs-name">asset_img</span> hexoLocal.png hexo初始的样子 %&#125;</span><br></code></pre></td></tr></table></figure>
-<p>hexo初始的样子 是对图片的描述</p>
-<h6 id="测试预览"><a href="#测试预览" class="headerlink" title="测试预览"></a>测试预览</h6><figure class="highlight nginx"><table><tr><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">hexo</span> s --<span class="hljs-literal">debug</span><br></code></pre></td></tr></table></figure>
-<h6 id="发布"><a href="#发布" class="headerlink" title="发布"></a>发布</h6><p>主题更换后的操作一致</p>
+    <title>iOS播放器设计</title>
+    <url>/2019/01/06/iOS%E6%92%AD%E6%94%BE%E5%99%A8%E8%AE%BE%E8%AE%A1/</url>
+    <content><![CDATA[<p>[TOC]</p>
+<h3 id="需求目标"><a href="#需求目标" class="headerlink" title="需求目标"></a>需求目标</h3><p>1、基础播放器可随时替代（本地、远程播放、暂停、拖动进度、后台播放）<br>2、记录上次播放、播放模式（单曲，顺序，随机）等<br>3、播放单个故事，播放专辑列表<br>4、网络慢，加载进度条和语音提示<br>5、播放失败、播放状态变更时自定义日志log上传bugly</p>
+<h3 id="设计思路"><a href="#设计思路" class="headerlink" title="设计思路"></a>设计思路</h3><p>分层：<br>基础层：给url就播放，开始使用AVPlayer，后续可能采用ffmpeg<br>业务层：播放记录、播放模式、专辑列表播放、播放状态回调、根据故事id播放故事</p>
+<p>技术点：<br>1、抽象工厂模式，解决基础播放器快速替换问题<br>2、策略模式，实现不同播放模式，资源列表排序算法<br>3、AVFoundation后台播放需要设置一下模式<br>4、节能</p>
+<figure class="highlight reasonml"><table><tr><td class="code"><pre><code class="hljs reasonml"><span class="hljs-keyword">do</span> &#123;<br>    <span class="hljs-comment">//keep alive audio at background</span><br>    <span class="hljs-keyword">try</span> <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">AVAudioSession</span>.</span></span>shared<span class="hljs-constructor">Instance()</span>.set<span class="hljs-constructor">Category(AVAudioSession.Category.<span class="hljs-params">playback</span>)</span><br>&#125; catch _ &#123; &#125;<br><br><span class="hljs-keyword">do</span> &#123;<br>    <span class="hljs-keyword">try</span> <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">AVAudioSession</span>.</span></span>shared<span class="hljs-constructor">Instance()</span>.set<span class="hljs-constructor">Active(<span class="hljs-params">true</span>)</span><br>&#125; catch _ &#123; &#125;<br></code></pre></td></tr></table></figure>
+<p>4、开启远程控制器后,才会后台自动切歌播放(开启线控,还能支持耳机上的线控操作)<br><figure class="highlight scheme"><table><tr><td class="code"><pre><code class="hljs scheme">[[<span class="hljs-name">UIApplication</span> sharedApplication] beginReceivingRemoteControlEvents]<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure><br>5、系统远端事件捕获不到问题,需要重写下面方法<br><figure class="highlight objectivec"><table><tr><td class="code"><pre><code class="hljs objectivec">-(<span class="hljs-built_in">BOOL</span>)canBecomeFirstResponder&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">YES</span>;<br>&#125;<br><br><span class="hljs-meta">#<span class="hljs-meta-keyword">pragma</span> mark - 接收到远程控制时执行的方法</span><br>- (<span class="hljs-keyword">void</span>) remoteControlReceivedWithEvent: (<span class="hljs-built_in">UIEvent</span> *) receivedEvent&#123;<br><br>&#125;<br></code></pre></td></tr></table></figure><br>6、锁屏播放信息设置<br><figure class="highlight objectivec"><table><tr><td class="code"><pre><code class="hljs objectivec"><span class="hljs-built_in">MPNowPlayingInfoCenter</span> *center = [<span class="hljs-built_in">MPNowPlayingInfoCenter</span> defaultCenter];<br><span class="hljs-built_in">NSDictionary</span> *songInfo = @&#123;<br>    <span class="hljs-built_in">MPMediaItemPropertyTitle</span>: title,<br>    <span class="hljs-built_in">MPMediaItemPropertyArtist</span>: artist<br>    <span class="hljs-built_in">MPMediaItemPropertyPlaybackDuration</span> : [<span class="hljs-built_in">NSNumber</span> numberWithFloat:length]<br>&#125;;<br>center.nowPlayingInfo = songInfo;<br></code></pre></td></tr></table></figure></p>
+<h3 id="主要流程"><a href="#主要流程" class="headerlink" title="主要流程"></a>主要流程</h3><p>1、根据故事id查看是否有播放记录？<br>    有播放记录，获取播放进度<br>    无播放记录，播放进度为初始值<br>2、查看该故事音频是否有本地缓存？<br>    有缓存，设置播放进度，播放本地<br>    无缓存，设置播放进度，播放远程<br>3、开始播放，添加播放记录。<br>4、播放过程中，定时器定时获取播放进度，设置进度条，同时更播放进度记录，更新锁屏上的播放信息。<br>5、暂停更新播放进度。<br>6、播放完成更新播放进度。<br>7、播放状态、网络状态、音频获取状态变换回调，方便打点。</p>
+<h3 id="主要遇到问题以及解决"><a href="#主要遇到问题以及解决" class="headerlink" title="主要遇到问题以及解决"></a>主要遇到问题以及解决</h3><p>1、架构：层次分明，职责清晰，利用合适的设计模式解决替换与算法分离问题。<br>2、卡顿：获取锁屏图片时卡顿，在子线程获取成功之后，图片的解码过程也放到子线程。<br>3、耗电：定时器及时关闭，锁屏信息只在锁屏和进入后台才更新</p>
 ]]></content>
       <tags>
-        <tag>hexo</tag>
+        <tag>架构设计</tag>
       </tags>
   </entry>
   <entry>
@@ -256,19 +272,19 @@ NSProxy 做为消息转发的抽象代理类，自身能够处理的方法极少
       </tags>
   </entry>
   <entry>
-    <title>iOS播放器设计</title>
-    <url>/2019/01/06/iOS%E6%92%AD%E6%94%BE%E5%99%A8%E8%AE%BE%E8%AE%A1/</url>
-    <content><![CDATA[<p>[TOC]</p>
-<h3 id="需求目标"><a href="#需求目标" class="headerlink" title="需求目标"></a>需求目标</h3><p>1、基础播放器可随时替代（本地、远程播放、暂停、拖动进度、后台播放）<br>2、记录上次播放、播放模式（单曲，顺序，随机）等<br>3、播放单个故事，播放专辑列表<br>4、网络慢，加载进度条和语音提示<br>5、播放失败、播放状态变更时自定义日志log上传bugly</p>
-<h3 id="设计思路"><a href="#设计思路" class="headerlink" title="设计思路"></a>设计思路</h3><p>分层：<br>基础层：给url就播放，开始使用AVPlayer，后续可能采用ffmpeg<br>业务层：播放记录、播放模式、专辑列表播放、播放状态回调、根据故事id播放故事</p>
-<p>技术点：<br>1、抽象工厂模式，解决基础播放器快速替换问题<br>2、策略模式，实现不同播放模式，资源列表排序算法<br>3、AVFoundation后台播放需要设置一下模式<br>4、节能</p>
-<figure class="highlight reasonml"><table><tr><td class="code"><pre><code class="hljs reasonml"><span class="hljs-keyword">do</span> &#123;<br>    <span class="hljs-comment">//keep alive audio at background</span><br>    <span class="hljs-keyword">try</span> <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">AVAudioSession</span>.</span></span>shared<span class="hljs-constructor">Instance()</span>.set<span class="hljs-constructor">Category(AVAudioSession.Category.<span class="hljs-params">playback</span>)</span><br>&#125; catch _ &#123; &#125;<br><br><span class="hljs-keyword">do</span> &#123;<br>    <span class="hljs-keyword">try</span> <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">AVAudioSession</span>.</span></span>shared<span class="hljs-constructor">Instance()</span>.set<span class="hljs-constructor">Active(<span class="hljs-params">true</span>)</span><br>&#125; catch _ &#123; &#125;<br></code></pre></td></tr></table></figure>
-<p>4、开启远程控制器后,才会后台自动切歌播放(开启线控,还能支持耳机上的线控操作)<br><figure class="highlight scheme"><table><tr><td class="code"><pre><code class="hljs scheme">[[<span class="hljs-name">UIApplication</span> sharedApplication] beginReceivingRemoteControlEvents]<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure><br>5、系统远端事件捕获不到问题,需要重写下面方法<br><figure class="highlight objectivec"><table><tr><td class="code"><pre><code class="hljs objectivec">-(<span class="hljs-built_in">BOOL</span>)canBecomeFirstResponder&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">YES</span>;<br>&#125;<br><br><span class="hljs-meta">#<span class="hljs-meta-keyword">pragma</span> mark - 接收到远程控制时执行的方法</span><br>- (<span class="hljs-keyword">void</span>) remoteControlReceivedWithEvent: (<span class="hljs-built_in">UIEvent</span> *) receivedEvent&#123;<br><br>&#125;<br></code></pre></td></tr></table></figure><br>6、锁屏播放信息设置<br><figure class="highlight objectivec"><table><tr><td class="code"><pre><code class="hljs objectivec"><span class="hljs-built_in">MPNowPlayingInfoCenter</span> *center = [<span class="hljs-built_in">MPNowPlayingInfoCenter</span> defaultCenter];<br><span class="hljs-built_in">NSDictionary</span> *songInfo = @&#123;<br>    <span class="hljs-built_in">MPMediaItemPropertyTitle</span>: title,<br>    <span class="hljs-built_in">MPMediaItemPropertyArtist</span>: artist<br>    <span class="hljs-built_in">MPMediaItemPropertyPlaybackDuration</span> : [<span class="hljs-built_in">NSNumber</span> numberWithFloat:length]<br>&#125;;<br>center.nowPlayingInfo = songInfo;<br></code></pre></td></tr></table></figure></p>
-<h3 id="主要流程"><a href="#主要流程" class="headerlink" title="主要流程"></a>主要流程</h3><p>1、根据故事id查看是否有播放记录？<br>    有播放记录，获取播放进度<br>    无播放记录，播放进度为初始值<br>2、查看该故事音频是否有本地缓存？<br>    有缓存，设置播放进度，播放本地<br>    无缓存，设置播放进度，播放远程<br>3、开始播放，添加播放记录。<br>4、播放过程中，定时器定时获取播放进度，设置进度条，同时更播放进度记录，更新锁屏上的播放信息。<br>5、暂停更新播放进度。<br>6、播放完成更新播放进度。<br>7、播放状态、网络状态、音频获取状态变换回调，方便打点。</p>
-<h3 id="主要遇到问题以及解决"><a href="#主要遇到问题以及解决" class="headerlink" title="主要遇到问题以及解决"></a>主要遇到问题以及解决</h3><p>1、架构：层次分明，职责清晰，利用合适的设计模式解决替换与算法分离问题。<br>2、卡顿：获取锁屏图片时卡顿，在子线程获取成功之后，图片的解码过程也放到子线程。<br>3、耗电：定时器及时关闭，锁屏信息只在锁屏和进入后台才更新</p>
+    <title>mac 相关终端命令</title>
+    <url>/2018/01/13/mac%20%E7%9B%B8%E5%85%B3%E7%BB%88%E7%AB%AF%E5%91%BD%E4%BB%A4/</url>
+    <content><![CDATA[<p>电池健康程度检测终端命令:</p>
+<figure class="highlight 1c"><table><tr><td class="code"><pre><code class="hljs 1c">ioreg -rn AppleSmartBattery <span class="hljs-string">| grep -i capacity</span><br></code></pre></td></tr></table></figure>
+<p> 查看</p>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">echo</span> <span class="hljs-variable">$SHELL</span><br></code></pre></td></tr></table></figure>
+<p> 切换 bash<br> 要在macOS上更改用户帐户的默认外壳，只需chsh -s在“终端”窗口中运行（更改外壳）命令。<br> 通过运行以下命令将默认Shell更改为Bash：<br> <figure class="highlight awk"><table><tr><td class="code"><pre><code class="hljs awk">chsh -s <span class="hljs-regexp">/ bin /</span> bash<br></code></pre></td></tr></table></figure></p>
+<p> 切换 zsh<br> 通过运行以下命令，将默认shell更改回Zsh：<br> <figure class="highlight awk"><table><tr><td class="code"><pre><code class="hljs awk">chsh -s <span class="hljs-regexp">/ bin /</span> zsh<br></code></pre></td></tr></table></figure><br> 出现提示时输入密码。关闭终端窗口并重新打开它之后，您将使用Zsh。</p>
+<p>终端前缀修改</p>
+<figure class="highlight vim"><table><tr><td class="code"><pre><code class="hljs vim">sudo <span class="hljs-built_in">hostname</span> XxdeMacBookPro15 --自己想要的名字<br>sudo scutil --<span class="hljs-keyword">set</span> LocalHostName $(<span class="hljs-built_in">hostname</span>) <br>sudo scutil --<span class="hljs-keyword">set</span> HostName $(<span class="hljs-built_in">hostname</span>)<br></code></pre></td></tr></table></figure>
 ]]></content>
       <tags>
-        <tag>架构设计</tag>
+        <tag>command</tag>
       </tags>
   </entry>
   <entry>
@@ -289,27 +305,32 @@ NSProxy 做为消息转发的抽象代理类，自身能够处理的方法极少
       </tags>
   </entry>
   <entry>
-    <title>mac 相关终端命令</title>
-    <url>/2018/01/13/mac%20%E7%9B%B8%E5%85%B3%E7%BB%88%E7%AB%AF%E5%91%BD%E4%BB%A4/</url>
-    <content><![CDATA[<p>电池健康程度检测终端命令:</p>
-<figure class="highlight 1c"><table><tr><td class="code"><pre><code class="hljs 1c">ioreg -rn AppleSmartBattery <span class="hljs-string">| grep -i capacity</span><br></code></pre></td></tr></table></figure>
-<p> 查看</p>
- <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">echo</span> <span class="hljs-variable">$SHELL</span><br></code></pre></td></tr></table></figure>
-<p> 切换 bash<br> 要在macOS上更改用户帐户的默认外壳，只需chsh -s在“终端”窗口中运行（更改外壳）命令。<br> 通过运行以下命令将默认Shell更改为Bash：<br> <figure class="highlight awk"><table><tr><td class="code"><pre><code class="hljs awk">chsh -s <span class="hljs-regexp">/ bin /</span> bash<br></code></pre></td></tr></table></figure></p>
-<p> 切换 zsh<br> 通过运行以下命令，将默认shell更改回Zsh：<br> <figure class="highlight awk"><table><tr><td class="code"><pre><code class="hljs awk">chsh -s <span class="hljs-regexp">/ bin /</span> zsh<br></code></pre></td></tr></table></figure><br> 出现提示时输入密码。关闭终端窗口并重新打开它之后，您将使用Zsh。</p>
-<p>终端前缀修改</p>
-<figure class="highlight vim"><table><tr><td class="code"><pre><code class="hljs vim">sudo <span class="hljs-built_in">hostname</span> XxdeMacBookPro15 --自己想要的名字<br>sudo scutil --<span class="hljs-keyword">set</span> LocalHostName $(<span class="hljs-built_in">hostname</span>) <br>sudo scutil --<span class="hljs-keyword">set</span> HostName $(<span class="hljs-built_in">hostname</span>)<br></code></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>command</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>socket 研究</title>
     <url>/2020/06/08/socket-%E7%A0%94%E7%A9%B6/</url>
-    <content><![CDATA[<h6 id="什么是socket"><a href="#什么是socket" class="headerlink" title="什么是socket?"></a>什么是socket?</h6><p>是一组对TCP/UDP协议封装的api接口，处于应用层与传输层之间</p>
-<p><a class="link"   href="https://www.jianshu.com/p/8e599ca5dfe8" >Socket简易分析<i class="fas fa-external-link-alt"></i></a></p>
-<h6 id="粘包半包是什么？怎么处理？"><a href="#粘包半包是什么？怎么处理？" class="headerlink" title="粘包半包是什么？怎么处理？"></a>粘包半包是什么？怎么处理？</h6><p><a class="link"   href="https://www.jb51.net/article/105278.htm" >IOS 详解socket编程[oc]粘包、半包处理<i class="fas fa-external-link-alt"></i></a></p>
+    <content><![CDATA[<h5 id="什么是socket"><a href="#什么是socket" class="headerlink" title="什么是socket?"></a>什么是socket?</h5><p>网络上两个程序通过一个双向通信连接实现数据交互，这种双向通信的连接叫做Socket.</p>
+<p>本质上，Socket 是一组对TCP/UDP协议封装的api接口，处于应用层与传输层之间.</p>
+<h5 id="连接过程"><a href="#连接过程" class="headerlink" title="连接过程"></a>连接过程</h5><p>建立Socket连接至少需要一对套接字，分别运行于服务端和客户端。套接字直接的连接需要三个步骤：</p>
+<p>1、服务器监听</p>
+<p>服务端Socket始终处于等待连接状态，实时监听是否有客户端请求连接。</p>
+<p>2、客户端请求</p>
+<p>客户端Socket提出连接请求，指定服务端Socket的ip地址和端口号，这时就可以向对应的服务端提出Socket连接请求。</p>
+<p>3、连接确认</p>
+<p>当服务端Socket监听到客户端Socket提出的连接请求时作出响应，建立一个新的进程，把服务端Socket的描述发送给客户端，该描述得到客户端确认后就可建立起Socket连接。而服务端Socket则继续处于监听状态，继续接收其他客户端Socket的请求。 </p>
+<h5 id="CocoaAsyncSocket"><a href="#CocoaAsyncSocket" class="headerlink" title="CocoaAsyncSocket"></a>CocoaAsyncSocket</h5><p>iOS 开发中socket有一个第三方库<code>CocoaAsyncSocket</code>很好用.</p>
+<p>使用的时候传递host和端口即可进行连接,</p>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><code class="hljs groovy">- (<span class="hljs-keyword">void</span>)<span class="hljs-attr">connectToServerWithCommand:</span>(NSString *)command<br>&#123;<br>    _socket = [[GCDAsyncSocket alloc] <span class="hljs-attr">initWithDelegate:</span>self <span class="hljs-attr">delegateQueue:</span>dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, <span class="hljs-number">0</span>)];<br>    [_socket <span class="hljs-attr">setUserData:</span>command];<br>    <br>    NSError *error = nil;<br>    [_socket <span class="hljs-attr">connectToHost:</span>host <span class="hljs-attr">onPort:</span>端口号 <span class="hljs-attr">error:</span>&amp;error];<br>    <span class="hljs-keyword">if</span> (error) &#123;<br>        NSLog(@<span class="hljs-string">&quot;连接 error:%@&quot;</span>,error.userInfo);<br>    &#125;<br>    <br>    [_socket <span class="hljs-attr">writeData:</span>[command <span class="hljs-attr">dataUsingEncoding:</span>NSUTF8StringEncoding] <span class="hljs-attr">withTimeout:</span><span class="hljs-number">10.0</span>f <span class="hljs-attr">tag:</span><span class="hljs-number">6</span>];<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>然后实现代理</p>
+<figure class="highlight objectivec"><table><tr><td class="code"><pre><code class="hljs objectivec"><span class="hljs-meta">#<span class="hljs-meta-keyword">pragma</span> mark - Socket Delegate</span><br><br>- (<span class="hljs-keyword">void</span>)socket:(GCDAsyncSocket *)sock didConnectToHost:(<span class="hljs-built_in">NSString</span> *)host port:(uint16_t)port<br>&#123;<br>    <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@&quot;Socket连接成功：%s&quot;</span>,__func__);<br>&#125;<br><br>-(<span class="hljs-keyword">void</span>)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(<span class="hljs-built_in">NSError</span> *)err&#123;<br>    <span class="hljs-keyword">if</span> (err) &#123;<br>        <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@&quot;连接失败&quot;</span>);<br>    &#125;<span class="hljs-keyword">else</span>&#123;<br>        <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@&quot;正常断开&quot;</span>);<br>    &#125; <br>&#125;<br><br>-(<span class="hljs-keyword">void</span>)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(<span class="hljs-keyword">long</span>)tag &#123;<br>    <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@&quot;数据发送成功：%s&quot;</span>,__func__);<br>    <span class="hljs-comment">//发送完数据手动读取，-1不设置超时</span><br>    [sock readDataWithTimeout:<span class="hljs-number">-1</span> tag:tag];<br>&#125;<br><br>-(<span class="hljs-keyword">void</span>)socket:(GCDAsyncSocket *)sock didReadData:(<span class="hljs-built_in">NSData</span> *)data withTag:(<span class="hljs-keyword">long</span>)tag &#123;<br>    <span class="hljs-built_in">NSString</span> *receiverStr = [[<span class="hljs-built_in">NSString</span> alloc] initWithData:data encoding:<span class="hljs-built_in">NSUTF8StringEncoding</span>];<br>    <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@&quot;读取数据：%s %@&quot;</span>,__func__,receiverStr);<br>&#125;<br></code></pre></td></tr></table></figure>
+<h5 id="TCP粘包、半包"><a href="#TCP粘包、半包" class="headerlink" title="TCP粘包、半包"></a>TCP粘包、半包</h5><h6 id="什么是粘包？"><a href="#什么是粘包？" class="headerlink" title="什么是粘包？"></a>什么是粘包？</h6><p>由于TCP默认会使用优化方法（Nagle算法）。<br>将多次间隔较小且数据量小的数据，合并成一个大的数据块，进行封包，然后依次发送。<br>这么做优点就是为了减少广域网的小分组数目，可以减小网络拥塞的出现，同时也可以节省宽带。</p>
+<h6 id="什么是半包？"><a href="#什么是半包？" class="headerlink" title="什么是半包？"></a>什么是半包？</h6><p>当发送一条很大的数据包，类似音视频，大图等，一次发送或者读取数据的缓冲区大小是有限的，所以会分段去发送或者读取数据。当多个包发送的时候，有些包可能就发送失败了，接收方接收数据不全就出现了半包的问题。</p>
+<h6 id="怎么处理？"><a href="#怎么处理？" class="headerlink" title="怎么处理？"></a>怎么处理？</h6><p>如果我们要正确解析数据，那么必须要使用一种合理的机制去解包。这个机制的思路其实很简单：</p>
+<p>在设计数据结构时记录包长和包的起始位置，一般就是每个包都设计一个包头和包体，包头包含包长等信息，包体就是具体传递的数据。</p>
+<h6 id="基于-CocoaAsyncSocket-处理"><a href="#基于-CocoaAsyncSocket-处理" class="headerlink" title="基于 CocoaAsyncSocket 处理"></a>基于 CocoaAsyncSocket 处理</h6><p>首先需要了解几个方法：</p>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><code class="hljs groovy"><span class="hljs-comment">//读取数据，有数据就会触发代理</span><br>- (<span class="hljs-keyword">void</span>)<span class="hljs-attr">readDataWithTimeout:</span>(NSTimeInterval)timeout <span class="hljs-attr">tag:</span>(<span class="hljs-keyword">long</span>)tag;<br><span class="hljs-comment">//直到读到这个长度的数据，才会触发代理</span><br>- (<span class="hljs-keyword">void</span>)<span class="hljs-attr">readDataToLength:</span>(NSUInteger)length <span class="hljs-attr">withTimeout:</span>(NSTimeInterval)timeout <span class="hljs-attr">tag:</span>(<span class="hljs-keyword">long</span>)tag;<br><span class="hljs-comment">//直到读到data这个边界，才会触发代理</span><br>- (<span class="hljs-keyword">void</span>)<span class="hljs-attr">readDataToData:</span>(NSData *)data <span class="hljs-attr">withTimeout:</span>(NSTimeInterval)timeout <span class="hljs-attr">tag:</span>(<span class="hljs-keyword">long</span>)tag;<br></code></pre></td></tr></table></figure>
+<p>包读取：</p>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><code class="hljs groovy"><br><span class="hljs-comment">// socket连接成功</span><br>- (<span class="hljs-keyword">void</span>)<span class="hljs-attr">socket:</span>(GCDAsyncSocket *)sock <span class="hljs-attr">didConnectToHost:</span>(NSString *)host <span class="hljs-attr">port:</span>(uint16_t)port &#123;<br>    <span class="hljs-comment">// 非相关代码移除</span><br>    ...<br>    <br>    <span class="hljs-comment">//连接成功就去读取包头的数据，并设置tag,方便解析时使用</span><br>    [_socket <span class="hljs-attr">readDataToLength:</span>LENGTH_HEAD <span class="hljs-attr">withTimeout:</span><span class="hljs-number">-1</span> <span class="hljs-attr">tag:</span>TAG_HEAD];<br>&#125;<br><br><br><span class="hljs-comment">// socket读取成功</span><br>- (<span class="hljs-keyword">void</span>)<span class="hljs-attr">socket:</span>(GCDAsyncSocket *)sock <span class="hljs-attr">didReadData:</span>(NSData *)data <span class="hljs-attr">withTag:</span>(<span class="hljs-keyword">long</span>)tag &#123;<br>    <span class="hljs-keyword">if</span> (tag == TAG_HEAD) &#123;<span class="hljs-comment">//包头的数据</span><br>        <span class="hljs-comment">//保存包头数据，等包体数据接收到时合并</span><br>        self.dataHead = data;<br>        <br>        <span class="hljs-comment">//从包中读取包长度信息</span><br>        UInt16 lengthTotal;<br>        [data <span class="hljs-attr">getBytes:</span>&amp;lengthTotal <span class="hljs-attr">range:</span>RANGE_PACKET_LENGTH];<br>        lengthTotal = CFSwapInt16BigToHost(lengthTotal);<br>        <br>        <span class="hljs-comment">//包体长度=总长度-包头长度</span><br>        UInt16 lengthBody = lengthTotal - LENGTH_HEAD;<br><br>        <span class="hljs-comment">//读取指定长度的包体数据</span><br>        [sock <span class="hljs-attr">readDataToLength:</span>lengthBody <span class="hljs-attr">withTimeout:</span><span class="hljs-number">-1</span> <span class="hljs-attr">tag:</span>TAG_BODY];<br>    &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (tag == TAG_READ_BODY) &#123;<span class="hljs-comment">//包体的数据</span><br>    <br>        <span class="hljs-comment">//整个包数据=包头+包体</span><br>        NSMutableData *mPacketData = [NSMutableData <span class="hljs-attr">dataWithData:</span>self.dataHead];<br>        [mPacketData <span class="hljs-attr">appendData:</span>data];<br>        <br>        <span class="hljs-comment">//清空包体变量</span><br>        self.dataHead = nil;<br>        <br>        <span class="hljs-comment">//解析整个包</span><br>        SocketResponse *response = [SocketResponse <span class="hljs-attr">responseFromData:</span>[mPacketData copy]]<br><br>        <span class="hljs-comment">//再次读取包头数据，以便后续包的读取</span><br>        [sock <span class="hljs-attr">readDataToLength:</span>LENGTH_HEAD <span class="hljs-attr">withTimeout:</span><span class="hljs-number">-1</span> <span class="hljs-attr">tag:</span>TAG_HEAD];<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        NSLog(@<span class="hljs-string">&quot;Socket: DidReadData: withTag: 没有相应的 TAG&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>解析：</p>
+<p>SocketResponse.m<br><figure class="highlight groovy"><table><tr><td class="code"><pre><code class="hljs groovy">+ (instancetype)<span class="hljs-attr">responseFromData:</span>(NSData *)respData<br>&#123;<br>    <span class="hljs-comment">// 解压包头</span><br>    SocketPacketHead *currentHead = [[SocketPacketHead alloc] <span class="hljs-attr">initWithData:</span>respData];<br>    <br>    <span class="hljs-comment">// 包体数据</span><br>    NSData *bodyData = [respData <span class="hljs-attr">subdataWithRange:</span>NSMakeRange(LENGTH_HEAD, respData.length - LENGTH_HEAD)];<br>    <br>    <span class="hljs-comment">//包解析</span><br>    SocketResponse *resp = [self <span class="hljs-attr">finalBodyDataWithHead:</span>currentHead <span class="hljs-attr">bodyData:</span>bodyData]; <br>    <span class="hljs-keyword">return</span> resp;<br>&#125;<br><br></code></pre></td></tr></table></figure></p>
 ]]></content>
       <tags>
         <tag>socket</tag>
@@ -334,27 +355,6 @@ NSProxy 做为消息转发的抽象代理类，自身能够处理的方法极少
 ]]></content>
       <tags>
         <tag>UI</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>常用lldb命令</title>
-    <url>/2018/12/19/%E5%B8%B8%E7%94%A8lldb%E5%91%BD%E4%BB%A4/</url>
-    <content><![CDATA[<h6 id="常用"><a href="#常用" class="headerlink" title="常用"></a>常用</h6><p>bt：堆栈信息<br>p:打印对象信息，内容比较全<br>po:打印对象信息<br>breakpoint set -n “-[方法名]”:断点<br>si:下一指令，汇编级别<br>s:下一步，高级源码级别<br>call:方法调用<br>thread return:退出当前线程<br>expression -O — self.view :打印当前对象内容，可以看见属性</p>
-<h6 id="打印，修改，方法调用"><a href="#打印，修改，方法调用" class="headerlink" title="打印，修改，方法调用"></a>打印，修改，方法调用</h6><p>p 对象/表达式<br>po 对象<br>expression 表达式<br>call 方法<br>print 对象</p>
-<h6 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h6><p>1、流程控制</p>
-<p>thread step-in =&gt; s<br>thread step-out =&gt; n<br>thread step-over =&gt; finish<br>thread continue </p>
-<p>2、堆栈信息</p>
-<p>thread backtrace =&gt; bt 打印当前堆栈信息<br>bt 1 只打印一帧</p>
-<p>3、跳帧选择N,调到第N帧</p>
-<p>frame select N</p>
-<p>4、查看帧变量<br>frame variable</p>
-<p>5、线程返回</p>
-<p>thread return  不带返回值<br>thread return 10 返回值为10</p>
-<h6 id="断点"><a href="#断点" class="headerlink" title="断点"></a>断点</h6><p>breakpoint set -n “方法”<br>breakpoint delete 断点编号<br>breakpoint list </p>
-<h6 id="image"><a href="#image" class="headerlink" title="image"></a>image</h6><p>image lookup -t 类名<br>image lookup -a 地址</p>
-]]></content>
-      <tags>
-        <tag>lldb</tag>
       </tags>
   </entry>
   <entry>
@@ -418,6 +418,27 @@ NSProxy 做为消息转发的抽象代理类，自身能够处理的方法极少
 ]]></content>
       <tags>
         <tag>日程日历App</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>常用lldb命令</title>
+    <url>/2018/12/19/%E5%B8%B8%E7%94%A8lldb%E5%91%BD%E4%BB%A4/</url>
+    <content><![CDATA[<h6 id="常用"><a href="#常用" class="headerlink" title="常用"></a>常用</h6><p>bt：堆栈信息<br>p:打印对象信息，内容比较全<br>po:打印对象信息<br>breakpoint set -n “-[方法名]”:断点<br>si:下一指令，汇编级别<br>s:下一步，高级源码级别<br>call:方法调用<br>thread return:退出当前线程<br>expression -O — self.view :打印当前对象内容，可以看见属性</p>
+<h6 id="打印，修改，方法调用"><a href="#打印，修改，方法调用" class="headerlink" title="打印，修改，方法调用"></a>打印，修改，方法调用</h6><p>p 对象/表达式<br>po 对象<br>expression 表达式<br>call 方法<br>print 对象</p>
+<h6 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h6><p>1、流程控制</p>
+<p>thread step-in =&gt; s<br>thread step-out =&gt; n<br>thread step-over =&gt; finish<br>thread continue </p>
+<p>2、堆栈信息</p>
+<p>thread backtrace =&gt; bt 打印当前堆栈信息<br>bt 1 只打印一帧</p>
+<p>3、跳帧选择N,调到第N帧</p>
+<p>frame select N</p>
+<p>4、查看帧变量<br>frame variable</p>
+<p>5、线程返回</p>
+<p>thread return  不带返回值<br>thread return 10 返回值为10</p>
+<h6 id="断点"><a href="#断点" class="headerlink" title="断点"></a>断点</h6><p>breakpoint set -n “方法”<br>breakpoint delete 断点编号<br>breakpoint list </p>
+<h6 id="image"><a href="#image" class="headerlink" title="image"></a>image</h6><p>image lookup -t 类名<br>image lookup -a 地址</p>
+]]></content>
+      <tags>
+        <tag>lldb</tag>
       </tags>
   </entry>
   <entry>
