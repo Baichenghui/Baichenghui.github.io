@@ -145,24 +145,6 @@ NSProxy 做为消息转发的抽象代理类，自身能够处理的方法极少
       </tags>
   </entry>
   <entry>
-    <title>hexo 使用</title>
-    <url>/2017/02/26/hexo-%E4%BD%BF%E7%94%A8/</url>
-    <content><![CDATA[<h3 id="主题配置步骤"><a href="#主题配置步骤" class="headerlink" title="主题配置步骤"></a>主题配置步骤</h3><p>1、cd 跳转到博客所在文件夹<br>2、clone 主题<br>如：<br><figure class="highlight awk"><table><tr><td class="code"><pre><code class="hljs awk">git clone https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/theme-next/</span>hexo-theme-<span class="hljs-keyword">next</span> themes/<span class="hljs-keyword">next</span><br></code></pre></td></tr></table></figure><br>3、将博客文件夹目录下_config.yml里theme的名称landscape修改为next，然后执行cd到你的博客文件夹目录下执行如下命令：</p>
-<figure class="highlight awk"><table><tr><td class="code"><pre><code class="hljs awk">hexo clean   <span class="hljs-regexp">//</span>清除缓存文件 (db.json) 和已生成的静态文件 (public)<br>hexo g       <span class="hljs-regexp">//</span>生成缓存和静态文件<br>hexo d       <span class="hljs-regexp">//</span>重新部署到服务器<br></code></pre></td></tr></table></figure>
-<p>也可以将3个命令合并一起执行</p>
-<figure class="highlight sas"><table><tr><td class="code"><pre><code class="hljs sas">hexo clean <span class="hljs-variable">&amp;&amp;</span> hexo g <span class="hljs-variable">&amp;&amp;</span> hexo d<br></code></pre></td></tr></table></figure>
-<p>注意：每次修改_config.yml，都要执行上面3个命令，至于其他修改，<a class="link"   href="http://theme-next.iissnan.com" >Next使用文档<i class="fas fa-external-link-alt"></i></a>里有极详细的介绍。</p>
-<h3 id="新建"><a href="#新建" class="headerlink" title="新建"></a>新建</h3><h5 id="新建文章"><a href="#新建文章" class="headerlink" title="新建文章"></a>新建文章</h5><figure class="highlight haxe"><table><tr><td class="code"><pre><code class="hljs haxe">hexo <span class="hljs-keyword">new</span> <span class="hljs-type">post</span> <span class="hljs-string">&quot;我的第一篇博客&quot;</span>      <span class="hljs-comment">//名字可以自己取</span><br></code></pre></td></tr></table></figure>
-<h5 id="图片引用"><a href="#图片引用" class="headerlink" title="图片引用"></a>图片引用</h5><figure class="highlight django"><table><tr><td class="code"><pre><code class="hljs django"><span class="hljs-template-tag">&#123;% <span class="hljs-name">asset_img</span> hexoLocal.png hexo初始的样子 %&#125;</span><br></code></pre></td></tr></table></figure>
-<p>hexo初始的样子 是对图片的描述</p>
-<h6 id="测试预览"><a href="#测试预览" class="headerlink" title="测试预览"></a>测试预览</h6><figure class="highlight nginx"><table><tr><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">hexo</span> s --<span class="hljs-literal">debug</span><br></code></pre></td></tr></table></figure>
-<h6 id="发布"><a href="#发布" class="headerlink" title="发布"></a>发布</h6><p>主题更换后的操作一致</p>
-]]></content>
-      <tags>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>iOS 高效切圆角方法总结</title>
     <url>/2017/07/01/iOS%20%E9%AB%98%E6%95%88%E5%88%87%E5%9C%86%E8%A7%92%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/</url>
     <content><![CDATA[<p>[TOC]</p>
@@ -207,6 +189,24 @@ NSProxy 做为消息转发的抽象代理类，自身能够处理的方法极少
 ]]></content>
       <tags>
         <tag>UI</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hexo 使用</title>
+    <url>/2017/02/26/hexo-%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<h3 id="主题配置步骤"><a href="#主题配置步骤" class="headerlink" title="主题配置步骤"></a>主题配置步骤</h3><p>1、cd 跳转到博客所在文件夹<br>2、clone 主题<br>如：<br><figure class="highlight awk"><table><tr><td class="code"><pre><code class="hljs awk">git clone https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/theme-next/</span>hexo-theme-<span class="hljs-keyword">next</span> themes/<span class="hljs-keyword">next</span><br></code></pre></td></tr></table></figure><br>3、将博客文件夹目录下_config.yml里theme的名称landscape修改为next，然后执行cd到你的博客文件夹目录下执行如下命令：</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><code class="hljs awk">hexo clean   <span class="hljs-regexp">//</span>清除缓存文件 (db.json) 和已生成的静态文件 (public)<br>hexo g       <span class="hljs-regexp">//</span>生成缓存和静态文件<br>hexo d       <span class="hljs-regexp">//</span>重新部署到服务器<br></code></pre></td></tr></table></figure>
+<p>也可以将3个命令合并一起执行</p>
+<figure class="highlight sas"><table><tr><td class="code"><pre><code class="hljs sas">hexo clean <span class="hljs-variable">&amp;&amp;</span> hexo g <span class="hljs-variable">&amp;&amp;</span> hexo d<br></code></pre></td></tr></table></figure>
+<p>注意：每次修改_config.yml，都要执行上面3个命令，至于其他修改，<a class="link"   href="http://theme-next.iissnan.com" >Next使用文档<i class="fas fa-external-link-alt"></i></a>里有极详细的介绍。</p>
+<h3 id="新建"><a href="#新建" class="headerlink" title="新建"></a>新建</h3><h5 id="新建文章"><a href="#新建文章" class="headerlink" title="新建文章"></a>新建文章</h5><figure class="highlight haxe"><table><tr><td class="code"><pre><code class="hljs haxe">hexo <span class="hljs-keyword">new</span> <span class="hljs-type">post</span> <span class="hljs-string">&quot;我的第一篇博客&quot;</span>      <span class="hljs-comment">//名字可以自己取</span><br></code></pre></td></tr></table></figure>
+<h5 id="图片引用"><a href="#图片引用" class="headerlink" title="图片引用"></a>图片引用</h5><figure class="highlight django"><table><tr><td class="code"><pre><code class="hljs django"><span class="hljs-template-tag">&#123;% <span class="hljs-name">asset_img</span> hexoLocal.png hexo初始的样子 %&#125;</span><br></code></pre></td></tr></table></figure>
+<p>hexo初始的样子 是对图片的描述</p>
+<h6 id="测试预览"><a href="#测试预览" class="headerlink" title="测试预览"></a>测试预览</h6><figure class="highlight nginx"><table><tr><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">hexo</span> s --<span class="hljs-literal">debug</span><br></code></pre></td></tr></table></figure>
+<h6 id="发布"><a href="#发布" class="headerlink" title="发布"></a>发布</h6><p>主题更换后的操作一致</p>
+]]></content>
+      <tags>
+        <tag>hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -305,6 +305,17 @@ NSProxy 做为消息转发的抽象代理类，自身能够处理的方法极少
       </tags>
   </entry>
   <entry>
+    <title>socket 研究</title>
+    <url>/2020/06/08/socket-%E7%A0%94%E7%A9%B6/</url>
+    <content><![CDATA[<h6 id="什么是socket"><a href="#什么是socket" class="headerlink" title="什么是socket?"></a>什么是socket?</h6><p>是一组对TCP/UDP协议封装的api接口，处于应用层与传输层之间</p>
+<p><a class="link"   href="https://www.jianshu.com/p/8e599ca5dfe8" >Socket简易分析<i class="fas fa-external-link-alt"></i></a></p>
+<h6 id="粘包半包是什么？怎么处理？"><a href="#粘包半包是什么？怎么处理？" class="headerlink" title="粘包半包是什么？怎么处理？"></a>粘包半包是什么？怎么处理？</h6><p><a class="link"   href="https://www.jb51.net/article/105278.htm" >IOS 详解socket编程[oc]粘包、半包处理<i class="fas fa-external-link-alt"></i></a></p>
+]]></content>
+      <tags>
+        <tag>socket</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>translatesAutoresizingMaskIntoConstraints</title>
     <url>/2018/05/03/translatesAutoresizingMaskIntoConstraints/</url>
     <content><![CDATA[<p>我们查看官方文档，可以看到文档是这样介绍该属性的：<br><figure class="highlight scss"><table><tr><td class="code"><pre><code class="hljs scss">它是一个用来决定，是否将视图的自动调整大小的遮罩(autoresizing <span class="hljs-attribute">mask</span>)转换为 <span class="hljs-attribute">Auto</span> Layout 约束的布尔值。<br></code></pre></td></tr></table></figure><br>通过文档介绍我们可以得知：当该属性为 true 时，系统会自动通过视图的 autoresizing mask 创建一组视图的约束，这些约束是基于你提供的 frame、bounds、center 这些属性。也就是说，当你给视图的 frame 赋值之后，它会为你创建静态的、基于 frame 的 Auto Layout 约束。如下：</p>
@@ -326,28 +337,6 @@ NSProxy 做为消息转发的抽象代理类，自身能够处理的方法极少
       </tags>
   </entry>
   <entry>
-    <title>socket 研究</title>
-    <url>/2020/06/08/socket-%E7%A0%94%E7%A9%B6/</url>
-    <content><![CDATA[<h6 id="什么是socket"><a href="#什么是socket" class="headerlink" title="什么是socket?"></a>什么是socket?</h6><p>是一组对TCP/UDP协议封装的api接口，处于应用层与传输层之间</p>
-<p><a class="link"   href="https://www.jianshu.com/p/8e599ca5dfe8" >Socket简易分析<i class="fas fa-external-link-alt"></i></a></p>
-<h6 id="粘包半包是什么？怎么处理？"><a href="#粘包半包是什么？怎么处理？" class="headerlink" title="粘包半包是什么？怎么处理？"></a>粘包半包是什么？怎么处理？</h6><p><a class="link"   href="https://www.jb51.net/article/105278.htm" >IOS 详解socket编程[oc]粘包、半包处理<i class="fas fa-external-link-alt"></i></a></p>
-]]></content>
-      <tags>
-        <tag>socket</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>技术支持</title>
-    <url>/2020/12/15/%E6%8A%80%E6%9C%AF%E6%94%AF%E6%8C%81/</url>
-    <content><![CDATA[<p>开发者QQ：2696437433</p>
-<p>开发者邮箱：baichenghui88888@gmail.com </p>
-<p>微信号：xiaobailong_b9i_1992</p>
-]]></content>
-      <tags>
-        <tag>日程日历App</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>常用lldb命令</title>
     <url>/2018/12/19/%E5%B8%B8%E7%94%A8lldb%E5%91%BD%E4%BB%A4/</url>
     <content><![CDATA[<h6 id="常用"><a href="#常用" class="headerlink" title="常用"></a>常用</h6><p>bt：堆栈信息<br>p:打印对象信息，内容比较全<br>po:打印对象信息<br>breakpoint set -n “-[方法名]”:断点<br>si:下一指令，汇编级别<br>s:下一步，高级源码级别<br>call:方法调用<br>thread return:退出当前线程<br>expression -O — self.view :打印当前对象内容，可以看见属性</p>
@@ -366,6 +355,17 @@ NSProxy 做为消息转发的抽象代理类，自身能够处理的方法极少
 ]]></content>
       <tags>
         <tag>lldb</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>技术支持</title>
+    <url>/2020/12/15/%E6%8A%80%E6%9C%AF%E6%94%AF%E6%8C%81/</url>
+    <content><![CDATA[<p>开发者QQ：2696437433</p>
+<p>开发者邮箱：baichenghui88888@gmail.com </p>
+<p>微信号：xiaobailong_b9i_1992</p>
+]]></content>
+      <tags>
+        <tag>日程日历App</tag>
       </tags>
   </entry>
   <entry>
