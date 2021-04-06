@@ -52,8 +52,7 @@
 <p>如果注册了两个NSURLProtocol,执行顺序是怎样?###</p>
 <p>Protocols的遍历是反向的，也就是最后注册的Protocol会被优先判断。<br>如下图, 先注册AAAA,再注册BBBB的话优先判断的是BBBB,</p>
 <p><img src="evernotecid://B57F1AED-083F-4A2B-9367-5A171F86DD13/appyinxiangcom/11846024/ENResource/p4242" alt="719b010b9025a0687f94e8dfb5ad23b4.png"></p>
-<h3 id="具体流程"><a href="#具体流程" class="headerlink" title="具体流程"></a>具体流程</h3><figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs mermaid">graph TD<br>A[模块A] --&gt;|A1| B(模块B)<br>B --&gt; C&#123;判断条件C&#125;<br>C --&gt;|条件C1| D[模块D]<br>C --&gt;|条件C2| E[模块E]<br>C --&gt;|条件C3| F[模块F]<br></code></pre></td></tr></table></figure>
-<p>1、发起请求<br>2、-（BOOL）canInitxxx<br>    根据userAgent、Method、白名单、URL System Load 判断是否处理请求<br>    不处理，会默认转给系统的NSURLProtocol处理<br>    处理进入下一步<br>3、canonicalRequestForRequest<br>    添加请求头信息<br>4、startLoading<br>    看自己是否有缓存：<br>        是否过期，<br>            过期去请求数据<br>            没过期，读取缓存，client 回调数据给webview展示<br>    看系统是否自己有缓存：<br>        处理同上<br>    无缓存：<br>        请求数据<br>        等到数据，缓存数据并由client 回调数据给webview展示</p>
+<h3 id="具体流程"><a href="#具体流程" class="headerlink" title="具体流程"></a>具体流程</h3><p>1、发起请求<br>2、-（BOOL）canInitxxx<br>    根据userAgent、Method、白名单、URL System Load 判断是否处理请求<br>    不处理，会默认转给系统的NSURLProtocol处理<br>    处理进入下一步<br>3、canonicalRequestForRequest<br>    添加请求头信息<br>4、startLoading<br>    看自己是否有缓存：<br>        是否过期，<br>            过期去请求数据<br>            没过期，读取缓存，client 回调数据给webview展示<br>    看系统是否自己有缓存：<br>        处理同上<br>    无缓存：<br>        请求数据<br>        等到数据，缓存数据并由client 回调数据给webview展示</p>
 <h3 id="填坑"><a href="#填坑" class="headerlink" title="填坑"></a>填坑</h3><p>1、关于私有API<br>因为WKBrowsingContextController和registerSchemeForCustomProtocol应该是私有的所以使用时候需要对字符串做下处理，用加密的方式或者其他就可以了，实测可以过审核的。</p>
 <p>2、关于post请求(个人觉得post就过滤不处理好了)<br>大家会发现拦截不了post请求(拦截到的post请求body体为空)，这个其实和WKWebview没有关系，这个是苹果为了提高效率加快流畅度所以在NSURLProtocol拦截之后索性就不复制body体内的东西，因为body的大小没有限制，开发者可能会把很大的数据放进去那就不好办了。我们可以采取httpbodystream的方式拿到body，这个在之前的文章也有提过</p>
 <figure class="highlight objectivec"><table><tr><td class="code"><pre><code class="hljs objectivec"><span class="hljs-meta">#<span class="hljs-meta-keyword">pragma</span> mark -</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">pragma</span> mark 处理POST请求相关POST  用HTTPBodyStream来处理BODY体</span><br>- (<span class="hljs-built_in">NSMutableURLRequest</span> *)handlePostRequestBodyWithRequest:(<span class="hljs-built_in">NSMutableURLRequest</span> *)request &#123;<br>    <span class="hljs-built_in">NSMutableURLRequest</span> * req = [request mutableCopy];<br>    <span class="hljs-keyword">if</span> ([request.HTTPMethod isEqualToString:<span class="hljs-string">@&quot;POST&quot;</span>]) &#123;<br>        <span class="hljs-keyword">if</span> (!request.HTTPBody) &#123;<br>            uint8_t d[<span class="hljs-number">1024</span>] = &#123;<span class="hljs-number">0</span>&#125;;<br>            <span class="hljs-built_in">NSInputStream</span> *stream = request.HTTPBodyStream;<br>            <span class="hljs-built_in">NSMutableData</span> *data = [[<span class="hljs-built_in">NSMutableData</span> alloc] init];<br>            [stream open];<br>            <span class="hljs-keyword">while</span> ([stream hasBytesAvailable]) &#123;<br>                <span class="hljs-built_in">NSInteger</span> len = [stream read:d maxLength:<span class="hljs-number">1024</span>];<br>                <span class="hljs-keyword">if</span> (len &gt; <span class="hljs-number">0</span> &amp;&amp; stream.streamError == <span class="hljs-literal">nil</span>) &#123;<br>                    [data appendBytes:(<span class="hljs-keyword">void</span> *)d length:len];<br>                &#125;<br>            &#125;<br>            req.HTTPBody = [data <span class="hljs-keyword">copy</span>];<br>            [stream close];<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> req;<br>&#125;<br></code></pre></td></tr></table></figure>
@@ -273,6 +272,14 @@ NSProxy 做为消息转发的抽象代理类，自身能够处理的方法极少
       </tags>
   </entry>
   <entry>
+    <title>iOS绘制k线总结</title>
+    <url>/2021/01/13/iOS%E7%BB%98%E5%88%B6k%E7%BA%BF/</url>
+    <content><![CDATA[]]></content>
+      <tags>
+        <tag>k线</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>mac 相关终端命令</title>
     <url>/2018/01/13/mac%20%E7%9B%B8%E5%85%B3%E7%BB%88%E7%AB%AF%E5%91%BD%E4%BB%A4/</url>
     <content><![CDATA[<p>电池健康程度检测终端命令:</p>
@@ -311,9 +318,6 @@ NSProxy 做为消息转发的抽象代理类，自身能够处理的方法极少
     <content><![CDATA[<h6 id="什么是socket"><a href="#什么是socket" class="headerlink" title="什么是socket?"></a>什么是socket?</h6><p>是一组对TCP/UDP协议封装的api接口，处于应用层与传输层之间</p>
 <p><a class="link"   href="https://www.jianshu.com/p/8e599ca5dfe8" >Socket简易分析<i class="fas fa-external-link-alt"></i></a></p>
 <h6 id="粘包半包是什么？怎么处理？"><a href="#粘包半包是什么？怎么处理？" class="headerlink" title="粘包半包是什么？怎么处理？"></a>粘包半包是什么？怎么处理？</h6><p><a class="link"   href="https://www.jb51.net/article/105278.htm" >IOS 详解socket编程[oc]粘包、半包处理<i class="fas fa-external-link-alt"></i></a></p>
-<h6 id="websocket"><a href="#websocket" class="headerlink" title="websocket"></a>websocket</h6><p>应用层协议，双向通信，基于TCP</p>
-<p><a class="link"   href="https://www.jb51.net/article/97031.htm" >iOS开发项目- 基于WebSocket的聊天通讯（1）<i class="fas fa-external-link-alt"></i></a></p>
-<p><a class="link"   href="https://www.jb51.net/article/97036.htm" >iOS开发项目- 基于WebSocket的聊天通讯（2）<i class="fas fa-external-link-alt"></i></a></p>
 ]]></content>
       <tags>
         <tag>socket</tag>
