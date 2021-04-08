@@ -210,22 +210,6 @@ NSProxy 做为消息转发的抽象代理类，自身能够处理的方法极少
       </tags>
   </entry>
   <entry>
-    <title>mac 相关终端命令</title>
-    <url>/2018/01/13/mac%20%E7%9B%B8%E5%85%B3%E7%BB%88%E7%AB%AF%E5%91%BD%E4%BB%A4/</url>
-    <content><![CDATA[<p>电池健康程度检测终端命令:</p>
-<figure class="highlight 1c"><table><tr><td class="code"><pre><code class="hljs 1c">ioreg -rn AppleSmartBattery <span class="hljs-string">| grep -i capacity</span><br></code></pre></td></tr></table></figure>
-<p> 查看</p>
- <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">echo</span> <span class="hljs-variable">$SHELL</span><br></code></pre></td></tr></table></figure>
-<p> 切换 bash<br> 要在macOS上更改用户帐户的默认外壳，只需chsh -s在“终端”窗口中运行（更改外壳）命令。<br> 通过运行以下命令将默认Shell更改为Bash：<br> <figure class="highlight awk"><table><tr><td class="code"><pre><code class="hljs awk">chsh -s <span class="hljs-regexp">/ bin /</span> bash<br></code></pre></td></tr></table></figure></p>
-<p> 切换 zsh<br> 通过运行以下命令，将默认shell更改回Zsh：<br> <figure class="highlight awk"><table><tr><td class="code"><pre><code class="hljs awk">chsh -s <span class="hljs-regexp">/ bin /</span> zsh<br></code></pre></td></tr></table></figure><br> 出现提示时输入密码。关闭终端窗口并重新打开它之后，您将使用Zsh。</p>
-<p>终端前缀修改</p>
-<figure class="highlight vim"><table><tr><td class="code"><pre><code class="hljs vim">sudo <span class="hljs-built_in">hostname</span> XxdeMacBookPro15 --自己想要的名字<br>sudo scutil --<span class="hljs-keyword">set</span> LocalHostName $(<span class="hljs-built_in">hostname</span>) <br>sudo scutil --<span class="hljs-keyword">set</span> HostName $(<span class="hljs-built_in">hostname</span>)<br></code></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>command</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>iOS播放器设计</title>
     <url>/2019/01/06/iOS%E6%92%AD%E6%94%BE%E5%99%A8%E8%AE%BE%E8%AE%A1/</url>
     <content><![CDATA[<p>[TOC]</p>
@@ -300,6 +284,22 @@ NSProxy 做为消息转发的抽象代理类，自身能够处理的方法极少
       </tags>
   </entry>
   <entry>
+    <title>mac 相关终端命令</title>
+    <url>/2018/01/13/mac%20%E7%9B%B8%E5%85%B3%E7%BB%88%E7%AB%AF%E5%91%BD%E4%BB%A4/</url>
+    <content><![CDATA[<p>电池健康程度检测终端命令:</p>
+<figure class="highlight 1c"><table><tr><td class="code"><pre><code class="hljs 1c">ioreg -rn AppleSmartBattery <span class="hljs-string">| grep -i capacity</span><br></code></pre></td></tr></table></figure>
+<p> 查看</p>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">echo</span> <span class="hljs-variable">$SHELL</span><br></code></pre></td></tr></table></figure>
+<p> 切换 bash<br> 要在macOS上更改用户帐户的默认外壳，只需chsh -s在“终端”窗口中运行（更改外壳）命令。<br> 通过运行以下命令将默认Shell更改为Bash：<br> <figure class="highlight awk"><table><tr><td class="code"><pre><code class="hljs awk">chsh -s <span class="hljs-regexp">/ bin /</span> bash<br></code></pre></td></tr></table></figure></p>
+<p> 切换 zsh<br> 通过运行以下命令，将默认shell更改回Zsh：<br> <figure class="highlight awk"><table><tr><td class="code"><pre><code class="hljs awk">chsh -s <span class="hljs-regexp">/ bin /</span> zsh<br></code></pre></td></tr></table></figure><br> 出现提示时输入密码。关闭终端窗口并重新打开它之后，您将使用Zsh。</p>
+<p>终端前缀修改</p>
+<figure class="highlight vim"><table><tr><td class="code"><pre><code class="hljs vim">sudo <span class="hljs-built_in">hostname</span> XxdeMacBookPro15 --自己想要的名字<br>sudo scutil --<span class="hljs-keyword">set</span> LocalHostName $(<span class="hljs-built_in">hostname</span>) <br>sudo scutil --<span class="hljs-keyword">set</span> HostName $(<span class="hljs-built_in">hostname</span>)<br></code></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>command</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>sizeToFit 和 sizeThatFits</title>
     <url>/2017/05/01/sizeToFit-%E5%92%8C-sizeThatFits/</url>
     <content><![CDATA[<p>[toc]</p>
@@ -370,6 +370,17 @@ NSProxy 做为消息转发的抽象代理类，自身能够处理的方法极少
       </tags>
   </entry>
   <entry>
+    <title>技术支持</title>
+    <url>/2020/12/15/%E6%8A%80%E6%9C%AF%E6%94%AF%E6%8C%81/</url>
+    <content><![CDATA[<p>开发者QQ：2696437433</p>
+<p>开发者邮箱：baichenghui88888@gmail.com </p>
+<p>微信号：xiaobailong_b9i_1992</p>
+]]></content>
+      <tags>
+        <tag>日程日历App</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>常用lldb命令</title>
     <url>/2018/12/19/%E5%B8%B8%E7%94%A8lldb%E5%91%BD%E4%BB%A4/</url>
     <content><![CDATA[<h6 id="常用"><a href="#常用" class="headerlink" title="常用"></a>常用</h6><p>bt：堆栈信息<br>p:打印对象信息，内容比较全<br>po:打印对象信息<br>breakpoint set -n “-[方法名]”:断点<br>si:下一指令，汇编级别<br>s:下一步，高级源码级别<br>call:方法调用<br>thread return:退出当前线程<br>expression -O — self.view :打印当前对象内容，可以看见属性</p>
@@ -388,17 +399,6 @@ NSProxy 做为消息转发的抽象代理类，自身能够处理的方法极少
 ]]></content>
       <tags>
         <tag>lldb</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>技术支持</title>
-    <url>/2020/12/15/%E6%8A%80%E6%9C%AF%E6%94%AF%E6%8C%81/</url>
-    <content><![CDATA[<p>开发者QQ：2696437433</p>
-<p>开发者邮箱：baichenghui88888@gmail.com </p>
-<p>微信号：xiaobailong_b9i_1992</p>
-]]></content>
-      <tags>
-        <tag>日程日历App</tag>
       </tags>
   </entry>
   <entry>
